@@ -4,7 +4,7 @@ import Input from "./components/Input.vue";
 </script>
 
 <template>
-  <LoginForm>
-    <Input type="text" placeholder="Hi" />
-  </LoginForm>
+  <div class="login_background">
+    <LoginForm renderLabels>Login!</LoginForm>
+  </div>
 </template>

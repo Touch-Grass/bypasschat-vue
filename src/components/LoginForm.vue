@@ -13,26 +13,29 @@ export default defineComponent({
       console.log(this.input_password);
     },
   },
+  props: {
+    renderLabels: {
+      type: Boolean,
+    },
+  },
 });
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
-    <div class="grid place-items-center mx-2 my-20 sm:my-auto">
-      <div
-        class="px-[3rem] py-[3rem] bg-white rounded-lg shadow-md lg:shadow-lg"
-      >
+    <div class="grid place-items-center mx-2 my-auto">
+      <div class="px-[3rem] py-[3rem] bg-white rounded-lg shadow-lg">
         <h2
           class="text-center font-semibold text-3xl lg:text-4xl text-gray-800"
         >
-          Login
+          <slot>Login</slot>
         </h2>
 
         <form @submit.prevent="Submit">
           <label
             for="email"
             class="block text-xs font-semibold text-gray-600 uppercase py-2"
-            >E-mail</label
+            ><span v-if="renderLabels">Email</span></label
           >
           <input
             id="email"
@@ -47,11 +50,11 @@ export default defineComponent({
           <label
             for="password"
             class="block mt-2 text-xs font-semibold text-gray-600 uppercase py-2"
-            >Password</label
+            ><span v-if="renderLabels">Password</span></label
           >
           <input
             id="password"
-            placeholder="password"
+            placeholder="Password"
             v-model="input_password"
             type="password"
             class="block w-full py-3 px-1 mt-2 mb-4 text-gray-500 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md placeholder:text-center"

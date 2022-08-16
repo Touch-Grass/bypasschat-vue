@@ -1,0 +1,28 @@
+.login_background {
+  background: linear-gradient(
+    95deg,
+    #00a2fd,
+    #6f4ae3,
+    #751e8e,
+    #c51c6c,
+    #d51166,
+    #d50d99,
+    #a415ce,
+    #150ab7
+  );
+  background-size: 1600% 1600%;
+
+  animation: AnimationName 15s ease-in-out infinite;
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

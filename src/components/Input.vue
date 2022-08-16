@@ -2,7 +2,10 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   data() {
-    return {};
+    return {
+      type: "text",
+      value: "",
+    };
   },
   methods: {},
   props: {
