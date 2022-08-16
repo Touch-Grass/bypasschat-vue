@@ -9,8 +9,9 @@ export default defineComponent({
   },
   methods: {
     Submit() {
-      console.log(this.input_email);
-      console.log(this.input_password);
+      // Todo: Add login logic (send to firebase)
+      // console.log(this.input_email);
+      // console.log(this.input_password);
     },
   },
   props: {
