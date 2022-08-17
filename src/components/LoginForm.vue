@@ -1,20 +1,30 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+// Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
 export default defineComponent({
+  name: "LoginForm", //Sets the component name to LoginForm.
   data() {
+    //The data() method returns an object that contains the component data.
     return {
+      //Variables that are used in the template.
+      loggedIn: ref(false),
       input_email: "",
       input_password: "",
     };
   },
   methods: {
+    // Methods, ex @click="methodName" or @input="methodName($event, args)" Very similar to addEventListener in TypeScript.
     Submit() {
+      this.loggedIn = true;
+      this.$emit("formSubmit", this.loggedIn);
+      console.log("submit form LoginForm.vue");
       // Todo: Add login logic (send to firebase)
       // console.log(this.input_email);
       // console.log(this.input_password);
     },
   },
   props: {
+    // Props like {{ prop }} or v-bind="prop"
     renderLabels: {
       type: Boolean,
     },
@@ -25,13 +35,12 @@ export default defineComponent({
 <template>
   <div class="flex flex-col h-screen">
     <div class="grid place-items-center mx-2 my-auto">
-      <div class="px-[3rem] py-[3rem] bg-white rounded-lg shadow-lg">
+      <div class="px-[3rem] py-[0.8rem] bg-white rounded-lg shadow-lg">
         <h2
           class="text-center font-semibold text-3xl lg:text-4xl text-gray-800"
         >
           <slot>Login</slot>
         </h2>
-
         <form @submit.prevent="Submit">
           <label
             for="email"
@@ -51,7 +60,8 @@ export default defineComponent({
           <label
             for="password"
             class="block mt-2 text-xs font-semibold text-gray-600 uppercase py-2"
-            ><span v-if="renderLabels">Password</span></label
+          >
+            <span v-if="renderLabels">Password</span></label
           >
           <input
             id="password"
