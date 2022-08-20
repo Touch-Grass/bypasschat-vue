@@ -1,7 +1,11 @@
 <script lang="ts">
 import { EmailAuthProvider } from "@firebase/auth";
 import { defineComponent, ref, onMounted } from "vue";
-import { auth, signInWithEmailAndPassword, onAuthStateChanged } from "../main";
+import {
+  auth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "../../main";
 // Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
 export default defineComponent({
   name: "LoginForm", //Sets the component name to LoginForm.
@@ -42,12 +46,12 @@ export default defineComponent({
     checkSignIn() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          alert("Signed In!");
+          console.log("Signed In!");
           const uid = user.uid;
           this.loggedIn = true;
           this.$emit("loggedIn", this.loggedIn);
         } else {
-          alert("Not signed in");
+          console.log("Not signed in");
         }
       });
       console.log("Checking sign in");
@@ -55,9 +59,10 @@ export default defineComponent({
   },
 
   mounted() {
+    // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
     setTimeout(() => {
       this.checkSignIn();
-    }, 1000);
+    }, 10);
   },
   props: {
     // Props like {{ prop }} or v-bind="prop"

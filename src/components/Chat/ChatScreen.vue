@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen bg-gray-400 flex">
     <div class="fixed left-0 w-20 h-screen bg-gray-800">
-      <div class="flex justify-center items-start">hi hi</div>
+      <div class="flex justify-center items-center"></div>
     </div>
     <div class="fixed left-20 bg-gray-600"></div>
     -

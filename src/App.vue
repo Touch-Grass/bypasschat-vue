@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import LoginForm from "./components/LoginForm.vue";
+import LoginForm from "./components/Login/LoginForm.vue";
+import ChatScreen from "./components/Chat/ChatScreen.vue";
 import firebaseTest from "./components/FirebaseTest.vue";
 import ChatSelect from "./components/ChatSelect.vue";
 import tempSignUp from "./components/SignUpForm.vue";
-import ChatScreen from "./components/ChatScreen.vue";
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   data() {
@@ -30,6 +30,7 @@ export default defineComponent({
     LoginForm,
     ChatSelect,
     firebaseTest,
+    ChatScreen,
   },
   methods: {
     logChange(e: boolean) {
