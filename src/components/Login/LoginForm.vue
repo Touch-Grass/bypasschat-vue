@@ -1,75 +1,61 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { EmailAuthProvider } from "@firebase/auth";
-import { defineComponent, ref, onMounted } from "vue";
+import { async } from "@firebase/util";
+import { ref, onMounted } from "vue";
 import {
   auth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "../../main";
 // Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
-export default defineComponent({
-  name: "LoginForm", //Sets the component name to LoginForm.
-  data() {
-    //The data() method returns an object that contains the component data.
-    return {
-      //Variables that are used in the template.
-      formBase: ref(),
-      loggedIn: ref(false),
-      input_email: "",
-      input_password: "",
-    };
-  },
-  methods: {
-    // Methods, ex @click="methodName" or @input="methodName($event, args)" Very similar to addEventListener in TypeScript.
-    Submit() {
-      this.loggedIn = true;
-      this.$emit("loggedIn", this.loggedIn);
+let loggedIn = false;
+const formBase = ref();
+const input_email = "";
+const input_password = "";
 
-      this.signInAuth(this.input_email, this.input_password);
+const emits = defineEmits<{
+  (e: "loggedIn", loggedIn: boolean): void;
+}>();
 
-      // Todo: Add login logic (send to firebase)
-      // console.log(this.input_email);
-      // console.log(this.input_password);
-    },
-    signInAuth(email: any, password: any) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          alert("Signed in!");
+const props = defineProps<{
+  renderLabels?: boolean;
+}>();
 
-          // console.log(user);
-        })
-        .catch((error) => {
-          throw new Error(`New Error ${error.message}`);
-        });
-    },
-    checkSignIn() {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log("Signed In!");
-          const uid = user.uid;
-          this.loggedIn = true;
-          this.$emit("loggedIn", this.loggedIn);
-        } else {
-          console.log("Not signed in");
-        }
-      });
-      console.log("Checking sign in");
-    },
-  },
+function signInAuth(email: any, password: any) {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Signed in!");
+    })
+    .catch((error) => {
+      throw new Error(`New Error ${error.message}`);
+    });
+}
 
-  mounted() {
-    // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
-    setTimeout(() => {
-      this.checkSignIn();
-    }, 10);
-  },
-  props: {
-    // Props like {{ prop }} or v-bind="prop"
-    renderLabels: {
-      type: Boolean,
-    },
-  },
+function Submit() {
+  loggedIn = true;
+  emits("loggedIn", loggedIn);
+  signInAuth(input_email, input_password);
+}
+
+function checkSignIn() {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Signed In!");
+      const uid = user.uid;
+      loggedIn = true;
+      emits("loggedIn", loggedIn);
+    } else {
+      console.log("Not signed in");
+    }
+  });
+}
+
+onMounted((): void => {
+  // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
+  setTimeout(() => {
+    checkSignIn();
+  }, 10);
 });
 </script>
 
