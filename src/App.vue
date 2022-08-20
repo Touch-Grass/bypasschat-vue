@@ -1,18 +1,26 @@
 <template>
   <!-- Login menu -->
-  <div class="absolute top-0 login_background w-screen">
-    <LoginForm @formSubmit="logChange" renderLabels></LoginForm>
+  <div v-if="!loggedIn">
+    <div class="absolute top-0 login_background w-screen">
+      <LoginForm @loggedIn="logChange" renderLabels></LoginForm>
+    </div>
   </div>
 
+  <div v-if="loggedIn"><ChatScreen></ChatScreen></div>
   <!-- Chat select screen -->
-  <!-- <div class="absolute top-0">
-    <ChatSelect />
-  </div> -->
+  <!-- v-if="loggedIn === true" -->
+  <div class="absolute top-0">
+    <!-- <firebaseTest>FIREBASE </firebaseTest> -->
+    <!-- <ChatSelect /> -->
+  </div>
 </template>
 
 <script lang="ts">
 import LoginForm from "./components/LoginForm.vue";
+import firebaseTest from "./components/FirebaseTest.vue";
 import ChatSelect from "./components/ChatSelect.vue";
+import tempSignUp from "./components/SignUpForm.vue";
+import ChatScreen from "./components/ChatScreen.vue";
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   data() {
@@ -21,6 +29,7 @@ export default defineComponent({
   components: {
     LoginForm,
     ChatSelect,
+    firebaseTest,
   },
   methods: {
     logChange(e: boolean) {

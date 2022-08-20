@@ -1,5 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { EmailAuthProvider } from "@firebase/auth";
+import { defineComponent, ref, onMounted } from "vue";
+import { auth, signInWithEmailAndPassword, onAuthStateChanged } from "../main";
 // Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
 export default defineComponent({
   name: "LoginForm", //Sets the component name to LoginForm.
@@ -7,6 +9,7 @@ export default defineComponent({
     //The data() method returns an object that contains the component data.
     return {
       //Variables that are used in the template.
+      formBase: ref(),
       loggedIn: ref(false),
       input_email: "",
       input_password: "",
@@ -16,12 +19,45 @@ export default defineComponent({
     // Methods, ex @click="methodName" or @input="methodName($event, args)" Very similar to addEventListener in TypeScript.
     Submit() {
       this.loggedIn = true;
-      this.$emit("formSubmit", this.loggedIn);
-      console.log("submit form LoginForm.vue");
+      this.$emit("loggedIn", this.loggedIn);
+
+      this.signInAuth(this.input_email, this.input_password);
+
       // Todo: Add login logic (send to firebase)
       // console.log(this.input_email);
       // console.log(this.input_password);
     },
+    signInAuth(email: any, password: any) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          alert("Signed in!");
+
+          // console.log(user);
+        })
+        .catch((error) => {
+          throw new Error(`New Error ${error.message}`);
+        });
+    },
+    checkSignIn() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          alert("Signed In!");
+          const uid = user.uid;
+          this.loggedIn = true;
+          this.$emit("loggedIn", this.loggedIn);
+        } else {
+          alert("Not signed in");
+        }
+      });
+      console.log("Checking sign in");
+    },
+  },
+
+  mounted() {
+    setTimeout(() => {
+      this.checkSignIn();
+    }, 1000);
   },
   props: {
     // Props like {{ prop }} or v-bind="prop"
@@ -35,7 +71,10 @@ export default defineComponent({
 <template>
   <div class="flex flex-col h-screen">
     <div class="grid place-items-center mx-2 my-auto">
-      <div class="px-[3rem] py-[0.8rem] bg-white rounded-lg shadow-lg">
+      <div
+        ref="formBase"
+        class="px-[3rem] py-[0.8rem] bg-white rounded-lg shadow-lg"
+      >
         <h2
           class="text-center font-semibold text-3xl lg:text-4xl text-gray-800"
         >
