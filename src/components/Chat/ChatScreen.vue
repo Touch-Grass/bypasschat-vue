@@ -1,23 +1,87 @@
 <template>
-  <div class="w-screen h-screen bg-gray-400 flex">
-    <div class="fixed left-0 w-20 h-screen bg-gray-800">
-      <div class="flex justify-center items-center"></div>
+  <div class="bg-gray-400 main_wrapper">
+    <div class="bg-gray-800 sidebar_selector"></div>
+    <div class="bg-gray-600 chat_selector"></div>
+    <div class="chat_area">
+      <slot></slot>
     </div>
-    <div class="fixed left-20 bg-gray-600"></div>
-    -
+    <div class="bg-gray-900 message_input_wrapper">
+      <form @submit.prevent="sendMessage" method="post">
+        <input
+          v-model="message_input"
+          required
+          oninvalid="this.setCustomValidity('Please enter a message')"
+          class="text-gray-800"
+          placeholder="Message"
+          type="text"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "ChatScreen",
-  data() {
-    return {};
-  },
-  components: {},
-  methods: {},
-});
+<script lang="ts" setup>
+import { ref } from "vue";
+
+const message_input = ref("");
+
+function sendMessage() {
+  console.log(message_input.value);
+  message_input.value = "";
+}
 </script>
 
-<style lang=""></style>
+<style scoped>
+.main_wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 100px 250px 1fr;
+  /* ^^^ Sidebar, Chat selector, Main Chat pannel  */
+  grid-template-rows: 1fr 90px;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+}
+
+@media (max-width: 640px) {
+  .message_input_wrapper {
+    width: calc(100% - calc(125px + 75px)) !important;
+  }
+  .main_wrapper {
+    grid-template-columns: 75px 125px 1fr;
+    grid-template-rows: 1fr 90px;
+  }
+}
+
+.sidebar_selector,
+.chat_selector {
+  height: 100vh;
+}
+.message_input_wrapper {
+  height: 75px;
+  width: calc(100% - calc(250px + 100px));
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chat_area {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+.message_input_wrapper form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.message_input_wrapper input {
+  width: calc(100% - 70px);
+  height: calc(100% - 40px);
+}
+</style>

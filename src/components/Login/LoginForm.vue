@@ -8,18 +8,24 @@ import {
   onAuthStateChanged,
 } from "../../main";
 // Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
-let loggedIn = false;
+let loggedIn: boolean = false;
 const formBase = ref();
-const input_email = "";
-const input_password = "";
+let input_email: string = "";
+let input_password: string = "";
 
-const emits = defineEmits<{
+interface Emits {
   (e: "loggedIn", loggedIn: boolean): void;
-}>();
+}
 
-const props = defineProps<{
-  renderLabels?: boolean;
-}>();
+interface Props {
+  renderLabels?: {
+    type: Boolean;
+    default: false;
+  };
+}
+
+const emits = defineEmits<Emits>();
+const props = defineProps<Props>();
 
 function signInAuth(email: any, password: any) {
   signInWithEmailAndPassword(auth, email, password)
@@ -55,7 +61,7 @@ onMounted((): void => {
   // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
   setTimeout(() => {
     checkSignIn();
-  }, 10);
+  }, 100);
 });
 </script>
 
