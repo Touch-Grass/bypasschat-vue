@@ -50,7 +50,8 @@
         <button type="submit">Send</button>
       </form>
     </div> -->
-  <Message text="text" time="20:20" sender="hi" image="lol"></Message>
+  <!-- <Message text="text" time="20:20" sender="hi" image="lol"></Message> -->
+  <Message chat_id="asdasdasd" msg_id="difojaosdj"></Message>
 </template>
 
 <script lang="ts" setup>

@@ -1,7 +1,10 @@
 <template>
   <div class="bg-gray-400 main_wrapper">
     <!-- <div class="bg-gray-800 sidebar_selector"></div> -->
-    <div class="bg-gray-600 chat_selector"></div>
+    <ChatList></ChatList>
+    <div class="bg-gray-600 chat_selector">
+      <ChatSelect></ChatSelect>
+    </div>
     <div class="chat_area">
       <ChatScreen></ChatScreen>
     </div>
@@ -11,6 +14,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import ChatScreen from "./ChatScreen.vue";
+import ChatList from "./ChatList.vue";
 
 //Variables
 const message_input = ref("");

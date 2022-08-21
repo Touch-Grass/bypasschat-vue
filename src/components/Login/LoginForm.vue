@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 // import { EmailAuthProvider } from "@firebase/auth";
 import { ref, onMounted } from "vue";
-import {
-  auth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  Booleanish,
-} from "../../main";
+import { auth, Booleanish } from "../../main";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 let loggedIn: boolean = false;
 const formBase = ref();
 let input_email: string = "";

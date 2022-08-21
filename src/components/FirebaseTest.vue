@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="flex justify-center items-center bg-blue-500">
     <div @click="setTest" class="">
       <slot></slot>
@@ -22,4 +22,4 @@ export default defineComponent({
     },
   },
 });
-</script>
+</script> -->

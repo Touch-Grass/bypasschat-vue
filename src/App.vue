@@ -12,17 +12,13 @@
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 import ChatScreen from "./components/Chat/ChatScreen.vue";
-import firebaseTest from "./components/FirebaseTest.vue";
 import ChatSelect from "./components/ChatSelect.vue";
-import tempSignUp from "./components/SignUpForm.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     LoginForm,
     ChatLayout,
-    firebaseTest,
     ChatSelect,
-    tempSignUp,
     ChatScreen,
   },
   data() {

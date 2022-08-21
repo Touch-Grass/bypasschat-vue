@@ -15,21 +15,15 @@ createApp(App).mount("#app");
 // Imports firebase components
 // Todo, import only needed components
 import { FirebaseApp, initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  Auth,
-} from "firebase/auth";
-import {
-  getDatabase,
-  ref,
-  set,
-  push,
-  onValue,
-  Database,
-} from "firebase/database";
+import { getAuth, Auth } from "firebase/auth";
+import { getDatabase, Database } from "firebase/database";
+// signInWithEmailAndPassword,
+// createUserWithEmailAndPassword,
+// onAuthStateChanged,
+//   ref,
+//   set,
+//   push,
+//   onValue,
 
 /* Firebase realtime database link:
 https://console.firebase.google.com/u/2/project/vue-chitchat-cd15a/database/vue-chitchat-cd15a-default-rtdb/data
@@ -54,29 +48,29 @@ const firebaseConfig: {
   appId: "1:372968490071:web:3c3b1b7bce01d2b8670f12",
 };
 // Initialize Firebase
-const app: FirebaseApp = initializeApp(firebaseConfig);
+export const app: FirebaseApp = initializeApp(firebaseConfig);
 // Assigns the realtime database to the variable "database"
-const database: Database = getDatabase(app);
+export const database: Database = getDatabase(app);
 // Assigns the authentication to the variable "auth"
-const auth: Auth = getAuth(app);
+export const auth: Auth = getAuth(app);
 
 // set(ref(database, "Testing"), {
 //     test: "Lets Go!",
 //   });
 
-export {
-  app,
-  database,
-  auth,
-  // Auth
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  // Database
-  getDatabase,
-  ref,
-  set,
-  push,
-  onValue,
-  Database,
-};
+// export {
+//   app,
+//   database,
+//   auth,
+//   // Auth
+//   signInWithEmailAndPassword,
+//   createUserWithEmailAndPassword,
+//   onAuthStateChanged,
+//   // Database
+//   getDatabase,
+//   ref,
+//   set,
+//   push,
+//   onValue,
+//   Database,
+// };

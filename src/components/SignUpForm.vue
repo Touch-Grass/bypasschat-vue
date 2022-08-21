@@ -28,7 +28,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { auth, createUserWithEmailAndPassword } from "../main";
+import { auth } from "../main";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 export default defineComponent({
   data() {
     return {
