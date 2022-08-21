@@ -11,18 +11,19 @@
 <script lang="ts">
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
-import ChatScreen from "./components/Chat/ChatScreen.vue";
-import ChatSelect from "./components/Chat/ChatSelect.vue";
+// import ChatScreen from "./components/Chat/ChatScreen/ChatScreen.vue";
+// import ChatSelect from "./components/Chat/ChatSelect.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     LoginForm,
     ChatLayout,
-    ChatScreen,
-    ChatSelect,
+    // ChatScreen,
+    // ChatSelect,
   },
   data() {
     return {
+      // loggedIn: false,
       loggedIn: false,
     };
   },
@@ -34,3 +35,13 @@ export default defineComponent({
   },
 });
 </script>
+<!-- 
+<script lang="ts">
+import { ref } from "vue";
+export let userData = ref({
+  id: null,
+  email: null,
+  name: null,
+  image: null,
+});
+</script> -->

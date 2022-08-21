@@ -16,4 +16,11 @@
   /* Colors */
   --left-msg-bg: #ececec;
   --right-msg-bg: #579ffb;
+
+  --d-dark-gray: #202225;
+  --d-gray: #2f3136;
+  --d-light-gray: #36393f;
+  --d-tint-gray: #42464d;
+
+  --d-red: #ed4245;
 }

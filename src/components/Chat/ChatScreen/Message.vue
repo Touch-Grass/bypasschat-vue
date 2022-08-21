@@ -14,10 +14,9 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
-import { Stringish } from "../../main";
+import { Stringish } from "../../../main";
 import { getDatabase, ref, onValue } from "firebase/database";
-//import database from app.vue
-import { database } from "../../firebase";
+import { database } from "../../../assets/typescript/firebase";
 
 interface Props {
   chat_id: Stringish;
@@ -61,9 +60,7 @@ function initMessage(
 }
 
 onMounted(() => {
-  //   setTimeout(() => {
-  initMessage();
-  //   }, 10);
+  //  initMessage();
 });
 </script>
 

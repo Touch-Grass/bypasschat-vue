@@ -2,7 +2,8 @@
 // import { EmailAuthProvider } from "@firebase/auth";
 import { ref, onMounted } from "vue";
 import { Booleanish } from "../../main";
-import { auth } from "../../firebase";
+import userData from "../../App.vue";
+import { auth } from "../../assets/typescript/firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 let loggedIn: boolean = false;
 const formBase = ref();
@@ -11,6 +12,7 @@ let input_password: string = "";
 
 interface Emits {
   (e: "loggedIn", loggedIn: boolean): void;
+  (e: "userData", userData: object): void;
 }
 
 interface Props {
@@ -43,6 +45,13 @@ function checkSignIn() {
     if (user) {
       console.log("Signed In!");
       const uid = user.uid;
+      // userData = {
+      //   id: uid,
+      //   name: "Bob",
+      //   email: "bob@gmail.com",
+      //   image: "https://picsum.photos/200/300",
+      // };
+      emits("userData", userData);
       loggedIn = true;
       emits("loggedIn", loggedIn);
     } else {
@@ -52,11 +61,8 @@ function checkSignIn() {
 }
 
 onMounted(() => {
-  // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
-  // setTimeout(() => {
   console.log("Mounted!");
   checkSignIn();
-  // }, 100);
 });
 </script>
 

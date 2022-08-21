@@ -1,9 +1,8 @@
 <template>
   <div class="bg-gray-400 main_wrapper">
     <!-- <div class="bg-gray-800 sidebar_selector"></div> -->
-    <ChatList></ChatList>
     <div class="bg-gray-600 chat_selector">
-      <ChatSelect></ChatSelect>
+      <ChatList></ChatList>
     </div>
     <div class="chat_area">
       <ChatScreen></ChatScreen>
@@ -13,8 +12,8 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import ChatScreen from "./ChatScreen.vue";
-import ChatList from "./ChatList.vue";
+import ChatScreen from "./ChatScreen/ChatScreen.vue";
+import ChatList from "./ChatList/ChatList.vue";
 
 //Variables
 const message_input = ref("");
@@ -32,7 +31,7 @@ function sendMessage() {
   height: 100vh;
   display: grid;
   grid-template-columns: 250px 1fr;
-  /* ^^^ Sidebar, Chat selector, Main Chat pannel  */
+  /* ^^^ Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr 90px;
 }
 

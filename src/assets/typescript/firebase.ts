@@ -1,5 +1,5 @@
 // Imports firebase components
-// Todo, import only needed components
+// Todo: import only needed components
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth, Auth } from "firebase/auth";
 import { getDatabase, Database } from "firebase/database";
