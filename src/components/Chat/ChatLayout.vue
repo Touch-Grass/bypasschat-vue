@@ -1,5 +1,4 @@
 <template>
-  <!-- Hi from my better end with cat L -->
   <div class="bg-gray-400 main_wrapper">
     <!-- <div class="bg-gray-800 sidebar_selector"></div> -->
     <div class="bg-gray-600 chat_selector">
