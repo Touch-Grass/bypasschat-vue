@@ -91,7 +91,8 @@ function sendMessage() {
 }
 
 .message_bubble {
-  max-width: 350px;
+  /* Todo: Try to set this to the width of the grid */
+  max-width: 300px;
   padding: 15px;
   border-radius: 15px;
   background: var(--left-msg-bg);
