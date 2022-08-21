@@ -1,15 +1,15 @@
 <template>
   <!-- Login menu -->
-  <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
+  <!-- <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
     <LoginForm @loggedIn="logChange" :renderLabels="true"></LoginForm>
-  </div>
+  </div> -->
 
   <!-- Chat screen -->
-  <div v-if="loggedIn">
-    <ChatScreen>
-      <ChatMessages></ChatMessages>
-    </ChatScreen>
-  </div>
+  <!-- <div v-if="loggedIn"> -->
+  <ChatScreen>
+    <ChatMessages></ChatMessages>
+  </ChatScreen>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">
