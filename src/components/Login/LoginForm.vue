@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { EmailAuthProvider } from "@firebase/auth";
-import { async } from "@firebase/util";
+// import { EmailAuthProvider } from "@firebase/auth";
 import { ref, onMounted } from "vue";
 import {
   auth,
@@ -8,8 +7,7 @@ import {
   onAuthStateChanged,
   Booleanish,
 } from "../../main";
-// Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
-let loggedIn: Booleanish = false;
+let loggedIn: boolean = false;
 const formBase = ref();
 let input_email: string = "";
 let input_password: string = "";
@@ -43,6 +41,7 @@ function Submit() {
 }
 
 function checkSignIn() {
+  console.log("Checking!");
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("Signed In!");

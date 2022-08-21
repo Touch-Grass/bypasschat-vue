@@ -1,21 +1,17 @@
 <template>
   <!-- Login menu -->
-  <!-- <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
+  <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
     <LoginForm @loggedIn="logChange" :renderLabels="true"></LoginForm>
-  </div> -->
+  </div>
 
   <!-- Chat screen -->
-  <!-- <div v-if="loggedIn"> -->
-  <ChatScreen>
-    <ChatMessages></ChatMessages>
-  </ChatScreen>
-  <!-- </div> -->
+  <ChatLayout v-if="loggedIn"></ChatLayout>
 </template>
 
 <script lang="ts">
 import LoginForm from "./components/Login/LoginForm.vue";
+import ChatLayout from "./components/Chat/ChatLayout.vue";
 import ChatScreen from "./components/Chat/ChatScreen.vue";
-import ChatMessages from "./components/Chat/ChatMessages.vue";
 import firebaseTest from "./components/FirebaseTest.vue";
 import ChatSelect from "./components/ChatSelect.vue";
 import tempSignUp from "./components/SignUpForm.vue";
@@ -23,15 +19,15 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   components: {
     LoginForm,
-    ChatScreen,
+    ChatLayout,
     firebaseTest,
     ChatSelect,
     tempSignUp,
-    ChatMessages,
+    ChatScreen,
   },
   data() {
     return {
-      loggedIn: false,
+      loggedIn: true,
     };
   },
   methods: {

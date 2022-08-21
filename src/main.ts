@@ -3,8 +3,12 @@ import "./assets/css/style.css";
 import "./assets/css/tailwind/tailwind.css";
 import App from "./App.vue";
 
-import { Booleanish, Numberish } from "./assets/css/typescript/types";
-export type { Booleanish, Numberish };
+import {
+  Booleanish,
+  Numberish,
+  Stringish,
+} from "./assets/css/typescript/types";
+export type { Booleanish, Numberish, Stringish };
 
 createApp(App).mount("#app");
 
@@ -27,22 +31,8 @@ import {
   Database,
 } from "firebase/database";
 
-export {
-  // Auth
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  // Database
-  getDatabase,
-  ref,
-  set,
-  push,
-  onValue,
-  Database,
-};
-
 /* Firebase realtime database link:
-    https://console.firebase.google.com/u/2/project/vue-chitchat-cd15a/database/vue-chitchat-cd15a-default-rtdb/data
+https://console.firebase.google.com/u/2/project/vue-chitchat-cd15a/database/vue-chitchat-cd15a-default-rtdb/data
 */
 
 // Firebase config
@@ -64,12 +54,29 @@ const firebaseConfig: {
   appId: "1:372968490071:web:3c3b1b7bce01d2b8670f12",
 };
 // Initialize Firebase
-export const app: FirebaseApp = initializeApp(firebaseConfig);
+const app: FirebaseApp = initializeApp(firebaseConfig);
 // Assigns the realtime database to the variable "database"
-export const database: Database = getDatabase(app);
+const database: Database = getDatabase(app);
 // Assigns the authentication to the variable "auth"
-export const auth: Auth = getAuth(app);
+const auth: Auth = getAuth(app);
 
 // set(ref(database, "Testing"), {
 //     test: "Lets Go!",
 //   });
+
+export {
+  app,
+  database,
+  auth,
+  // Auth
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  // Database
+  getDatabase,
+  ref,
+  set,
+  push,
+  onValue,
+  Database,
+};

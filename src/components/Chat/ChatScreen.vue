@@ -1,11 +1,43 @@
 <template>
-  <div class="bg-gray-400 main_wrapper">
-    <div class="bg-gray-800 sidebar_selector"></div>
-    <div class="bg-gray-600 chat_selector"></div>
-    <div class="chat_area">
-      <slot></slot>
+  <!-- <div class="bg-red-600 messages_wrapper">
+    <div class="bg-green-500 message_left_side">
+      <div class="message left_message">
+        <div class="message_bubble">
+          <div class="message_info">
+            <div class="message_info_name">wtfjs.com</div>
+            <div class="message_info_time">12:69</div>
+          </div>
+          <div class="message_text">Cubby</div>
+        </div>
+      </div>
+
+       <div class="message left_message">
+        <div class="message_bubble">
+          <div class="message_info">
+            <div class="message_info_name">loljs</div>
+            <div class="message_info_time">69:00</div>
+          </div>
+          <div class="message-text">index.html.js</div>
+        </div>
+      </div> -->
+  <!-- </div>
+    <div class="bg-red-500"></div>
+    <div class="bg-blue-800 message_right_side">
+      <div class="message right_message">
+        <div class="message_bubble">
+          <div class="message_info">
+            <div class="message_info_name">
+              fdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfd
+            </div>
+            <div class="message_info_time">69:00</div>
+          </div>
+          <div class="message-text">index.html.js</div>
+        </div>
+      </div>
     </div>
-    <div class="bg-gray-900 message_input_wrapper">
+  </div> -->
+
+  <!-- <div class="bg-gray-900 message_input_wrapper">
       <form @submit.prevent="sendMessage" method="post">
         <input
           v-model="message_input"
@@ -17,12 +49,13 @@
         />
         <button type="submit">Send</button>
       </form>
-    </div>
-  </div>
+    </div> -->
+  <Message text="text" time="20:20" sender="hi" image="lol"></Message>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import Message from "./Message.vue";
 
 const message_input = ref("");
 
@@ -31,55 +64,3 @@ function sendMessage() {
   message_input.value = "";
 }
 </script>
-
-<style scoped>
-.main_wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 100px 250px 1fr;
-  /* ^^^ Sidebar, Chat selector, Main Chat pannel  */
-  grid-template-rows: 1fr 90px;
-}
-
-@media (max-width: 640px) {
-  .message_input_wrapper {
-    width: calc(100% - calc(125px + 75px)) !important;
-  }
-  .main_wrapper {
-    grid-template-columns: 75px 125px 1fr;
-    grid-template-rows: 1fr 90px;
-  }
-}
-
-.sidebar_selector,
-.chat_selector {
-  height: 100vh;
-}
-.message_input_wrapper {
-  height: 75px;
-  width: calc(100% - calc(250px + 100px));
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.chat_area {
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-}
-.message_input_wrapper form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-.message_input_wrapper input {
-  width: calc(100% - 70px);
-  height: calc(100% - 40px);
-}
-</style>
