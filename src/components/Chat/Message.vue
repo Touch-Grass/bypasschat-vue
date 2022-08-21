@@ -14,8 +14,10 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
-import { Stringish, database } from "../../main";
+import { Stringish } from "../../main";
 import { getDatabase, ref, onValue } from "firebase/database";
+//import database from app.vue
+import { database } from "../../firebase";
 
 interface Props {
   chat_id: Stringish;
@@ -36,11 +38,11 @@ function initMessage(
   chat_id: Stringish = props.chat_id,
 ) {
   const messageRef = ref(database, `Chats/${chat_id}/Messages/${msg_id}`); //Gets the ref or the specific message based of chat id and message id
-  console.log(messageRef);
+  //   console.log(messageRef);
   onValue(messageRef, (snapshot) => {
     //On value event listener for the message ref, will update if message is edited at all
     const data = snapshot.val();
-    console.log(data);
+    // console.log(data);
     if (data) {
       message.text = data.text;
       message.time = data.time;
@@ -60,7 +62,7 @@ function initMessage(
 
 onMounted(() => {
   //   setTimeout(() => {
-  //   initMessage();
+  initMessage();
   //   }, 10);
 });
 </script>

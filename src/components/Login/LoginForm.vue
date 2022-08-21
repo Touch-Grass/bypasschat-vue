@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 // import { EmailAuthProvider } from "@firebase/auth";
 import { ref, onMounted } from "vue";
-import { auth, Booleanish } from "../../main";
+import { Booleanish } from "../../main";
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 let loggedIn: boolean = false;
 const formBase = ref();
@@ -50,11 +51,12 @@ function checkSignIn() {
   });
 }
 
-onMounted((): void => {
+onMounted(() => {
   // Todo: Fix this code. Maybe async await is needed. https://vuejs.org/guide/built-ins/suspense.html#async-setup
-  setTimeout(() => {
-    checkSignIn();
-  }, 100);
+  // setTimeout(() => {
+  console.log("Mounted!");
+  checkSignIn();
+  // }, 100);
 });
 </script>
 

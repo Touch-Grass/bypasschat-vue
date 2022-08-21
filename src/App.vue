@@ -12,18 +12,18 @@
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 import ChatScreen from "./components/Chat/ChatScreen.vue";
-import ChatSelect from "./components/ChatSelect.vue";
+import ChatSelect from "./components/Chat/ChatSelect.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     LoginForm,
     ChatLayout,
-    ChatSelect,
     ChatScreen,
+    ChatSelect,
   },
   data() {
     return {
-      loggedIn: true,
+      loggedIn: false,
     };
   },
   methods: {

@@ -6,7 +6,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import { Stringish, database } from "../../main";
+import { Stringish } from "../../main";
+import { database } from "../../firebase";
 import { ref, onValue } from "firebase/database";
 
 interface Props {
