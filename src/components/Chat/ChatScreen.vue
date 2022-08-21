@@ -40,8 +40,6 @@ function sendMessage() {
   grid-template-columns: 100px 250px 1fr;
   /* ^^^ Sidebar, Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr 90px;
-  grid-column-gap: 0;
-  grid-row-gap: 0;
 }
 
 @media (max-width: 640px) {

@@ -12,4 +12,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /* Colors */
+  --left-msg-bg: #ececec;
+  --right-msg-bg: #579ffb;
 }

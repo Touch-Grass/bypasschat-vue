@@ -6,9 +6,10 @@ import {
   auth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  Booleanish,
 } from "../../main";
 // Exports the component definition as a Vue component named LoginForm. This is very common and you don't need to fully understand it right now.
-let loggedIn: boolean = false;
+let loggedIn: Booleanish = false;
 const formBase = ref();
 let input_email: string = "";
 let input_password: string = "";
@@ -18,10 +19,7 @@ interface Emits {
 }
 
 interface Props {
-  renderLabels?: {
-    type: Boolean;
-    default: false;
-  };
+  renderLabels?: boolean;
 }
 
 const emits = defineEmits<Emits>();
