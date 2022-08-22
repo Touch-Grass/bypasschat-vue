@@ -1,8 +1,35 @@
+<script lang="ts">
+export function useUserID(user: any | null) {
+  // state encapsulated and managed by the composable
+  let userData = {
+    id: ref(user.uid),
+    name: ref("Bob"),
+    email: ref("bob@gmail.com"),
+    image: ref("https://picsum.photos/200/300"),
+  };
+
+  // a composable can update its managed state over time.
+  function updateUserInfo() {
+    userData.id.value = user?.uid;
+    userData.name.value = user?.displayName;
+    userData.email.value = user?.email;
+    userData.image.value = user?.photoURL;
+  }
+
+  // a composable can also hook into its owner component's
+  // lifecycle to setup and teardown side effects.
+  onMounted(() => window.addEventListener("mousemove", updateUserInfo));
+  onUnmounted(() => window.removeEventListener("mousemove", updateUserInfo));
+
+  // expose managed state as return value
+  return { userData };
+}
+</script>
+
 <script lang="ts" setup>
 // import { EmailAuthProvider } from "@firebase/auth";
-import { ref, onMounted } from "vue";
-import { Booleanish } from "../../main";
-import userData from "../../App.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+// import userData from "../../App.vue";
 import { auth } from "../../assets/typescript/firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 let loggedIn: boolean = false;
@@ -12,7 +39,7 @@ let input_password: string = "";
 
 interface Emits {
   (e: "loggedIn", loggedIn: boolean): void;
-  (e: "userData", userData: object): void;
+  // (e: "userData", userData: object): void;
 }
 
 interface Props {
@@ -45,13 +72,7 @@ function checkSignIn() {
     if (user) {
       console.log("Signed In!");
       const uid = user.uid;
-      // userData = {
-      //   id: uid,
-      //   name: "Bob",
-      //   email: "bob@gmail.com",
-      //   image: "https://picsum.photos/200/300",
-      // };
-      emits("userData", userData);
+      // emits("userData", userData);
       loggedIn = true;
       emits("loggedIn", loggedIn);
     } else {
@@ -61,7 +82,6 @@ function checkSignIn() {
 }
 
 onMounted(() => {
-  console.log("Mounted!");
   checkSignIn();
 });
 </script>
