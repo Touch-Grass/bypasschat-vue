@@ -15,15 +15,51 @@ import { ref } from "vue";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 
-//Variables
 const message_input = ref("");
 
-//Functions
 function sendMessage() {
   console.log(message_input.value);
   message_input.value = "";
 }
 </script>
+
+<style>
+.message_input_wrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 80px;
+  width: calc(100% - 250px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.message_input_wrapper form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.message_input_wrapper input {
+  width: calc(100% - 60px);
+  height: calc(100% - 40px);
+}
+@media (max-width: 640px) {
+  .message_input_wrapper {
+    width: calc(100% - 155px) !important;
+  }
+  .profile_name {
+    font-size: 1rem;
+    margin-left: 5px;
+  }
+  .profile_image {
+    width: 40px;
+    height: 40px;
+    margin-left: 3px;
+  }
+}
+</style>
 
 <style scoped>
 .main_wrapper {
@@ -49,30 +85,9 @@ function sendMessage() {
 .chat_selector {
   height: 100vh;
 }
-.message_input_wrapper {
-  height: 75px;
-  width: calc(100% - 250px);
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .chat_area {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-}
-.message_input_wrapper form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-.message_input_wrapper input {
-  width: calc(100% - 70px);
-  height: calc(100% - 40px);
 }
 </style>
