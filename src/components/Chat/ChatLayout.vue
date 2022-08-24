@@ -1,22 +1,97 @@
 <template>
-  <div class="bg-gray-400 main_wrapper">
+  <div class="main_wrapper">
     <!-- <div class="bg-gray-800 sidebar_selector"></div> -->
-    <div class="bg-gray-600 chat_selector">
-      <ChatList></ChatList>
+    <div v-if="props.userData.id === null" class="not_logged_in">
+      <h1>Error, you are not logged in!</h1>
+      <p>
+        Click <a href="#" @click="reloadLocation">here</a> to try to reload the
+        page
+      </p>
     </div>
-    <div class="chat_area">
-      <ChatScreen></ChatScreen>
+
+    <div v-if="props.userData.id !== null" class="chat_selector">
+      <ChatList :userData="props.userData" :chats="chats"></ChatList>
+    </div>
+    <div v-if="props.userData.id !== null" class="bg-gray-800 chat_area">
+      <ChatScreen :chats="chats"></ChatScreen>
+      <!-- {{ props.userData }} -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { database } from "../../assets/typescript/firebase";
+import {
+  ref as fbref,
+  onChildAdded,
+  push,
+  set,
+  DatabaseReference,
+} from "firebase/database";
+import { useUserData } from "../Composables/composables";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 
-const message_input = ref("");
+interface Props {
+  userData: any;
+}
 
+const props = defineProps<Props>();
+
+const chats: string[] = [];
+
+// const userData = JSON.parse(JSON.stringify(props.userData)).userData;
+// const userData = useUserData(props.userData);
+// watch(
+//   props.userData,
+//   (newVal: object) => {
+//     console.log("Something changed");
+//     // if (newVal) {
+//     //   console.log("Something changed");
+//     //   // console.log("Watched and found userData update!");
+//     //   // console.log(newVal);
+//     //   // console.log(JSON.parse(JSON.stringify(newVal)).userData.name);
+//     // }
+//   },
+//   { immediate: true },
+// );
+
+// console.log(userData);
+
+function reloadLocation() {
+  location.reload();
+}
+
+getChats();
+
+function getChats() {
+  //Commented stuff below just adds chat to user, pls dont uncomment
+  // let newChatPush = push(fbref(database, `Users/${props.userData.id}/Chats`));
+  // set(newChatPush, {
+  //   id: "-NACSuF0Udj7dUHacsGW",
+  // });
+  const userChatsRef: DatabaseReference = fbref(
+    database,
+    `Users/${props.userData.id}/Chats`,
+  );
+  onChildAdded(userChatsRef, (data) => {
+    // console.log(data.val().id);
+    chats.push(data.val().id);
+  });
+}
+
+// const userData = props.userData;
+
+// const userData = ref(JSON.parse(JSON.stringify(props.userData)).userData);
+
+//DO NOTE DELETE (FOR NOW)
+// onMounted(() => {
+//   console.log("Mounted");
+//   console.log(props.userData);
+// });
+
+const message_input = ref("");
 function sendMessage() {
   console.log(message_input.value);
   message_input.value = "";
@@ -24,27 +99,6 @@ function sendMessage() {
 </script>
 
 <style>
-.message_input_wrapper {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  height: 80px;
-  width: calc(100% - 250px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.message_input_wrapper form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-.message_input_wrapper input {
-  width: calc(100% - 60px);
-  height: calc(100% - 40px);
-}
 @media (max-width: 640px) {
   .message_input_wrapper {
     width: calc(100% - 155px) !important;
@@ -63,12 +117,22 @@ function sendMessage() {
 
 <style scoped>
 .main_wrapper {
+  background-color: var(--d-gray);
   width: 100vw;
   height: 100vh;
   display: grid;
   grid-template-columns: 250px 1fr;
   /* ^^^ Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr 90px;
+}
+
+.not_logged_in {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 640px) {

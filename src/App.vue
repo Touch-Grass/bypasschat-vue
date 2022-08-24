@@ -1,14 +1,19 @@
 <template>
   <!-- Login menu -->
-  <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
-    <LoginForm @loggedIn="logChange" :renderLabels="true"></LoginForm>
+  <div v-show="!loggedIn" class="absolute top-0 login_background w-screen">
+    <LoginForm
+      @loggedIn="logChange"
+      @userData="setUserData"
+      :renderLabels="true"
+    ></LoginForm>
   </div>
 
   <!-- Chat screen -->
-  <ChatLayout v-if="loggedIn"></ChatLayout>
+  <ChatLayout v-if="loggedIn" :userData="useUserData(userData)"></ChatLayout>
 </template>
-
+<!-- 
 <script lang="ts">
+import { useUserData } from "./components/Composables/composables";
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 // import ChatScreen from "./components/Chat/ChatScreen/ChatScreen.vue";
@@ -23,8 +28,14 @@ export default defineComponent({
   },
   data() {
     return {
-      // loggedIn: false,
-      loggedIn: true,
+      loggedIn: false,
+      // loggedIn: true,
+      userData: {
+        id: null,
+        name: null,
+        email: null,
+        image: null,
+      },
     };
   },
   methods: {
@@ -32,16 +43,44 @@ export default defineComponent({
       this.loggedIn = e;
       console.log(this.loggedIn);
     },
+    setUserData(e: any) {
+      console.log("Setting user data!");
+      this.userData = e;
+      console.log(this.userData);
+    },
   },
 });
-</script>
-<!--
-<script lang="ts">
-import { ref } from "vue";
-export let userData = ref({
+</script> -->
+
+<script lang="ts" setup>
+import { ref, defineComponent } from "vue";
+import { useUserData } from "./components/Composables/composables";
+import LoginForm from "./components/Login/LoginForm.vue";
+import ChatLayout from "./components/Chat/ChatLayout.vue";
+
+// interface Components {
+//   LoginForm: any;
+//   ChatLayout: any;
+// }
+// const components = defineComponent<Components>();
+
+// let loggedIn = ref(false);
+let loggedIn = ref(true);
+
+let userData = ref({
   id: null,
-  email: null,
   name: null,
+  email: null,
   image: null,
 });
-</script> -->
+
+function logChange(e: boolean) {
+  console.log(`Logged in status set to ${e}`);
+  loggedIn.value = e;
+}
+function setUserData(e: any) {
+  console.log("Setting user data!");
+  userData.value = e;
+  console.log(userData);
+}
+</script>

@@ -15,7 +15,13 @@
 import { onMounted } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
 import { Stringish } from "../../../main";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  DatabaseReference,
+  Database,
+} from "firebase/database";
 import { database } from "../../../assets/typescript/firebase";
 
 interface Props {
@@ -36,12 +42,14 @@ function initMessage(
   msg_id: Stringish = props.msg_id,
   chat_id: Stringish = props.chat_id,
 ) {
-  const messageRef = ref(database, `Chats/${chat_id}/Messages/${msg_id}`); //Gets the ref or the specific message based of chat id and message id
+  const messageRef: DatabaseReference = ref(
+    database,
+    `Chats/${chat_id}/Messages/${msg_id}`,
+  ); //Gets the ref or the specific message based of chat id and message id
   //   console.log(messageRef);
   onValue(messageRef, (snapshot) => {
-    //On value event listener for the message ref, will update if message is edited at all
-    const data = snapshot.val();
-    // console.log(data);
+    //On value event liddstener for the message ref, will update if message is edited at all
+    const data: any = snapshot.val();
     if (data) {
       message.text = data.text;
       message.time = data.time;

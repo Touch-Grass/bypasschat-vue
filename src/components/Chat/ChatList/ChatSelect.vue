@@ -16,7 +16,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-function initChatSelect(chat_id = props.chat_id) {
+function initChatSelect(chat_id = props.chat_id): void {
   console.log(`The chat is: ${chat_id}!`);
   // const chatRef = ref(database, `chats/${chat_id}`);
 }

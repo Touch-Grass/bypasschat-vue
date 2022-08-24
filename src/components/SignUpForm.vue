@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { auth } from "../../src/assets/firebase";
+import { auth } from "../assets/typescript/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 export default defineComponent({
   data() {
