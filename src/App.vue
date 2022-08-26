@@ -11,7 +11,7 @@
   <!-- Chat screen -->
   <ChatLayout v-if="loggedIn" :userData="useUserData(userData)"></ChatLayout>
 </template>
-<!-- 
+<!--
 <script lang="ts">
 import { useUserData } from "./components/Composables/composables";
 import LoginForm from "./components/Login/LoginForm.vue";
@@ -53,21 +53,19 @@ export default defineComponent({
 </script> -->
 
 <script lang="ts" setup>
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, Ref } from "vue";
 import { useUserData } from "./components/Composables/composables";
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
-
 // interface Components {
 //   LoginForm: any;
 //   ChatLayout: any;
 // }
 // const components = defineComponent<Components>();
 
-// let loggedIn = ref(false);
-let loggedIn = ref(true);
+const loggedIn = ref(false);
 
-let userData = ref({
+const userData = ref({
   id: null,
   name: null,
   email: null,

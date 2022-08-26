@@ -36,10 +36,13 @@ import {
 } from "firebase/auth";
 import { ref as fbref, onValue } from "firebase/database";
 import { mainModule } from "process";
+import { sign } from "crypto";
 let loggedIn: boolean = false;
+const signInError = ref(false);
 const formBase: Ref<HTMLDivElement | undefined> = ref();
 const input_email = ref("");
 const input_password = ref("");
+const disabled = ref(false);
 
 interface Emits {
   (e: "loggedIn", loggedIn: boolean): void;
@@ -66,6 +69,12 @@ function signInAuth(email: any, password: any) {
       // alert("Signed in!");
     })
     .catch((error) => {
+      signInError.value = true;
+      disabled.value = true;
+      setTimeout(() => {
+        signInError.value = false;
+        disabled.value = true;
+      }, 3000);
       throw new Error(`New Error ${error.message}`);
     });
 }
@@ -82,7 +91,16 @@ function checkSignIn(): void {
       console.log("User signed in!");
       const uid = user.uid;
       onValue(fbref(database, `/Users/${uid}`), (data) => {
-        if (!data) throw new Error("No account data");
+        if (!data) {
+          signInError.value = true;
+          disabled.value = true;
+          setTimeout(() => {
+            signInError.value = false;
+            disabled.value = true;
+          }, 3000);
+          console.log(signInError);
+          throw new Error("No account data");
+        }
         let userData = {
           id: data.val().id,
           name: data.val().name,
@@ -93,17 +111,9 @@ function checkSignIn(): void {
         loggedIn = true;
         emits("loggedIn", loggedIn);
       });
-
-      // let userData = {
-      //   id: uid,
-      //   name: "Bob",
-      //   email: "bob@gmail.com",
-      //   image: "https://picsum.photos/200/300",
-      // };
-      // emits("userData", userData);
     } else {
       console.log("User signed out!");
-      loggedIn = true;
+      loggedIn = false;
       emits("loggedIn", loggedIn);
     }
   });
@@ -130,12 +140,18 @@ onMounted(() => {
     <div class="grid place-items-center mx-2 my-auto">
       <div
         ref="formBase"
-        class="px-[3rem] py-[0.8rem] bg-white rounded-lg shadow-lg"
+        class="px-[3rem] py-[0.8rem] bg-white shadow-2xl rounded-lg"
       >
         <h2
           class="text-center font-semibold text-3xl lg:text-4xl text-gray-800"
         >
           <slot>Login</slot>
+          <h5
+            v-show="signInError"
+            class="error_signing_in text-red-800 text-base block mt-2 font-extrabold"
+          >
+            Error Signing In!
+          </h5>
         </h2>
         <form @submit.prevent="Submit">
           <label
@@ -170,6 +186,7 @@ onMounted(() => {
           />
 
           <button
+            :class="{ fadeIn: disabled }"
             type="submit"
             class="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none"
           >
@@ -180,3 +197,33 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.fadeIn {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+</style>

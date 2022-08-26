@@ -1,6 +1,5 @@
 <template>
-  <div class="main_wrapper">
-    <!-- <div class="bg-gray-800 sidebar_selector"></div> -->
+  <div @click="dismissSettings($event)" class="main_wrapper">
     <div v-if="props.userData.id === null" class="not_logged_in">
       <h1>Error, you are not logged in!</h1>
       <p>
@@ -10,12 +9,23 @@
     </div>
 
     <div v-if="props.userData.id !== null" class="chat_selector">
-      <ChatList :userData="props.userData" :chats="chats"></ChatList>
+      <ChatList
+        :userData="props.userData"
+        :chats="chats"
+        @selectedChat="changeChat"
+        @toggleSettings="toggleSettings"
+      ></ChatList>
     </div>
-    <div v-if="props.userData.id !== null" class="bg-gray-800 chat_area">
-      <ChatScreen :chats="chats"></ChatScreen>
+
+    <div v-if="props.userData.id !== null" class="bg-pink-800 chat_area">
+      <ChatScreen
+        :chats="chats"
+        :selected_chat="selected_chat"
+        :userData="props.userData"
+      ></ChatScreen>
       <!-- {{ props.userData }} -->
     </div>
+    <SettingsMenu v-show="settings_open" />
   </div>
 </template>
 
@@ -32,6 +42,7 @@ import {
 import { useUserData } from "../Composables/composables";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
+import SettingsMenu from "./Settings/SettingsMenu.vue";
 
 interface Props {
   userData: any;
@@ -40,27 +51,20 @@ interface Props {
 const props = defineProps<Props>();
 
 const chats: string[] = [];
+const settings_open = ref(false);
+const selected_chat = ref("");
 
-// const userData = JSON.parse(JSON.stringify(props.userData)).userData;
-// const userData = useUserData(props.userData);
-// watch(
-//   props.userData,
-//   (newVal: object) => {
-//     console.log("Something changed");
-//     // if (newVal) {
-//     //   console.log("Something changed");
-//     //   // console.log("Watched and found userData update!");
-//     //   // console.log(newVal);
-//     //   // console.log(JSON.parse(JSON.stringify(newVal)).userData.name);
-//     // }
-//   },
-//   { immediate: true },
-// );
-
-// console.log(userData);
+function changeChat(id: any) {
+  selected_chat.value = id;
+}
 
 function reloadLocation() {
   location.reload();
+}
+
+function dismissSettings(e: Event) {
+  if (e.target === document.querySelector(".settings_icon")) return;
+  settings_open.value = false;
 }
 
 getChats();
@@ -79,6 +83,11 @@ function getChats() {
     // console.log(data.val().id);
     chats.push(data.val().id);
   });
+}
+
+function toggleSettings() {
+  settings_open.value = !settings_open.value;
+  console.log(`Toggled settings ${settings_open.value}`);
 }
 
 // const userData = props.userData;
@@ -112,6 +121,10 @@ function sendMessage() {
     height: 40px;
     margin-left: 3px;
   }
+}
+
+.main_wrapper {
+  overflow-x: hidden;
 }
 </style>
 
@@ -152,6 +165,6 @@ function sendMessage() {
 .chat_area {
   height: 100%;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

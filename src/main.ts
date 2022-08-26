@@ -6,6 +6,7 @@ import {
   Numberish,
   Stringish,
 } from "./assets/css/typescript/types";
+
 export type { Booleanish, Numberish, Stringish };
 
 import App from "./App.vue";

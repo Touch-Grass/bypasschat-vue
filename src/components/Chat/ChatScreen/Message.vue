@@ -1,84 +1,97 @@
 <template>
-  <div class="message">
-    <img :src="message.image" class="msg-img" />
+  <div class="message" :class="message.side.value">
+    <img :src="message.image.value" class="msg-img" />
     <div class="msg-bubble">
       <div class="msg-info">
-        <div class="msg-info-name">{{ message.name }}</div>
-        <div class="msg-info-time">{{ message.time }}</div>
+        <div class="msg-info-name">{{ message.name.value }}</div>
+        <div class="msg-info-time">{{ message.time.value }}</div>
       </div>
-      <div class="msg-text">{{ message.text }}</div>
+      <div class="msg-text">{{ message.text.value }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { ref } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
 import { Stringish } from "../../../main";
 import {
   getDatabase,
-  ref,
+  ref as fbref,
   onValue,
   DatabaseReference,
   Database,
+  DataSnapshot,
 } from "firebase/database";
 import { database } from "../../../assets/typescript/firebase";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(relativeTime);
+dayjs.extend(customParseFormat);
 
 interface Props {
-  chat_id: Stringish;
-  msg_id: Stringish;
+  chat_id: any;
+  msg_id: any;
+  user_id: any;
 }
 const props = defineProps<Props>();
 
 const message = {
-  text: "",
-  time: "",
-  name: "",
-  image: "",
-  sender: "",
+  text: ref(""),
+  time: ref(""),
+  name: ref(""),
+  image: ref(""),
+  sender: ref(""),
+  side: ref(""),
 };
+
+initMessage();
 
 function initMessage(
   msg_id: Stringish = props.msg_id,
   chat_id: Stringish = props.chat_id,
 ) {
-  const messageRef: DatabaseReference = ref(
+  const messageRef: DatabaseReference = fbref(
     database,
     `Chats/${chat_id}/Messages/${msg_id}`,
   ); //Gets the ref or the specific message based of chat id and message id
   //   console.log(messageRef);
   onValue(messageRef, (snapshot) => {
     //On value event liddstener for the message ref, will update if message is edited at all
-    const data: any = snapshot.val();
+    const data = snapshot.val();
     if (data) {
-      message.text = data.text;
-      message.time = data.time;
-      message.sender = data.sender;
-      const userRef = ref(database, `Users/${data.sender}`);
+      message.text.value = data.text;
+      message.time.value = formatDate(data.time);
+      message.sender.value = data.sender;
+      message.side.value =
+        props.user_id === message.sender.value
+          ? "right-message"
+          : "left-message";
+      const userRef = fbref(database, `Users/${data.sender}`);
       onValue(userRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
+        const data: any = snapshot.val();
         if (data) {
-          message.name = data.name;
-          message.image = data.image;
+          message.name.value = data.name;
+          message.image.value = data.image;
         }
       });
     }
   });
 }
 
-onMounted(() => {
-  //  initMessage();
-});
+function formatDate(date: string) {
+  const localTime = dayjs.utc(date, "YYYY-MM-DD/hh:mm:ss/a");
+  let formattedTime = localTime.fromNow();
+  return formattedTime;
+}
 </script>
 
 <style scoped>
-:root {
-  --msger-bg: #fff;
-  --left-msg-bg: #ececec;
-  --right-msg-bg: #579ffb;
-}
-
 *,
 *:before,
 *:after {
@@ -89,8 +102,12 @@ onMounted(() => {
 
 .msg-text {
   text-align: start;
+  color: black;
 }
 
+.msg-info-time {
+  color: darkslategray;
+}
 .main-chat {
   /*   The area of the chat where the messenges are */
   flex: 1;
@@ -106,7 +123,7 @@ onMounted(() => {
 }
 
 .message:last-of-type {
-  margin: 0;
+  margin-bottom: 60px;
 }
 
 .msg-img {

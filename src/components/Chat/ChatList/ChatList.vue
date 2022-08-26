@@ -9,16 +9,17 @@
       <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
       <div class="reverse">
         <img
-          v-if="props.userData.id !== null"
+          v-show="props.userData.id !== null"
           class="mr-1 settings_icon"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAB/ElEQVRYhe2XO0sDQRSFv5jCIlj7iiAEFEQbbVXsI9hY2qfUQmNno+nyH+zzB7RRSEoVxVqxC8Qqxig+mrXIWXaS7E5210QRvDDM7JlzHzNz57HwL39UaoDTUWo/5Tzt49wtk1GNDcUIYEn1CZBQOe3oG2gAK6pvDOxa9WoMe74yDVwBB8CMsAWggjfdmwZ/08DL4iLdA9majhJAifa1vQXe1L4DtoGUwU8JuxPnTTqmjVJY52tSaADHQF3fn8Au9mUbEudTOnXZaOh7rZfzpBF5XtgwsAEshx2BuBvSRbbcmUzaFHN4o01beOvAGfACNNXOWvhpvFnJ2QKYBR7w1jrjwzki+Bw49OFn8HLjQT6sMgpcSOERbxdAa+QO8E5rrcdV9oQ5tM/EjGw4sjnay7krKaAqxTkDPxe266PjrvOZgc0Jq9K+a0LJk5RHDKwpbMyHP6a+ZwMbEfYU5CTqSeioTvj0JTs4QbxQAaSAV7WnDPxS9ZaPjotdGZi7k16JsAS2JMziJWEemFDZBz7oTsIMEZMwzDY8ZIDbMOxBlKWV7U36fBD9+lEM9stoj96XUZ5vXEau2K7je2CH7ut4R33fvo4h+EFSNgzaHiTzwmM/SGxSlKOCgRWEFaMai/MmrKheNDD3MVqOYS+yTBJ8Dkz8RADwyz8m/9JX+QLRONJ+SbNmWgAAAABJRU5ErkJggg=="
+          @click="toggleSettings"
         />
       </div>
       <button @click="addChat" class="bg-blue-500">+</button>
     </div>
     <div class="block mt-1 h-line"></div>
     <ul v-for="id in props.chats">
-      <ChatSelect :chat_id="id"></ChatSelect>
+      <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
     </ul>
     <div class="h-[100%] w-[100%] flex items-end justify-start">
       <button class="bg-blue-800 button_loggout" @click="logout">Logout</button>
@@ -41,7 +42,43 @@ interface Props {
   chats: string[];
 }
 
+interface Emits {
+  (e: "selectedChat", id: any): void;
+  (e: "toggleSettings"): void;
+}
+
+const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
+
+chatInfo.push("231");
+
+function addChat(): void {
+  let newChatPush: ThenableReference = push(fbref(database, "/Chats"));
+  set(newChatPush, {
+    name: "New Chat",
+  });
+
+  let userChatPush: ThenableReference = push(
+    fbref(database, `/Users/${props.userData.id}/Chats`),
+  );
+  set(userChatPush, {
+    id: newChatPush.key,
+  });
+}
+
+function changeChat(id: any) {
+  console.log(`Changed the chat to ${id}`);
+  emits("selectedChat", id);
+}
+
+function toggleSettings() {
+  emits("toggleSettings");
+}
+
+function logout(): void {
+  auth.signOut();
+  location.reload();
+}
 
 // // let userData: any = useUserData(props.userData);
 // let userData = props.userData;
@@ -71,20 +108,6 @@ const props = defineProps<Props>();
 // console.group("userData");
 // console.log(userData);
 // console.groupEnd();
-
-chatInfo.push("231");
-
-function addChat(): void {
-  let newChatPush: ThenableReference = push(fbref(database, "/Chats"));
-  set(newChatPush, {
-    name: "New Chat",
-  });
-}
-
-function logout(): void {
-  auth.signOut();
-  location.reload();
-}
 </script>
 
 <style>

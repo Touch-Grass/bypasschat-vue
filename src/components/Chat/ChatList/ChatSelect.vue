@@ -1,29 +1,37 @@
 <template>
-  <div class="chat_wrapper">
+  <div class="chat_wrapper" @click="selectedChat">
     <p>{{ chat_id }}</p>
     <img src="chat_imgs" alt="" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { ref } from "vue";
 import { Stringish } from "../../../main";
 import { database } from "../../../assets/typescript/firebase";
-import { ref, onValue } from "firebase/database";
+import { ref as fbref, onValue } from "firebase/database";
+
+interface Emits {
+  (e: "selectedChat", id: any): void;
+}
+
+const emits = defineEmits<Emits>();
 
 interface Props {
   chat_id: string;
 }
 const props = defineProps<Props>();
 
+initChatSelect();
+
 function initChatSelect(chat_id = props.chat_id): void {
   console.log(`The chat is: ${chat_id}!`);
   // const chatRef = ref(database, `chats/${chat_id}`);
 }
 
-onMounted(() => {
-  initChatSelect();
-});
+function selectedChat() {
+  emits("selectedChat", props.chat_id);
+}
 </script>
 
 <style scoped>
