@@ -22,9 +22,8 @@ interface Props {
 const props = defineProps<Props>();
 </script>
 
-<style>
+<!-- <style>
 .message_input_wrapper {
-  position: fixed;
   bottom: 0;
   right: 0;
   height: 60px;
@@ -71,4 +70,4 @@ const props = defineProps<Props>();
 .button_submit img {
   display: flex;
 }
-</style>
+</style> -->

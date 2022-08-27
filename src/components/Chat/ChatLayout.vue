@@ -23,14 +23,13 @@
         :selected_chat="selected_chat"
         :userData="props.userData"
       ></ChatScreen>
-      <!-- {{ props.userData }} -->
     </div>
     <SettingsMenu v-show="settings_open" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, onMounted } from "vue";
+import { ref } from "vue";
 import { database } from "../../assets/typescript/firebase";
 import {
   ref as fbref,
@@ -38,6 +37,7 @@ import {
   push,
   set,
   DatabaseReference,
+  DataSnapshot,
 } from "firebase/database";
 import { useUserData } from "../Composables/composables";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
@@ -45,6 +45,7 @@ import ChatList from "./ChatList/ChatList.vue";
 import SettingsMenu from "./Settings/SettingsMenu.vue";
 
 interface Props {
+  // todo: fix this lol.
   userData: any;
 }
 
@@ -54,7 +55,7 @@ const chats: string[] = [];
 const settings_open = ref(false);
 const selected_chat = ref("");
 
-function changeChat(id: any) {
+function changeChat(id: string) {
   selected_chat.value = id;
 }
 
@@ -79,7 +80,7 @@ function getChats() {
     database,
     `Users/${props.userData.id}/Chats`,
   );
-  onChildAdded(userChatsRef, (data) => {
+  onChildAdded(userChatsRef, (data: DataSnapshot) => {
     // console.log(data.val().id);
     chats.push(data.val().id);
   });
@@ -108,6 +109,32 @@ function sendMessage() {
 </script>
 
 <style>
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.main_wrapper {
+  background-color: var(--d-gray);
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  /* ^^^ Chat selector, Main Chat pannel  */
+  grid-template-rows: 1fr;
+}
+.message_input_wrapper {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  transform: translateX(-10px);
+  /* ^^^ Recenter after giving rest of chat padding */
+}
+</style>
+
+<!-- <style>
 @media (max-width: 640px) {
   .message_input_wrapper {
     width: calc(100% - 155px) !important;
@@ -123,22 +150,9 @@ function sendMessage() {
   }
 }
 
-.main_wrapper {
-  overflow-x: hidden;
-}
-</style>
+</style> -->
 
-<style scoped>
-.main_wrapper {
-  background-color: var(--d-gray);
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  /* ^^^ Chat selector, Main Chat pannel  */
-  grid-template-rows: 1fr 90px;
-}
-
+<!-- <style>
 .not_logged_in {
   display: flex;
   width: 100vw;
@@ -161,10 +175,12 @@ function sendMessage() {
 .sidebar_selector,
 .chat_selector {
   height: 100vh;
+  max-height: 100vh;
 }
+
 .chat_area {
   height: 100%;
   width: 100%;
   overflow-y: auto;
 }
-</style>
+</style> -->

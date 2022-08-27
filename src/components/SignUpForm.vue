@@ -29,7 +29,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { auth } from "../assets/typescript/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  User,
+  UserCredential,
+} from "firebase/auth";
+import { Stringish } from "../main";
 export default defineComponent({
   data() {
     return {
@@ -39,18 +44,17 @@ export default defineComponent({
     };
   },
   methods: {
-    signInAuth(email: any, password: any) {
+    signInAuth(email: string, password: string) {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential: any) => {
-          const user = userCredential.user;
+        .then((userCredential: UserCredential) => {
+          const user: User = userCredential.user;
           alert("Signed up!");
           console.log(user);
         })
-        .catch((error: any) => {
+        .catch((error: Error) => {
           throw new Error(`New Error ${error.message}`);
         });
     },
   },
-  components: {},
 });
 </script>

@@ -1,8 +1,16 @@
 <template>
   <div class="chat_wrapper bg-gray-800">
-    <div class="chat_head">{{ props.chat_id }}</div>
+    <div class="chat_head">
+      <p>
+        {{ props.chat_id }}
+      </p>
+    </div>
 
-    <div class="message_wrapper" v-for="id in messages">
+    <div
+      class="chat_messages_wrapper"
+      ref="chat_messages_wrapper"
+      v-for="id in messages"
+    >
       <Message
         :chat_id="props.chat_id"
         :msg_id="id"
@@ -16,7 +24,7 @@
           v-model="message_input"
           required
           oninvalid="this.setCustomValidity('Please enter a message')"
-          class="text-gray-800"
+          class="message_input_box"
           placeholder="Message"
           type="text"
         />
@@ -41,11 +49,7 @@ import {
   onValue,
   onChildAdded,
 } from "firebase/database";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { getTime } from "../../../assets/typescript/time";
 
 interface Props {
   user_id: string;
@@ -53,10 +57,10 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const messages: Ref<any[]> = ref([]);
 
 const message_input = ref("");
-
-const messages: Ref<any[]> = ref([]);
+const chat_messages_wrapper = ref();
 
 onMounted(() => {
   loadMessages();
@@ -66,8 +70,16 @@ function loadMessages() {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
   onChildAdded(messagesRef, (data) => {
     messages.value.push(data.key);
-    document.querySelector(".message_wrapper")?.scrollTo(0, 999999999999999);
-    // console.log(message_wrapper.value);
+
+    // chat_messages_wrapper.value.scrollTop += 500;
+    setTimeout(() => {
+      // console.log(chat_messages_wrapper.value);
+      // chat_messages_wrapper.value.display = "none";
+    }, 500);
+    // chat_messages_wrapper.value.style.display = "none";
+
+    // document.querySelector(".chat_messages_wrapper")?.scrollTo(0, 999999999999999);
+    // console.log(chat_messages_wrapper.value);
   });
 }
 
@@ -90,15 +102,44 @@ function getMessage() {
     time: getTime(),
   };
 }
-
-function getTime() {
-  /* To pick timezone: https://github.com/omsrivastava/timezones-list/blob/master/dist/timezones.json */
-  const currentDate = dayjs().utc().format("YYYY-MM-DD/hh:mm:ss/a"); //Gets the time from day js in format YYYY-MM-DD/hh:mm:ss/a, ex: 2021-09-01/09:16:45/pm
-  return currentDate;
-}
 </script>
 
 <style scoped>
+.message_input_wrapper form {
+  height: 100%;
+  width: calc(100% - 250px);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.message_input_box {
+  color: white;
+  font-weight: 600;
+  background-color: var(--d-gray);
+  width: calc(100% - 10px);
+  height: 50px;
+}
+
+.button_submit {
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  bottom: 0;
+
+  aspect-ratio: 1/1;
+  padding: 3px 3px 3px 1px;
+  transform: translate(-270px, -12px);
+}
+</style>
+
+<style>
+.chat_wrapper {
+  padding: 10px;
+}
+</style>
+
+<!-- <style scoped>
 .chat_wrapper {
   width: 100%;
   height: 100%;
@@ -110,12 +151,18 @@ function getTime() {
   }
 }
 
+</style> -->
+<style>
 .chat_head {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: calc(100% - 250px);
+  transform: translateX(-10px);
   height: 30px;
-  background-color: rgba(0, 0, 255, 0.5);
+  background-color: rgba(47, 49, 54, 0.5);
   backdrop-filter: blur(15px);
+}
+.chat_head p {
+  text-align: center;
 }
 </style>

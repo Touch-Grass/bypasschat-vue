@@ -1,7 +1,7 @@
 <template>
-  <div class="chat_wrapper" @click="selectedChat">
+  <div class="chat_list_wrapper" @click="selectedChat">
     <p>{{ chat_id }}</p>
-    <img src="chat_imgs" alt="" />
+    <img src="chat_imgs" alt="chat image" />
   </div>
 </template>
 
@@ -12,36 +12,40 @@ import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue } from "firebase/database";
 
 interface Emits {
-  (e: "selectedChat", id: any): void;
+  (e: "selectedChat", id: string): void;
 }
-
-const emits = defineEmits<Emits>();
 
 interface Props {
   chat_id: string;
 }
+
+const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 initChatSelect();
 
-function initChatSelect(chat_id = props.chat_id): void {
+/**
+ * @param {string} chat_id The ID of the chat to select
+ */
+function initChatSelect(chat_id: Stringish = props.chat_id): void {
   console.log(`The chat is: ${chat_id}!`);
   // const chatRef = ref(database, `chats/${chat_id}`);
 }
 
+// Returns what ever chat is selected (return is an emit to other modules)
 function selectedChat() {
   emits("selectedChat", props.chat_id);
 }
 </script>
 
-<style scoped>
-.chat_wrapper {
+<style>
+.chat_list_wrapper {
   width: calc(100% - 20px);
   padding: 5px;
   height: 100%;
-  border-radius: 5px;
   cursor: pointer;
   display: flex;
+
   /* Starts the flex to align */
   flex-direction: column;
   justify-content: center;
@@ -51,13 +55,12 @@ function selectedChat() {
   background-color: var(--d-gray);
 }
 
-.chat_wrapper:hover {
+.chat_list_wrapper:hover {
   background-color: var(--d-light-gray);
 }
 
-.chat_wrapper p {
+.chat_list_wrapper p {
   text-align: start;
   padding-left: 5px;
 }
 </style>
-2

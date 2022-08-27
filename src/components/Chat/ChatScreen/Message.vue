@@ -24,15 +24,7 @@ import {
   DataSnapshot,
 } from "firebase/database";
 import { database } from "../../../assets/typescript/firebase";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import relativeTime from "dayjs/plugin/relativeTime";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.extend(relativeTime);
-dayjs.extend(customParseFormat);
+import { formatTime } from "../../../assets/typescript/time";
 
 interface Props {
   chat_id: any;
@@ -43,6 +35,7 @@ const props = defineProps<Props>();
 
 const message = {
   text: ref(""),
+  date: ref(""),
   time: ref(""),
   name: ref(""),
   image: ref(""),
@@ -66,13 +59,14 @@ function initMessage(
     const data = snapshot.val();
     if (data) {
       message.text.value = data.text;
-      message.time.value = formatDate(data.time);
+      message.date.value = data.time;
       message.sender.value = data.sender;
+      updateTime();
       message.side.value =
         props.user_id === message.sender.value
           ? "right-message"
           : "left-message";
-      const userRef = fbref(database, `Users/${data.sender}`);
+      const userRef = fbref(database, `Users/${data.sender}`); //Ref to the user who sent the message
       onValue(userRef, (snapshot) => {
         const data: any = snapshot.val();
         if (data) {
@@ -82,24 +76,20 @@ function initMessage(
       });
     }
   });
+  //Updates the time every minute.
+  setInterval(() => {
+    updateTime();
+  }, 60000);
 }
 
-function formatDate(date: string) {
-  const localTime = dayjs.utc(date, "YYYY-MM-DD/hh:mm:ss/a");
-  let formattedTime = localTime.fromNow();
-  return formattedTime;
+function updateTime() {
+  if (message.date.value) {
+    message.time.value = formatTime(message.date.value);
+  }
 }
 </script>
 
-<style scoped>
-*,
-*:before,
-*:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+<style>
 .msg-text {
   text-align: start;
   color: black;
@@ -120,10 +110,6 @@ function formatDate(date: string) {
   display: flex;
   align-items: flex-end;
   margin-bottom: 10px;
-}
-
-.message:last-of-type {
-  margin-bottom: 60px;
 }
 
 .msg-img {

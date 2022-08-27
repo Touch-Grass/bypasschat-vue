@@ -10,6 +10,7 @@
       <div class="reverse">
         <img
           v-show="props.userData.id !== null"
+          ref="settings_icon"
           class="mr-1 settings_icon"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAB/ElEQVRYhe2XO0sDQRSFv5jCIlj7iiAEFEQbbVXsI9hY2qfUQmNno+nyH+zzB7RRSEoVxVqxC8Qqxig+mrXIWXaS7E5210QRvDDM7JlzHzNz57HwL39UaoDTUWo/5Tzt49wtk1GNDcUIYEn1CZBQOe3oG2gAK6pvDOxa9WoMe74yDVwBB8CMsAWggjfdmwZ/08DL4iLdA9majhJAifa1vQXe1L4DtoGUwU8JuxPnTTqmjVJY52tSaADHQF3fn8Au9mUbEudTOnXZaOh7rZfzpBF5XtgwsAEshx2BuBvSRbbcmUzaFHN4o01beOvAGfACNNXOWvhpvFnJ2QKYBR7w1jrjwzki+Bw49OFn8HLjQT6sMgpcSOERbxdAa+QO8E5rrcdV9oQ5tM/EjGw4sjnay7krKaAqxTkDPxe266PjrvOZgc0Jq9K+a0LJk5RHDKwpbMyHP6a+ZwMbEfYU5CTqSeioTvj0JTs4QbxQAaSAV7WnDPxS9ZaPjotdGZi7k16JsAS2JMziJWEemFDZBz7oTsIMEZMwzDY8ZIDbMOxBlKWV7U36fBD9+lEM9stoj96XUZ5vXEau2K7je2CH7ut4R33fvo4h+EFSNgzaHiTzwmM/SGxSlKOCgRWEFaMai/MmrKheNDD3MVqOYS+yTBJ8Dkz8RADwyz8m/9JX+QLRONJ+SbNmWgAAAABJRU5ErkJggg=="
           @click="toggleSettings"
@@ -21,7 +22,7 @@
     <ul v-for="id in props.chats">
       <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
     </ul>
-    <div class="h-[100%] w-[100%] flex items-end justify-start">
+    <div class="justify-start">
       <button class="bg-blue-800 button_loggout" @click="logout">Logout</button>
     </div>
   </div>
@@ -33,6 +34,7 @@ import ChatSelect from "./ChatSelect.vue";
 import { useUserData } from "../../Composables/composables";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
+import { Stringish } from "../../../assets/typescript/types";
 const chatInfo: any[] = ["123", "132"];
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
@@ -43,12 +45,13 @@ interface Props {
 }
 
 interface Emits {
-  (e: "selectedChat", id: any): void;
+  (e: "selectedChat", id: string): void;
   (e: "toggleSettings"): void;
 }
 
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
+const settings_icon = ref();
 
 chatInfo.push("231");
 
@@ -69,6 +72,8 @@ function addChat(): void {
 function changeChat(id: any) {
   console.log(`Changed the chat to ${id}`);
   emits("selectedChat", id);
+
+  settings_icon.value.style.display = "none";
 }
 
 function toggleSettings() {
@@ -111,6 +116,16 @@ function logout(): void {
 </script>
 
 <style>
+.chat_selector {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+</style>
+<style></style>
+
+<style>
 .profile_image {
   width: 50px;
   height: 50px;
@@ -119,10 +134,10 @@ function logout(): void {
   margin-left: 0.65rem;
   border: 1px solid white;
 }
-</style>
-<style scoped>
 .list_wrapper {
   width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .list_wrapper {
   width: 100%;
