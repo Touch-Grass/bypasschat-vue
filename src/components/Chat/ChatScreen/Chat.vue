@@ -20,7 +20,6 @@
 
     <div class="bg-gray-900 message_input_wrapper">
       <form @submit.prevent="sendMessage" method="post">
-      
         <input
           v-model="message_input"
           required
@@ -152,7 +151,8 @@ function getMessage() {
 }
 </style> -->
 
-<style scoped> /* Fixed Version */
+<style scoped>
+/* Fixed Version */
 .message_input_wrapper {
   background-color: transparent;
   height: 80px;
