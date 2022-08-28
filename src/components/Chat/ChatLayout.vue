@@ -42,7 +42,7 @@ import {
 import { useUserData } from "../Composables/composables";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
-import SettingsMenu from "./Settings/SettingsMenu.vue";
+import SettingsMenu from "./Menus/SettingsMenu.vue";
 
 interface Props {
   // todo: fix this lol.
@@ -123,14 +123,6 @@ function sendMessage() {
   grid-template-columns: 250px 1fr;
   /* ^^^ Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr;
-}
-.message_input_wrapper {
-  width: 100%;
-  height: 60px;
-  position: fixed;
-  bottom: 0;
-  transform: translateX(-10px);
-  /* ^^^ Recenter after giving rest of chat padding */
 }
 </style>
 
