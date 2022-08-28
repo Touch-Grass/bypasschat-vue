@@ -20,6 +20,7 @@
 
     <div class="bg-gray-900 message_input_wrapper">
       <form @submit.prevent="sendMessage" method="post">
+      
         <input
           v-model="message_input"
           required
@@ -109,28 +110,33 @@ function getMessage() {
 }
 </script>
 
-<style scoped>
+<!-- <style scoped> /* Advanced Version */
 .message_input_wrapper {
-  width: 100%;
+  width: calc(100% - 10px);
   height: 60px;
   position: fixed;
   bottom: 0;
+  background-color: var(--d-dark-gray);
   /* ^^^ Recenter after giving rest of chat padding */
 }
 .message_input_wrapper form {
   height: 100%;
   /* width: calc(100% - 250px); */
+  width: 200px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: green;
 }
 .message_input_box {
   color: white;
   /* font-weight: 600; */
   background-color: var(--d-gray);
-  width: calc(100% - 10px);
+  width: calc(100%);
   height: 50px;
+  margin-left: 5px;
+  /* transform: translateX(5px); */
   padding-left: 5px;
 }
 
@@ -144,6 +150,60 @@ function getMessage() {
   padding: 3px 3px 3px 1px;
   transform: translate(-270px, -12px);
 }
+</style> -->
+
+<style scoped> /* Fixed Version */
+.message_input_wrapper {
+  background-color: transparent;
+  height: 80px;
+
+  /* Positioning wrapper at bottom right */
+  position: fixed;
+  bottom: 0;
+  left: 250px;
+  width: calc(100% - 250px);
+}
+
+.message_input_wrapper form {
+  /* Styling the forms appearance */
+  background-color: var(--d-gray);
+  border-radius: 15px;
+
+  margin: 10px;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+
+  /* Grid to hold the inner input and buttons */
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 1fr;
+}
+
+.message_input_box {
+  background-color: transparent;
+  width: 100%;
+
+  padding-left: 10px;
+}
+
+.message_input_box:focus {
+  outline: none;
+}
+
+.button_submit {
+  padding-left: 12px;
+  border: none;
+  outline: none;
+  transition: 200ms;
+}
+
+.button_submit:active {
+  transform: scale(0.5);
+}
+
+/* .chat_messages_wrapper {
+  
+} */
 </style>
 
 <style>
