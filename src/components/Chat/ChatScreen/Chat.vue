@@ -166,7 +166,7 @@ function getMessage() {
 
 .message_input_wrapper form {
   /* Styling the forms appearance */
-  background-color: var(--d-gray);
+  background-color: var(--d-light-gray);
   border-radius: 15px;
 
   margin: 10px;
