@@ -109,13 +109,6 @@ function sendMessage() {
 </script>
 
 <style>
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  box-sizing: border-box;
-}
-
 .main_wrapper {
   background-color: var(--d-gray);
   width: 100vw;

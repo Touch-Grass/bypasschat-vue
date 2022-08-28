@@ -166,8 +166,8 @@ function getMessage() {
   top: 0;
   width: calc(100% - 250px);
   height: 30px;
-  background-color: rgba(47, 49, 54, 0.5);
-  backdrop-filter: blur(15px);
+  background-color: rgba(47, 49, 54, 0.9);
+  backdrop-filter: blur(10px);
 }
 .chat_head p {
   text-align: center;

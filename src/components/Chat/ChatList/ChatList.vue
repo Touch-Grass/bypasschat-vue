@@ -71,7 +71,7 @@ function addChat(): void {
   });
 }
 
-function changeChat(id: any) {
+function changeChat(id: string) {
   console.log(`Changed the chat to ${id}`);
   emits("selectedChat", id);
 }
@@ -114,7 +114,6 @@ function logout(): void {
 // console.log(userData);
 // console.groupEnd();
 </script>
-
 <style>
 .chat_selector {
   position: sticky;
@@ -123,6 +122,7 @@ function logout(): void {
   box-sizing: border-box;
 }
 </style>
+<style></style>
 
 <style>
 .profile_image {

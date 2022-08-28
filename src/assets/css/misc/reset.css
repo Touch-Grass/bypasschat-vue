@@ -39,6 +39,10 @@ button:focus-visible {
   padding: 2em;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 #app {
   width: 100vmax;
   margin: 0 auto;
@@ -77,18 +81,13 @@ html:focus-within {
   scroll-behavior: smooth;
 }
 
-#app {
-  overflow-x: hidden;
-}
-
 /* Set core body defaults */
 body {
   min-height: 100vh;
+  min-width: 320px;
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
