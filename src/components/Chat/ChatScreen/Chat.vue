@@ -105,9 +105,16 @@ function getMessage() {
 </script>
 
 <style scoped>
+.message_input_wrapper {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  /* ^^^ Recenter after giving rest of chat padding */
+}
 .message_input_wrapper form {
   height: 100%;
-  width: calc(100% - 250px);
+  /* width: calc(100% - 250px); */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -115,10 +122,11 @@ function getMessage() {
 }
 .message_input_box {
   color: white;
-  font-weight: 600;
+  /* font-weight: 600; */
   background-color: var(--d-gray);
   width: calc(100% - 10px);
   height: 50px;
+  padding-left: 5px;
 }
 
 .button_submit {
@@ -134,9 +142,9 @@ function getMessage() {
 </style>
 
 <style>
-.chat_wrapper {
+/* .chat_wrapper {
   padding: 10px;
-}
+} */
 </style>
 
 <!-- <style scoped>
@@ -157,7 +165,6 @@ function getMessage() {
   position: fixed;
   top: 0;
   width: calc(100% - 250px);
-  transform: translateX(-10px);
   height: 30px;
   background-color: rgba(47, 49, 54, 0.5);
   backdrop-filter: blur(15px);

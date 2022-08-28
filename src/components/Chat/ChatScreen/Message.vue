@@ -88,7 +88,6 @@ function updateTime() {
   }
 }
 </script>
-
 <style>
 .msg-text {
   text-align: start;

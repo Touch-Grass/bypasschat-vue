@@ -24,5 +24,7 @@
   --d-tint-gray: #42464d;
 
   --d-red: #ed4245;
+  --d-blue: #5865f2;
+  --d-blue-clicked: #4752c4;
   --font: "JetBrains Mono", monospace;
 }

@@ -1,12 +1,14 @@
 <template>
   <div class="list_wrapper">
     <div class="upper_wrapper">
-      <img
-        :src="props.userData.image ?? defaultImage"
-        alt="Profile Image"
-        class="profile_image"
-      />
-      <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
+      <div class="user_wrapper">
+        <img
+          :src="props.userData.image ?? defaultImage"
+          alt="Profile Image"
+          class="profile_image"
+        />
+        <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
+      </div>
       <div class="reverse">
         <img
           v-show="props.userData.id !== null"
@@ -22,8 +24,8 @@
     <ul v-for="id in props.chats">
       <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
     </ul>
-    <div class="justify-start">
-      <button class="bg-blue-800 button_loggout" @click="logout">Logout</button>
+    <div class="button_logout_wrapper">
+      <button class="bg-blue-800 button_logout" @click="logout">Logout</button>
     </div>
   </div>
 </template>
@@ -72,8 +74,6 @@ function addChat(): void {
 function changeChat(id: any) {
   console.log(`Changed the chat to ${id}`);
   emits("selectedChat", id);
-
-  settings_icon.value.style.display = "none";
 }
 
 function toggleSettings() {
@@ -123,7 +123,6 @@ function logout(): void {
   box-sizing: border-box;
 }
 </style>
-<style></style>
 
 <style>
 .profile_image {

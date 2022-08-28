@@ -1,5 +1,5 @@
 <template>
-  <div v-for="id in props.chats">
+  <div class="chat_conta" v-for="id in props.chats">
     <Chat
       :chat_id="id"
       v-show="props.selected_chat === id"
@@ -21,6 +21,13 @@ interface Props {
 
 const props = defineProps<Props>();
 </script>
+
+<style>
+/* .chat_container {
+  width: 100%;
+  height: 100%;
+} */
+</style>
 
 <!-- <style>
 .message_input_wrapper {
