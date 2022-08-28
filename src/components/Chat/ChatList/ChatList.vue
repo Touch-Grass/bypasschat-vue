@@ -133,6 +133,20 @@ function logout(): void {
   margin-left: 0.65rem;
   border: 1px solid white;
 }
+
+.user_wrapper {
+  display: flex;
+  align-items: center;
+  flex: 0 0 max-content;
+  padding-right: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+.user_wrapper:hover {
+  background-color: var(--d-light-gray);
+}
+
 .list_wrapper {
   width: 100%;
   height: 100%;

@@ -1,6 +1,6 @@
 <template>
-  <div class="chat_wrapper bg-gray-800">
-    <div class="chat_head">
+  <div class="chat_wrapper">
+    <div class="chat_head shadow-lg">
       <p>
         {{ props.chat_id }}
       </p>
@@ -50,17 +50,27 @@ import {
   onChildAdded,
 } from "firebase/database";
 import { getTime } from "../../../assets/typescript/time";
+import { Stringish } from "../../../main";
 
 interface Props {
-  user_id: string;
   chat_id: any;
+  user_id: string;
 }
-
 const props = defineProps<Props>();
-const messages: Ref<any[]> = ref([]);
 
+/**
+ * Array of all messages in chat, each item is an id of a message as a string,
+ * ex: "-J1iKLLAVBB29B2"
+ */
+const messages: Ref<string[]> = ref([]);
+const chat_users: Ref<string[]> = ref([]);
 const message_input = ref("");
 const chat_messages_wrapper = ref();
+
+const chat = {
+  name: ref(""),
+  type: ref(""),
+};
 
 onMounted(() => {
   loadMessages();
@@ -69,14 +79,9 @@ onMounted(() => {
 function loadMessages() {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
   onChildAdded(messagesRef, (data) => {
-    messages.value.push(data.key);
-
-    // chat_messages_wrapper.value.scrollTop += 500;
-    setTimeout(() => {
-      // console.log(chat_messages_wrapper.value);
-      // chat_messages_wrapper.value.display = "none";
-    }, 500);
-    // chat_messages_wrapper.value.style.display = "none";
+    if (data.key) {
+      messages.value.push(data.key);
+    }
 
     // document.querySelector(".chat_messages_wrapper")?.scrollTo(0, 999999999999999);
     // console.log(chat_messages_wrapper.value);
@@ -145,6 +150,12 @@ function getMessage() {
 /* .chat_wrapper {
   padding: 10px;
 } */
+</style>
+
+<style scoped>
+.chat_wrapper {
+  background-color: var(--d-gray);
+}
 </style>
 
 <!-- <style scoped>
