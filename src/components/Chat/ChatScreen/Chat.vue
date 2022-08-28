@@ -175,7 +175,8 @@ function getMessage() {
 
   /* Grid to hold the inner input and buttons */
   display: grid;
-  grid-template-columns: 1fr 60px;
+  /* Grid, picure it as input button padding, to add another button just add another 50px to the list below, ex: 1fr (input) 50px (button1) 50px (button2) 10px (padding)*/
+  grid-template-columns: 1fr 50px 10px;
   grid-template-rows: 1fr;
 }
 
