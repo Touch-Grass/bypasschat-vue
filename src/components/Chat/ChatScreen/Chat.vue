@@ -117,48 +117,6 @@ function sendMessage(): void {
 }
 </script>
 
-<!-- <style scoped> /* Advanced Version */
-.message_input_wrapper {
-  width: calc(100% - 10px);
-  height: 60px;
-  position: fixed;
-  bottom: 0;
-  background-color: var(--d-dark-gray);
-  /* ^^^ Recenter after giving rest of chat padding */
-}
-.message_input_wrapper form {
-  height: 100%;
-  /* width: calc(100% - 250px); */
-  width: 200px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: green;
-}
-.message_input_box {
-  color: white;
-  /* font-weight: 600; */
-  background-color: var(--d-gray);
-  width: calc(100%);
-  height: 50px;
-  margin-left: 5px;
-  /* transform: translateX(5px); */
-  padding-left: 5px;
-}
-
-.button_submit {
-  position: absolute;
-  z-index: 100;
-  right: 0;
-  bottom: 0;
-
-  aspect-ratio: 1/1;
-  padding: 3px 3px 3px 1px;
-  transform: translate(-270px, -12px);
-}
-</style> -->
-
 <style>
 .chat_head {
   position: fixed;
@@ -266,3 +224,4 @@ function sendMessage(): void {
   padding: 5px;
 }
 </style>
+
