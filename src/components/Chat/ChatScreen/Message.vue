@@ -125,13 +125,13 @@ function updateTime(): void {
 }
 
 .chat_messages_wrapper:last-of-type {
-  margin: 200px;
+  /* margin: 200px; */
 }
 .message {
   /*   Each message has this class */
   display: flex;
   align-items: flex-end;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .msg-img {

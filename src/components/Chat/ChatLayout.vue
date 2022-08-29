@@ -116,6 +116,8 @@ function sendMessage(): void {
   grid-template-columns: 250px 1fr;
   /* ^^^ Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr;
+
+  overflow: hidden;
 }
 </style>
 

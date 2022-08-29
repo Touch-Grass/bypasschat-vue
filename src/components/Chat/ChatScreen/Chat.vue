@@ -6,21 +6,21 @@
       </p>
     </div>
 
-    <div
-      class="chat_messages_wrapper"
-      ref="chat_messages_wrapper"
-      v-for="id in messages"
-    >
-      <Message
-        :chat_id="props.chat_id"
-        :msg_id="id"
-        :user_id="props.user_id"
-      ></Message>
+    <div class="chat_messages_area">
+      <ul class="chat_messages_wrapper" ref="chat_messages_wrapper">
+        <li v-for="id in messages">
+          <Message
+            :chat_id="props.chat_id"
+            :msg_id="id"
+            :user_id="props.user_id"
+          ></Message>
+        </li>
+      </ul>
     </div>
 
     <div class="bg-gray-900 message_input_wrapper">
       <form @submit.prevent="sendMessage" method="post">
-        <div>
+        <div class="message_input_container">
           <input
             v-model="message_input"
             required
@@ -30,7 +30,7 @@
             type="text"
           />
         </div>
-        <div>
+        <div class="message_button_container">
           <button class="button_submit" type="submit">
             <img
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkklEQVRIie3VvWsUQRgH4CeJ4BGipLGTFBZ+YJtaQtoYjCD+ARFSxsrGKgSElLFPoyBY2OVIa0CFBLFUuKRKqqBFTGwOP+4sZhc2w+3u3XoXguQHb3Pv3Dy7s7OznOc/yAim8Bx7eDdIrIa7WMM3tDO1129sFLN4iaMIy9ZqP7AreIQ6mjlQK+pNVcUmsIB1/MzB0vqBVwneFpb9Qi/YNTzG+8wkZbWLB04u+1o32G0s4XOXULY2kpX5Ev0+U4ZuVsDS57ksLGc96h0Lu70wHyqgR5hL/r/cof+6DJVc2Yse0B3h0cA9nffBw27gNAvKd24d48n4G/jeYUwTl3uB4Q4OOkzWwgqGk3GX5G/E9V7RNFexnZnoGPcz/SG8yUHbmK8Kw0XhPWzgVtRbKkB/CyfcPyd+JWbxpwDe7Aca5zoOC9A2FvuN1pSfai3hBMvNcFEzJ01slYz5hP0Kc5emho/y7/jpINA0E/iaA98cJAzT+BWhjUGjaZ5E8LPTgoeEL1AKT54WDGPCJ/VtciHnOTv5C+oR7Pjc+gqDAAAAAElFTkSuQmCC"
@@ -177,6 +177,27 @@ function sendMessage(): void {
 </style>
 
 <style scoped>
+.chat_messages_area {
+  background-color: red;
+  position: absolute;
+  top: 30px;
+  width: calc(100% - 250px);
+  height: calc(100% - 90px);
+  overflow: hidden;
+}
+
+.chat_messages_wrapper {
+  height: 100%;
+  overflow-y: scroll; 
+}
+
+.chat_messages_wrapper > li {
+  list-style: none;
+  height: 100px;
+}
+</style>
+
+<style scoped>
 /* Fixed Version */
 .message_input_wrapper {
   background-color: transparent;
@@ -200,14 +221,27 @@ function sendMessage(): void {
 
   /* Grid to hold the inner input and buttons */
   display: grid;
-  /* Grid, picure it as input button padding, to add another button just add another 50px to the list below, ex: 1fr (input) 50px (button1) 50px (button2) 10px (padding)*/
-  grid-template-columns: 1fr 50px 10px;
+  /* Grid, picure it as input button padding, to add another button just add another 50px to the list below, ex: 1fr (input) 50px (button1) 50px (button2) 5px (padding)*/
+  grid-template-columns: 1fr 50px 5px;
   grid-template-rows: 1fr;
+}
+
+.message_input_container,
+.message_button_container {
+  width: 100%;
+  height: 60px;
+}
+.message_input_container {
+}
+
+.message_button_container {
+  padding: 15px 5px;
 }
 
 .message_input_box {
   background-color: transparent;
   width: 100%;
+  height: 100%;
 
   padding-left: 10px;
 }
@@ -217,7 +251,8 @@ function sendMessage(): void {
 }
 
 .button_submit {
-  padding-left: 12px;
+  width: 30px;
+  height: 30px;
   border: none;
   outline: none;
   transition: 200ms;
