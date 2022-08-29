@@ -31,12 +31,11 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref } from "vue";
+import { ref } from "vue";
 import ChatSelect from "./ChatSelect.vue";
 import { useUserData } from "../../Composables/composables";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
-import { Stringish } from "../../../assets/typescript/types";
 const chatInfo: any[] = ["123", "132"];
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
@@ -121,10 +120,7 @@ function logout(): void {
   height: 100vh;
   box-sizing: border-box;
 }
-</style>
-<style></style>
 
-<style>
 .profile_image {
   width: 50px;
   height: 50px;

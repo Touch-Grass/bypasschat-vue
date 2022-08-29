@@ -9,8 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import Message from "./Message.vue";
 import Chat from "./Chat.vue";
 
 interface Props {
@@ -21,13 +19,6 @@ interface Props {
 
 const props = defineProps<Props>();
 </script>
-
-<style>
-/* .chat_container {
-  width: 100%;
-  height: 100%;
-} */
-</style>
 
 <!-- <style>
 .message_input_wrapper {

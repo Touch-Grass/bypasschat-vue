@@ -15,16 +15,16 @@
   -webkit-text-size-adjust: 100%;
 
   /* Colors */
-  --left-msg-bg: #ececec;
-  --right-msg-bg: #579ffb;
+  --left-msg-bg: rgb(232, 232, 232);
+  --right-msg-bg: rgb(71, 152, 245);
 
-  --d-dark-gray: #202225;
-  --d-gray: #2f3136;
-  --d-light-gray: #36393f;
-  --d-tint-gray: #42464d;
+  --d-dark-gray: rgb(32, 34, 37);
+  --d-gray: rgb(47, 49, 54);
+  --d-light-gray: rgb(54, 57, 63);
+  --d-tint-gray: rgb(66, 70, 77);
 
-  --d-red: #ed4245;
-  --d-blue: #5865f2;
-  --d-blue-clicked: #4752c4;
+  --d-red: rgb(237, 66, 69);
+  --d-blue: rgb(88, 101, 242);
+  --d-blue-clicked: rgb(71, 82, 196);
   --font: "JetBrains Mono", monospace;
 }

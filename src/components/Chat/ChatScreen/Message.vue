@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
 import { Stringish } from "../../../main";
 import {
@@ -27,13 +27,23 @@ import { database } from "../../../assets/typescript/firebase";
 import { formatTime } from "../../../assets/typescript/time";
 
 interface Props {
-  chat_id: any;
-  msg_id: any;
-  user_id: any;
+  chat_id: string;
+  msg_id: string;
+  user_id: string;
 }
 const props = defineProps<Props>();
 
-const message = {
+type MessageData = {
+  text: Ref<string>;
+  date: Ref<string>;
+  time: Ref<string>;
+  name: Ref<string>;
+  image: Ref<string>;
+  sender: Ref<string>;
+  side: Ref<string>;
+};
+
+const message: MessageData = {
   text: ref(""),
   date: ref(""),
   time: ref(""),
@@ -46,15 +56,15 @@ const message = {
 initMessage();
 
 function initMessage(
-  msg_id: Stringish = props.msg_id,
-  chat_id: Stringish = props.chat_id,
-) {
+  msg_id: string = props.msg_id,
+  chat_id: string = props.chat_id,
+): void {
   const messageRef: DatabaseReference = fbref(
     database,
     `Chats/${chat_id}/Messages/${msg_id}`,
   ); //Gets the ref or the specific message based of chat id and message id
   //   console.log(messageRef);
-  onValue(messageRef, (snapshot) => {
+  onValue(messageRef, (snapshot: DataSnapshot) => {
     //On value event liddstener for the message ref, will update if message is edited at all
     const data = snapshot.val();
     if (data) {
@@ -62,13 +72,18 @@ function initMessage(
       message.date.value = data.time;
       message.sender.value = data.sender;
       updateTime();
+      // Sets the side that the message will be on.
       message.side.value =
         props.user_id === message.sender.value
           ? "right-message"
           : "left-message";
-      const userRef = fbref(database, `Users/${data.sender}`); //Ref to the user who sent the message
+      const userRef: DatabaseReference = fbref(
+        database,
+        `Users/${data.sender}`,
+      ); //Ref to the user who sent the message
+      // Listens for changes in the database and will run here.
       onValue(userRef, (snapshot) => {
-        const data: any = snapshot.val();
+        const data = snapshot.val();
         if (data) {
           message.name.value = data.name;
           message.image.value = data.image;
@@ -77,21 +92,26 @@ function initMessage(
     }
   });
   //Updates the time every minute.
-  setInterval(() => {
-    updateTime();
-  }, 60000);
+  setInterval(() => updateTime(), 60000);
 }
 
-function updateTime() {
+function updateTime(): void {
   if (message.date.value) {
     message.time.value = formatTime(message.date.value);
   }
 }
 </script>
-<style>
+
+<style scoped>
 .msg-text {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   text-align: start;
   color: black;
+  font-weight: 500;
+}
+
+.right-message .msg-text {
+  color: white;
 }
 
 .msg-info-time {
@@ -104,6 +124,9 @@ function updateTime() {
   padding: 10px;
 }
 
+.chat_messages_wrapper:last-of-type {
+  margin: 200px;
+}
 .message {
   /*   Each message has this class */
   display: flex;

@@ -20,20 +20,23 @@
 
     <div class="bg-gray-900 message_input_wrapper">
       <form @submit.prevent="sendMessage" method="post">
-      
-        <input
-          v-model="message_input"
-          required
-          oninvalid="this.setCustomValidity('Please enter a message')"
-          class="message_input_box"
-          placeholder="Message"
-          type="text"
-        />
-        <button class="button_submit" type="submit">
-          <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkklEQVRIie3VvWsUQRgH4CeJ4BGipLGTFBZ+YJtaQtoYjCD+ARFSxsrGKgSElLFPoyBY2OVIa0CFBLFUuKRKqqBFTGwOP+4sZhc2w+3u3XoXguQHb3Pv3Dy7s7OznOc/yAim8Bx7eDdIrIa7WMM3tDO1129sFLN4iaMIy9ZqP7AreIQ6mjlQK+pNVcUmsIB1/MzB0vqBVwneFpb9Qi/YNTzG+8wkZbWLB04u+1o32G0s4XOXULY2kpX5Ev0+U4ZuVsDS57ksLGc96h0Lu70wHyqgR5hL/r/cof+6DJVc2Yse0B3h0cA9nffBw27gNAvKd24d48n4G/jeYUwTl3uB4Q4OOkzWwgqGk3GX5G/E9V7RNFexnZnoGPcz/SG8yUHbmK8Kw0XhPWzgVtRbKkB/CyfcPyd+JWbxpwDe7Aca5zoOC9A2FvuN1pSfai3hBMvNcFEzJ01slYz5hP0Kc5emho/y7/jpINA0E/iaA98cJAzT+BWhjUGjaZ5E8LPTgoeEL1AKT54WDGPCJ/VtciHnOTv5C+oR7Pjc+gqDAAAAAElFTkSuQmCC"
+        <div>
+          <input
+            v-model="message_input"
+            required
+            oninvalid="this.setCustomValidity('Please enter a message')"
+            class="message_input_box shadow-2xl"
+            placeholder="Message"
+            type="text"
           />
-        </button>
+        </div>
+        <div>
+          <button class="button_submit" type="submit">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkklEQVRIie3VvWsUQRgH4CeJ4BGipLGTFBZ+YJtaQtoYjCD+ARFSxsrGKgSElLFPoyBY2OVIa0CFBLFUuKRKqqBFTGwOP+4sZhc2w+3u3XoXguQHb3Pv3Dy7s7OznOc/yAim8Bx7eDdIrIa7WMM3tDO1129sFLN4iaMIy9ZqP7AreIQ6mjlQK+pNVcUmsIB1/MzB0vqBVwneFpb9Qi/YNTzG+8wkZbWLB04u+1o32G0s4XOXULY2kpX5Ev0+U4ZuVsDS57ksLGc96h0Lu70wHyqgR5hL/r/cof+6DJVc2Yse0B3h0cA9nffBw27gNAvKd24d48n4G/jeYUwTl3uB4Q4OOkzWwgqGk3GX5G/E9V7RNFexnZnoGPcz/SG8yUHbmK8Kw0XhPWzgVtRbKkB/CyfcPyd+JWbxpwDe7Aca5zoOC9A2FvuN1pSfai3hBMvNcFEzJ01slYz5hP0Kc5emho/y7/jpINA0E/iaA98cJAzT+BWhjUGjaZ5E8LPTgoeEL1AKT54WDGPCJ/VtciHnOTv5C+oR7Pjc+gqDAAAAAElFTkSuQmCC"
+            />
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -47,14 +50,13 @@ import {
   ref as fbref,
   push,
   set,
-  onValue,
   onChildAdded,
+  DataSnapshot,
 } from "firebase/database";
 import { getTime } from "../../../assets/typescript/time";
-import { Stringish } from "../../../main";
 
 interface Props {
-  chat_id: any;
+  chat_id: string;
   user_id: string;
 }
 const props = defineProps<Props>();
@@ -73,13 +75,14 @@ const chat = {
   type: ref(""),
 };
 
-onMounted(() => {
-  loadMessages();
-});
+onMounted(() => loadMessages());
 
-function loadMessages() {
+/**
+ * Loads all messages in chat from firebase
+ */
+function loadMessages(): void {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
-  onChildAdded(messagesRef, (data) => {
+  onChildAdded(messagesRef, (data: DataSnapshot) => {
     if (data.key) {
       messages.value.push(data.key);
     }
@@ -89,24 +92,28 @@ function loadMessages() {
   });
 }
 
-function sendMessage() {
-  //Calls getMessage function which returns message object
-  const message = getMessage();
-
-  console.log(message);
-
-  const messageRef = push(fbref(database, `/Chats/${props.chat_id}/Messages`));
-  set(messageRef, message);
-
-  message_input.value = "";
-}
-
 function getMessage() {
   return {
     sender: props.user_id,
     text: message_input.value,
     time: getTime(),
   };
+}
+
+/**
+ * Sends a message to the chat
+ * Calls getMessage() to get the message info about what is sent.
+ */
+function sendMessage(): void {
+  //Calls getMessage function which returns message object
+  const message = getMessage();
+  console.log(message);
+
+  const messageRef = push(fbref(database, `/Chats/${props.chat_id}/Messages`));
+  set(messageRef, message);
+
+  // Clears the input.
+  message_input.value = "";
 }
 </script>
 
@@ -152,7 +159,25 @@ function getMessage() {
 }
 </style> -->
 
-<style scoped> /* Fixed Version */
+<style>
+.chat_head {
+  position: fixed;
+  top: 0;
+  width: calc(100% - 250px);
+  height: 30px;
+  background-color: rgba(47, 49, 54, 0.9);
+  backdrop-filter: blur(10px);
+
+  /* DONT DELETE! */
+  transform: translateX(-3px);
+}
+.chat_head p {
+  text-align: center;
+}
+</style>
+
+<style scoped>
+/* Fixed Version */
 .message_input_wrapper {
   background-color: transparent;
   height: 80px;
@@ -201,47 +226,8 @@ function getMessage() {
 .button_submit:active {
   transform: scale(0.5);
 }
-
-/* .chat_messages_wrapper {
-  
-} */
-</style>
-
-<style>
-/* .chat_wrapper {
-  padding: 10px;
-} */
-</style>
-
-<style scoped>
 .chat_wrapper {
   background-color: var(--d-gray);
-}
-</style>
-
-<!-- <style scoped>
-.chat_wrapper {
-  width: 100%;
-  height: 100%;
-}
-
-@media (max-width: 768px) {
-  .chat_head {
-    width: calc(100% - 155px);
-  }
-}
-
-</style> -->
-<style>
-.chat_head {
-  position: fixed;
-  top: 0;
-  width: calc(100% - 250px);
-  height: 30px;
-  background-color: rgba(47, 49, 54, 0.9);
-  backdrop-filter: blur(10px);
-}
-.chat_head p {
-  text-align: center;
+  padding: 5px;
 }
 </style>

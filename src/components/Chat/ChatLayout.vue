@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <div v-if="props.userData.id !== null" class="chat_selector">
+    <div v-if="props.userData.id !== null" class="chat_selector shadow-2xl">
       <ChatList
         :userData="props.userData"
         :chats="chats"
@@ -86,7 +86,7 @@ function getChats() {
   });
 }
 
-function toggleSettings() {
+function toggleSettings(): void {
   settings_open.value = !settings_open.value;
   console.log(`Toggled settings ${settings_open.value}`);
 }
@@ -102,7 +102,7 @@ function toggleSettings() {
 // });
 
 const message_input = ref("");
-function sendMessage() {
+function sendMessage(): void {
   console.log(message_input.value);
   message_input.value = "";
 }
