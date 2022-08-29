@@ -20,6 +20,12 @@ interface Props {
 const props = defineProps<Props>();
 </script>
 
+<style scoped>
+.chat_container {
+  
+}
+</style>
+
 <!-- <style>
 .message_input_wrapper {
   bottom: 0;

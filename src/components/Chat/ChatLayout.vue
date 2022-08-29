@@ -17,7 +17,7 @@
       ></ChatList>
     </div>
 
-    <div v-if="props.userData.id !== null" class="bg-pink-800 chat_area">
+    <div v-if="props.userData.id !== null" class="chat_area">
       <ChatScreen
         :chats="chats"
         :selected_chat="selected_chat"

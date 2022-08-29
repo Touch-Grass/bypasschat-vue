@@ -117,7 +117,22 @@ function sendMessage(): void {
 }
 </script>
 
-<style>
+<style scoped>
+.chat_wrapper {
+  /* background-color: var(--d-light-gray); */
+  background-color: red;
+
+
+
+
+  width: 100%;
+  height: 100vh;
+
+  /* padding: 5px; */
+}
+</style>
+
+<style scoped>
 .chat_head {
   position: fixed;
   top: 0;
@@ -136,7 +151,7 @@ function sendMessage(): void {
 
 <style scoped>
 .chat_messages_area {
-  background-color: red;
+  /* background-color: red; */
   position: absolute;
   top: 30px;
   width: calc(100% - 250px);
@@ -146,7 +161,8 @@ function sendMessage(): void {
 
 .chat_messages_wrapper {
   height: 100%;
-  overflow-y: scroll; 
+  padding: 5px 5px;
+  overflow-y: scroll;
 }
 
 .chat_messages_wrapper > li {
@@ -186,6 +202,7 @@ function sendMessage(): void {
 
 .message_input_container,
 .message_button_container {
+  background-color: transparent;
   width: 100%;
   height: 60px;
 }
@@ -219,9 +236,4 @@ function sendMessage(): void {
 .button_submit:active {
   transform: scale(0.5);
 }
-.chat_wrapper {
-  background-color: var(--d-gray);
-  padding: 5px;
-}
 </style>
-
