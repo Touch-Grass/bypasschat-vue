@@ -1,7 +1,7 @@
 <template>
   <div class="chat_list_wrapper" @click="selectedChat">
-    <p>{{ chat_id }}</p>
     <img src="chat_imgs" alt="chat image" />
+    <p>{{ chat_id }}</p>
   </div>
 </template>
 

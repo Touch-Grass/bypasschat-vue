@@ -21,8 +21,10 @@
       <button @click="addChat" class="bg-blue-500">+</button>
     </div>
     <div class="block mt-1 h-line"></div>
-    <ul v-for="id in props.chats">
-      <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
+    <ul>
+      <li v-for="id in props.chats">
+        <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
+      </li>
     </ul>
     <div class="button_logout_wrapper">
       <button class="bg-blue-800 button_logout" @click="logout">Logout</button>

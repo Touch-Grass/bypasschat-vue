@@ -126,7 +126,8 @@ function sendMessage(): void {
 }
 </style>
 
-<style scoped>
+
+<style scoped> /* Chat header */
 .chat_head {
   background-color: var(--d-light-gray);
   border-bottom: 1px solid var(--d-gray);
@@ -142,29 +143,33 @@ function sendMessage(): void {
 }
 </style>
 
-<style scoped>
+<style scoped> /* Chat message area */
 .chat_messages_area {
   position: absolute;
   top: 30px;
   width: calc(100% - 250px);
   height: calc(100% - 90px);
+  /* This is a backup to keep the chat fixed and not scroll with messages */
   overflow: hidden;
 }
 
 .chat_messages_wrapper {
   height: 100%;
   padding: 5px 5px;
+
+  /* Overflow y in this container makes it so only the message wrapper scrolls and the whole chat stays fixed */
   overflow-y: scroll;
 }
 
 .chat_messages_wrapper > li {
   list-style: none;
-  height: 100px;
+
+  /* The height controls the spacing between messages */
+  height: 100px; 
 }
 </style>
 
-<style scoped>
-/* Fixed Version */
+<style scoped> /* Chat message input */
 .message_input_wrapper {
   background-color: transparent;
   height: 80px;
