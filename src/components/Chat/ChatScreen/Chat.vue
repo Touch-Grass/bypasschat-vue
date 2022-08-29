@@ -146,7 +146,7 @@ function sendMessage(): void {
 
 .chat_messages_wrapper {
   height: 100%;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 
 .chat_messages_wrapper > li {
@@ -224,4 +224,3 @@ function sendMessage(): void {
   padding: 5px;
 }
 </style>
-
