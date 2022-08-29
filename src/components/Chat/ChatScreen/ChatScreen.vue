@@ -1,6 +1,7 @@
 <template>
   <div class="chat_container">
-    <Chat v-for="id in props.chats"
+    <Chat
+      v-for="id in props.chats"
       :chat_id="id"
       v-show="props.selected_chat === id"
       :user_id="props.userData.id"

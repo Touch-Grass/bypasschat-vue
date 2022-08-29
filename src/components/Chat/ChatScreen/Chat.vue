@@ -135,7 +135,6 @@ function sendMessage(): void {
   width: calc(100% - 250px);
   height: 30px;
   backdrop-filter: blur(10px);
-
 }
 .chat_head p {
   text-align: center;
