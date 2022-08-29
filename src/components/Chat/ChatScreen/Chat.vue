@@ -25,7 +25,7 @@
             v-model="message_input"
             required
             oninvalid="this.setCustomValidity('Please enter a message')"
-            class="message_input_box shadow-2xl"
+            class="message_input_box"
             placeholder="Message"
             type="text"
           />
@@ -119,27 +119,23 @@ function sendMessage(): void {
 
 <style scoped>
 .chat_wrapper {
-  /* background-color: var(--d-light-gray); */
-  background-color: red;
+  background-color: var(--d-light-gray);
 
   width: 100%;
   height: 100%;
-
-  /* padding: 5px; */
 }
 </style>
 
 <style scoped>
 .chat_head {
-  position: fixed;
+  background-color: var(--d-light-gray);
+  border-bottom: 1px solid var(--d-gray);
+  position: absolute;
   top: 0;
   width: calc(100% - 250px);
   height: 30px;
-  background-color: rgba(47, 49, 54, 0.9);
   backdrop-filter: blur(10px);
 
-  /* DONT DELETE! */
-  transform: translateX(-3px);
 }
 .chat_head p {
   text-align: center;
@@ -148,7 +144,6 @@ function sendMessage(): void {
 
 <style scoped>
 .chat_messages_area {
-  /* background-color: red; */
   position: absolute;
   top: 30px;
   width: calc(100% - 250px);
@@ -175,15 +170,15 @@ function sendMessage(): void {
   height: 80px;
 
   /* Positioning wrapper at bottom right */
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  left: 250px;
+  right: 0;
   width: calc(100% - 250px);
 }
 
 .message_input_wrapper form {
   /* Styling the forms appearance */
-  background-color: var(--d-light-gray);
+  background-color: var(--d-tint-gray);
   border-radius: 15px;
 
   margin: 10px;

@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <div v-if="props.userData.id !== null" class="chat_selector shadow-2xl">
+    <div v-if="props.userData.id !== null" class="chat_selector">
       <ChatList
         :userData="props.userData"
         :chats="chats"
