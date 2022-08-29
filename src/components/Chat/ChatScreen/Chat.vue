@@ -122,9 +122,6 @@ function sendMessage(): void {
   /* background-color: var(--d-light-gray); */
   background-color: red;
 
-
-
-
   width: 100%;
   height: 100%;
 
