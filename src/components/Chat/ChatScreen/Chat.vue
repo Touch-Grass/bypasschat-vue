@@ -126,8 +126,8 @@ function sendMessage(): void {
 }
 </style>
 
-
-<style scoped> /* Chat header */
+<style scoped>
+/* Chat header */
 .chat_head {
   background-color: var(--d-light-gray);
   border-bottom: 1px solid var(--d-gray);
@@ -136,14 +136,14 @@ function sendMessage(): void {
   width: calc(100% - 250px);
   height: 30px;
   backdrop-filter: blur(10px);
-
 }
 .chat_head p {
   text-align: center;
 }
 </style>
 
-<style scoped> /* Chat message area */
+<style scoped>
+/* Chat message area */
 .chat_messages_area {
   position: absolute;
   top: 30px;
@@ -165,11 +165,12 @@ function sendMessage(): void {
   list-style: none;
 
   /* The height controls the spacing between messages */
-  height: 100px; 
+  height: 100px;
 }
 </style>
 
-<style scoped> /* Chat message input */
+<style scoped>
+/* Chat message input */
 .message_input_wrapper {
   background-color: transparent;
   height: 80px;
