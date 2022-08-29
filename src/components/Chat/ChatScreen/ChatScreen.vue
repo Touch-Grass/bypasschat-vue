@@ -22,7 +22,8 @@ const props = defineProps<Props>();
 
 <style scoped>
 .chat_container {
-  
+  width: 100%;
+  height: 100%;
 }
 </style>
 
