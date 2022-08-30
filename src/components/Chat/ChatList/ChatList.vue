@@ -128,6 +128,7 @@ function logout(): void {
 
 <style scoped>
 .list_wrapper {
+  background-color: var(--d-gray);
   width: 100%;
   height: 100%;
   overflow: hidden;
