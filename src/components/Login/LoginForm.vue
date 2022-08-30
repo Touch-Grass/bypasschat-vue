@@ -55,7 +55,9 @@ interface Props {
 
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
-
+/**
+ * Signs into the firebase
+ */
 function signInAuth(email: any, password: any) {
   console.groupCollapsed("Sign in credentials");
   console.log("Email");
