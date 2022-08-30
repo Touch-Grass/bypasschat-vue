@@ -21,15 +21,21 @@
       <button @click="addChat" class="bg-blue-500">+</button>
     </div>
     <div class="block mt-1 h-line"></div>
-    <ul>
+    <div class="chat_select_wrapper">
       <li v-for="id in props.chats">
         <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
       </li>
-    </ul>
+    </div>
     <div class="button_logout_wrapper">
       <button class="bg-blue-800 button_logout" @click="logout">Logout</button>
     </div>
   </div>
+
+  <ul>
+    <li>
+      <div class="hi"></div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
@@ -38,7 +44,8 @@ import ChatSelect from "./ChatSelect.vue";
 import { useUserData } from "../../Composables/composables";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
-const chatInfo: any[] = ["123", "132"];
+import { VoidTypeAnnotation } from "@babel/types";
+const chatInfo: string[] = ["123", "132"];
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 
@@ -72,12 +79,12 @@ function addChat(): void {
   });
 }
 
-function changeChat(id: string) {
+function changeChat(id: string): void {
   console.log(`Changed the chat to ${id}`);
   emits("selectedChat", id);
 }
 
-function toggleSettings() {
+function toggleSettings(): void {
   emits("toggleSettings");
 }
 
@@ -115,6 +122,23 @@ function logout(): void {
 // console.log(userData);
 // console.groupEnd();
 </script>
+
+<style scoped>
+.chat_select_wrapper {
+  background-color: red;
+  height: 100%;
+
+  padding: 5px;
+}
+
+.chat_select_wrapper > li {
+  list-style: none;
+
+  height: 80px;
+  margin-bottom: 10px;
+}
+</style>
+
 <style>
 .chat_selector {
   position: sticky;
