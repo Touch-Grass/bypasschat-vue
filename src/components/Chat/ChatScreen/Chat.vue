@@ -130,11 +130,11 @@ function sendMessage(): void {
 <style scoped> /* Chat header */
 .chat_head {
   background-color: var(--d-light-gray);
-  border-bottom: 1px solid var(--d-gray);
+  border-bottom: 1px solid var(--d-dark-gray);
   position: absolute;
   top: 0;
   width: calc(100% - 250px);
-  height: 30px;
+  height: 60px;
   backdrop-filter: blur(10px);
 
 }
@@ -146,9 +146,9 @@ function sendMessage(): void {
 <style scoped> /* Chat message area */
 .chat_messages_area {
   position: absolute;
-  top: 30px;
+  top: 60px;
   width: calc(100% - 250px);
-  height: calc(100% - 90px);
+  height: calc(100% - 120px);
   /* This is a backup to keep the chat fixed and not scroll with messages */
   overflow: hidden;
 }

@@ -40,11 +40,13 @@ function selectedChat() {
 
 <style>
 .chat_list_wrapper {
-  width: calc(100% - 20px);
+  width: 100%;
   padding: 5px;
   height: 100%;
   cursor: pointer;
   display: flex;
+
+  border-radius: 10px;
 
   /* Starts the flex to align */
   flex-direction: column;

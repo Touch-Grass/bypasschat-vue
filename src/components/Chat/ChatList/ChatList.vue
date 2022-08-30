@@ -9,7 +9,7 @@
         />
         <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
       </div>
-      <div class="reverse">
+      <!-- <div class="reverse">
         <img
           v-show="props.userData.id !== null"
           ref="settings_icon"
@@ -18,17 +18,20 @@
           @click="toggleSettings"
         />
       </div>
-      <button @click="addChat" class="bg-blue-500">+</button>
+      <button @click="addChat" class="bg-blue-500">+</button> -->
     </div>
-    <div class="block mt-1 h-line"></div>
-    <div class="chat_select_wrapper">
-      <li v-for="id in props.chats">
-        <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
-      </li>
+
+    <!-- <div class="block mt-1 h-line"></div> -->
+    <div class="lower_wrapper">
+      <div class="chat_select_wrapper">
+        <li v-for="id in props.chats">
+          <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
+        </li>
+      </div>
     </div>
-    <div class="button_logout_wrapper">
+    <!-- <div class="button_logout_wrapper">
       <button class="bg-blue-800 button_logout" @click="logout">Logout</button>
-    </div>
+    </div> -->
   </div>
 
   <ul>
@@ -124,9 +127,34 @@ function logout(): void {
 </script>
 
 <style scoped>
-.chat_select_wrapper {
-  background-color: red;
+.list_wrapper {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+.upper_wrapper {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid var(--d-dark-gray);
+
+
+}
+
+.lower_wrapper {
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow: hidden;
+}
+</style>
+
+<style scoped>
+.chat_select_wrapper {
+  height: 100%;
+
+  overflow-y: auto;
 
   padding: 5px;
 }
@@ -134,7 +162,8 @@ function logout(): void {
 .chat_select_wrapper > li {
   list-style: none;
 
-  height: 80px;
+  width: 100%;
+  height: 60px;
   margin-bottom: 10px;
 }
 </style>
@@ -169,12 +198,12 @@ function logout(): void {
   background-color: var(--d-light-gray);
 }
 
-.list_wrapper {
+/* .list_wrapper {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-.list_wrapper {
+} */
+/* .list_wrapper {
   width: 100%;
   height: 100%;
   display: flex;
@@ -182,14 +211,14 @@ function logout(): void {
   justify-content: flex-start;
   align-items: center;
   background-color: var(--d-gray);
-}
-.upper_wrapper {
+} */
+/* .upper_wrapper {
   display: flex;
   align-items: center;
   flex-direction: row;
   width: 100%;
   height: 70px;
-}
+} */
 .upper_wrapper .reverse {
   display: flex;
   width: 100%;
@@ -197,14 +226,14 @@ function logout(): void {
   align-items: flex-end !important;
 }
 
-.list_wrapper > ul {
+/* .list_wrapper > ul {
   display: inline-block;
   margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-}
+} */
 .h-line {
   width: 100%;
   height: 1px;
