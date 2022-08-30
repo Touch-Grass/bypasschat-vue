@@ -90,6 +90,7 @@ function checkSignIn(): void {
     if (user) {
       console.log("User signed in!");
       const uid = user.uid;
+      // Sends info to the firebase
       onValue(fbref(database, `/Users/${uid}`), (data) => {
         if (!data) {
           signInError.value = true;
