@@ -9,6 +9,7 @@
     </div>
 
     <div v-if="props.userData.id !== null" class="chat_selector">
+      <!-- <Modal @toggledVisible="false" :showModal="true"></Modal> -->
       <ChatList
         :userData="props.userData"
         :chats="chats"
@@ -42,6 +43,7 @@ import {
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 import SettingsMenu from "./Menus/SettingsMenu.vue";
+import Modal from "../modal/Modal.vue";
 
 interface Props {
   // todo: fix this lol.
