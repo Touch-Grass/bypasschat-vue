@@ -13,7 +13,6 @@
 </template>
 <!--
 <script lang="ts">
-import { useUserData } from "./components/Composables/composables";
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 // import ChatScreen from "./components/Chat/ChatScreen/ChatScreen.vue";
@@ -54,9 +53,9 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import { ref, defineComponent, Ref } from "vue";
-import { useUserData } from "./components/Composables/composables";
 import LoginForm from "./components/Login/LoginForm.vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
+import { useUserData } from "./assets/typescript/Composables/useUserData";
 // interface Components {
 //   LoginForm: any;
 //   ChatLayout: any;
@@ -72,11 +71,11 @@ const userData = ref({
   image: null,
 });
 
-function logChange(e: boolean) {
+function logChange(e: boolean): void {
   console.log(`Logged in status set to ${e}`);
   loggedIn.value = e;
 }
-function setUserData(e: any) {
+function setUserData(e: any): void {
   console.log("Setting user data!");
   userData.value = e;
   console.log(userData);

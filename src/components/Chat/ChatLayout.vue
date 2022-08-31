@@ -39,7 +39,6 @@ import {
   DatabaseReference,
   DataSnapshot,
 } from "firebase/database";
-import { useUserData } from "../Composables/composables";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 import SettingsMenu from "./Menus/SettingsMenu.vue";
@@ -55,15 +54,15 @@ const chats: string[] = [];
 const settings_open = ref(false);
 const selected_chat = ref("");
 
-function changeChat(id: string) {
+function changeChat(id: string): void {
   selected_chat.value = id;
 }
 
-function reloadLocation() {
+function reloadLocation(): void {
   location.reload();
 }
 
-function dismissSettings(e: Event) {
+function dismissSettings(e: Event): void {
   if (e.target === document.querySelector(".settings_icon")) return;
   settings_open.value = false;
 }

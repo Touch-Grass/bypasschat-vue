@@ -19,6 +19,7 @@ import {
   getDatabase,
   ref as fbref,
   onValue,
+  onChildRemoved,
   DatabaseReference,
   Database,
   DataSnapshot,
@@ -91,6 +92,10 @@ function initMessage(
       });
     }
   });
+  onChildRemoved(messageRef, () => {
+    console.log("Message Removed");
+    //delete this vue component
+  });
   //Updates the time every minute.
   setInterval(() => updateTime(), 60000);
 }
@@ -104,6 +109,7 @@ function updateTime(): void {
 
 <style scoped>
 .msg-text {
+  max-width: 400px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   text-align: start;
   color: black;
@@ -124,9 +130,6 @@ function updateTime(): void {
   padding: 10px;
 }
 
-.chat_messages_wrapper:last-of-type {
-  /* margin: 200px; */
-}
 .message {
   /*   Each message has this class */
   display: flex;

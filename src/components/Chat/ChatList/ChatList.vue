@@ -1,15 +1,8 @@
 <template>
   <div class="list_wrapper">
     <div class="upper_wrapper">
-      <div class="user_wrapper">
-        <img
-          :src="props.userData.image ?? defaultImage"
-          alt="Profile Image"
-          class="profile_image"
-        />
-        <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
-      </div>
-      <!-- <div class="reverse">
+      <UserInfo :userData="props.userData"></UserInfo>
+      <div class="reverse">
         <img
           v-show="props.userData.id !== null"
           ref="settings_icon"
@@ -18,13 +11,14 @@
           @click="toggleSettings"
         />
       </div>
-      <button @click="addChat" class="bg-blue-500">+</button> -->
+      <!-- <button @click="addChat" class="bg-blue-500">+</button> -->
     </div>
 
     <!-- <div class="block mt-1 h-line"></div> -->
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
-        <li v-for="id in props.chats">
+        <button @click="swapChats">Swap item</button>
+        <li v-for="id in props.chats" :key="id">
           <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
         </li>
       </div>
@@ -44,13 +38,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import ChatSelect from "./ChatSelect.vue";
-import { useUserData } from "../../Composables/composables";
+import UserInfo from "./UserInfo.vue";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
-import { VoidTypeAnnotation } from "@babel/types";
 const chatInfo: string[] = ["123", "132"];
-const defaultImage =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 
 interface Props {
   userData: any;
@@ -91,9 +82,9 @@ function toggleSettings(): void {
   emits("toggleSettings");
 }
 
-function logout(): void {
-  auth.signOut();
-  location.reload();
+function swapChats(): void {
+  console.log("Swapped chats");
+  props.chats.reverse();
 }
 
 // // let userData: any = useUserData(props.userData);
@@ -137,9 +128,11 @@ function logout(): void {
 .upper_wrapper {
   width: 100%;
   height: 60px;
-  border-bottom: 1px solid var(--d-dark-gray);
-
-
+  border-bottom: 2px solid var(--d-dark-gray);
+  /* .upper_wrapper { */
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .lower_wrapper {
@@ -149,9 +142,6 @@ function logout(): void {
   height: calc(100% - 60px);
   overflow: hidden;
 }
-</style>
-
-<style scoped>
 .chat_select_wrapper {
   height: 100%;
 
@@ -178,25 +168,12 @@ function logout(): void {
 }
 
 .profile_image {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   aspect-ratio: 1/1;
   border-radius: 50%;
   margin-left: 0.65rem;
   border: 1px solid white;
-}
-
-.user_wrapper {
-  display: flex;
-  align-items: center;
-  flex: 0 0 max-content;
-  padding-right: 5px;
-  width: 100%;
-  height: 100%;
-}
-
-.user_wrapper:hover {
-  background-color: var(--d-light-gray);
 }
 
 /* .list_wrapper {
@@ -212,13 +189,6 @@ function logout(): void {
   justify-content: flex-start;
   align-items: center;
   background-color: var(--d-gray);
-} */
-/* .upper_wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  height: 70px;
 } */
 .upper_wrapper .reverse {
   display: flex;
@@ -240,18 +210,6 @@ function logout(): void {
   height: 1px;
   background-color: white;
   box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
-}
-
-.profile_image,
-.settings_icon,
-.profile_name {
-  /* Todo: Limit the length of the name */
-  user-select: none;
-}
-.profile_name {
-  text-align: start;
-  margin-left: 10px;
-  font-size: 1.5rem;
 }
 
 .button_logout {
