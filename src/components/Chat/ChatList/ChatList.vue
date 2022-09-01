@@ -21,8 +21,11 @@
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
         <button @click="swapChats">Swap item</button>
-        <div v-for="chat in props.chats" :style="{order: chat.order}">
-          <ChatSelect :chat_id="chat.id" @selectedChat="changeChat"></ChatSelect>
+        <div v-for="chat in props.chats" :style="{ order: chat.order }">
+          <ChatSelect
+            :chat_id="chat.id"
+            @selectedChat="changeChat"
+          ></ChatSelect>
         </div>
       </div>
     </div>
