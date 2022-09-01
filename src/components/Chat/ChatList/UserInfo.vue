@@ -16,23 +16,30 @@
     </div>
   </div>
 
-  <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu"></Modal>
+  
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import { auth } from "../../../assets/typescript/firebase";
 import Modal from "../../modal/Modal.vue";
+const defaultImage =
+"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 
 interface Props {
   userData: any;
+
 }
-const defaultImage =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
+
+interface Emits {
+  (e: "toggleModal", selector: string): void;
+}
+
+const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 const dropdownOpen = ref(false);
 const dropdownMenu = ref();
-const friendsMenu: Ref<boolean> = ref(false);
+
 
 function userWrapperClicked(): void {
   console.log("userWrapperClicked");
@@ -43,14 +50,13 @@ function toggleProfileMenu(): void {
   console.log("toggleProfileMenu");
 }
 
-function hideFriendsMenu(): void {
-  friendsMenu.value = false;
-}
+
 
 function toggleFriendsMenu(): void {
   console.log("toggleFriendsMenu");
-  console.log(friendsMenu.value);
-  friendsMenu.value = !friendsMenu.value;
+  // console.log(friendsMenu.value);
+  // friendsMenu.value = !friendsMenu.value;
+  emits("toggleModal", "friendsMenu");
 }
 
 function signOut(): void {
