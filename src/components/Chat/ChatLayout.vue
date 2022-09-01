@@ -55,7 +55,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const chats: string[] = [];
+const chats: any[] = [];
 const settings_open = ref(false);
 const selected_chat = ref("");
 
@@ -96,7 +96,10 @@ function getChats() {
   );
   onChildAdded(userChatsRef, (data: DataSnapshot) => {
     // console.log(data.val().id);
-    chats.push(data.val().id);
+    chats.push({
+      id: data.val().id,
+      order: data.val().order,
+    });
   });
 }
 

@@ -1,9 +1,10 @@
 <template>
   <div class="list_wrapper">
     <div class="upper_wrapper">
-      <UserInfo 
+      <UserInfo
         @toggleModal="emits('toggleModal', 'friendsMenu')"
-      :userData="props.userData"></UserInfo>
+        :userData="props.userData"
+      ></UserInfo>
       <div class="reverse">
         <img
           v-show="props.userData.id !== null"
@@ -20,9 +21,9 @@
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
         <button @click="swapChats">Swap item</button>
-        <li v-for="id in props.chats" :key="id">
-          <ChatSelect :chat_id="id" @selectedChat="changeChat"></ChatSelect>
-        </li>
+        <div v-for="chat in props.chats" :style="{order: chat.order}">
+          <ChatSelect :chat_id="chat.id" @selectedChat="changeChat"></ChatSelect>
+        </div>
       </div>
     </div>
     <!-- <div class="button_logout_wrapper">
@@ -47,7 +48,7 @@ const chatInfo: string[] = ["123", "132"];
 
 interface Props {
   userData: any;
-  chats: string[];
+  chats: any[];
 }
 
 interface Emits {
@@ -73,6 +74,7 @@ function addChat(): void {
   );
   set(userChatPush, {
     id: newChatPush.key,
+    order: 0,
   });
 }
 
@@ -151,15 +153,23 @@ function swapChats(): void {
   overflow-y: auto;
 
   padding: 5px;
+
+  display: flex;
+  flex-flow: column;
 }
 
-.chat_select_wrapper > li {
+.chat_select_wrapper > div {
   list-style: none;
 
   width: 100%;
   height: 60px;
   margin-bottom: 10px;
 }
+
+/* .chat_select_wrapper > div:last-child {
+  background-color: red;
+  order: 1;
+} */
 </style>
 
 <style>
