@@ -15,6 +15,7 @@
         :chats="chats"
         @selectedChat="changeChat"
         @toggleSettings="toggleSettings"
+        @toggleModal="toggleModal"
       ></ChatList>
     </div>
 
@@ -27,10 +28,12 @@
     </div>
     <SettingsMenu v-show="settings_open" />
   </div>
+  
+  <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu" class="z-1000">This is a cool modal!</Modal>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { database } from "../../assets/typescript/firebase";
 import {
   ref as fbref,
@@ -55,6 +58,16 @@ const props = defineProps<Props>();
 const chats: string[] = [];
 const settings_open = ref(false);
 const selected_chat = ref("");
+
+function toggleModal(selector: string) {
+  console.log("Toggled modal");
+  console.log(selector);
+}
+
+const friendsMenu: Ref<boolean> = ref(false);
+  function hideFriendsMenu(): void {
+  friendsMenu.value = false;
+}
 
 function changeChat(id: string): void {
   selected_chat.value = id;
@@ -121,54 +134,3 @@ function sendMessage(): void {
   overflow: hidden;
 }
 </style>
-
-<!-- <style>
-@media (max-width: 640px) {
-  .message_input_wrapper {
-    width: calc(100% - 155px) !important;
-  }
-  .profile_name {
-    font-size: 1rem;
-    margin-left: 5px;
-  }
-  .profile_image {
-    width: 40px;
-    height: 40px;
-    margin-left: 3px;
-  }
-}
-
-</style> -->
-
-<!-- <style>
-.not_logged_in {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-@media (max-width: 640px) {
-  .message_input_wrapper {
-    width: calc(100% - 155px) !important;
-  }
-  .main_wrapper {
-    grid-template-columns: 155px 1fr;
-    grid-template-rows: 1fr 90px;
-  }
-}
-
-.sidebar_selector,
-.chat_selector {
-  height: 100vh;
-  max-height: 100vh;
-}
-
-.chat_area {
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
-}
-</style> -->

@@ -2,7 +2,7 @@
   <div class="modal" v-show="showModal">
     <div class="modal-bg" @click="hideModal"></div>
     <div class="modal_wrapper shadow-2xl rounded-lg">
-      <slot>Modal.js</slot>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -39,13 +39,14 @@ function hideModal(): void {
 }
 .modal_wrapper {
   position: fixed;
-  /* width: 80vw;
-  height: 80vh; */
+  width: 80vw;
+  height: 80vh;
   top: 50%;
   left: 50%;
   z-index: 110;
 
-  background-color: var(--d-light-gray);
+  /* background-color: var(--d-light-gray); */
+  background-color: red;
   transform: translate(-50%, -50%);
 }
 

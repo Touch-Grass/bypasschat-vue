@@ -1,7 +1,9 @@
 <template>
   <div class="list_wrapper">
     <div class="upper_wrapper">
-      <UserInfo :userData="props.userData"></UserInfo>
+      <UserInfo 
+        @toggleModal="emits('toggleModal', 'friendsMenu')"
+      :userData="props.userData"></UserInfo>
       <div class="reverse">
         <img
           v-show="props.userData.id !== null"
@@ -51,6 +53,7 @@ interface Props {
 interface Emits {
   (e: "selectedChat", id: string): void;
   (e: "toggleSettings"): void;
+  (e: "toggleModal", selector: string): void;
 }
 
 const emits = defineEmits<Emits>();
