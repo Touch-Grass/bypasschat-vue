@@ -1,9 +1,10 @@
 <template>
   <div class="list_wrapper">
     <div class="upper_wrapper">
-      <UserInfo 
+      <UserInfo
         @toggleModal="emits('toggleModal', 'friendsMenu')"
-      :userData="props.userData"></UserInfo>
+        :userData="props.userData"
+      ></UserInfo>
       <div class="reverse">
         <img
           v-show="props.userData.id !== null"

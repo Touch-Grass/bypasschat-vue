@@ -15,19 +15,16 @@
       <li @click="signOut">Logout</li>
     </div>
   </div>
-
-  
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import { auth } from "../../../assets/typescript/firebase";
 import Modal from "../../modal/Modal.vue";
 const defaultImage =
-"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 
 interface Props {
   userData: any;
-
 }
 
 interface Emits {
@@ -40,7 +37,6 @@ const props = defineProps<Props>();
 const dropdownOpen = ref(false);
 const dropdownMenu = ref();
 
-
 function userWrapperClicked(): void {
   console.log("userWrapperClicked");
   dropdownOpen.value = !dropdownOpen.value;
@@ -49,8 +45,6 @@ function userWrapperClicked(): void {
 function toggleProfileMenu(): void {
   console.log("toggleProfileMenu");
 }
-
-
 
 function toggleFriendsMenu(): void {
   console.log("toggleFriendsMenu");
