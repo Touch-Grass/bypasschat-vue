@@ -20,8 +20,11 @@
     <!-- <div class="block mt-1 h-line"></div> -->
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
-        <div v-for="chat in props.chats" :style="{order: chat.order}">
-          <ChatSelect :chat_id="chat.id" @selectedChat="changeChat"></ChatSelect>
+        <div v-for="chat in props.chats" :style="{ order: chat.order }">
+          <ChatSelect
+            :chat_id="chat.id"
+            @selectedChat="changeChat"
+          ></ChatSelect>
         </div>
       </div>
     </div>
@@ -29,7 +32,6 @@
       <button class="bg-blue-800 button_logout" @click="logout">Logout</button>
     </div> -->
   </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -80,7 +82,6 @@ function changeChat(id: string): void {
 function toggleSettings(): void {
   emits("toggleSettings");
 }
-
 
 // // let userData: any = useUserData(props.userData);
 // let userData = props.userData;
@@ -155,7 +156,6 @@ function toggleSettings(): void {
   height: 60px;
   margin-bottom: 10px;
 }
-
 </style>
 
 <style>
