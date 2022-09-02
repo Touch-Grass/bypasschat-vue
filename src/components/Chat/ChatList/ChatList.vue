@@ -20,7 +20,6 @@
     <!-- <div class="block mt-1 h-line"></div> -->
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
-        <button @click="swapChats">Swap item</button>
         <div v-for="chat in props.chats" :style="{order: chat.order}">
           <ChatSelect :chat_id="chat.id" @selectedChat="changeChat"></ChatSelect>
         </div>
@@ -31,11 +30,6 @@
     </div> -->
   </div>
 
-  <ul>
-    <li>
-      <div class="hi"></div>
-    </li>
-  </ul>
 </template>
 
 <script lang="ts" setup>
@@ -87,10 +81,6 @@ function toggleSettings(): void {
   emits("toggleSettings");
 }
 
-function swapChats(): void {
-  console.log("Swapped chats");
-  props.chats.reverse();
-}
 
 // // let userData: any = useUserData(props.userData);
 // let userData = props.userData;
@@ -166,10 +156,6 @@ function swapChats(): void {
   margin-bottom: 10px;
 }
 
-/* .chat_select_wrapper > div:last-child {
-  background-color: red;
-  order: 1;
-} */
 </style>
 
 <style>

@@ -1,12 +1,12 @@
 <template>
   <div class="chat_list_wrapper" @click="selectedChat">
-    <img src="chat_imgs" alt="chat image" />
-    <p>{{ chat_id }}</p>
+    <img :src="chat.image" class="chat-img" alt="chat image" />
+    <p>{{ chat.name }}</p>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { Stringish } from "../../../main";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue } from "firebase/database";
@@ -22,14 +22,24 @@ interface Props {
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
+let chat = ref({
+  name: "",
+  image: "",
+});
+
 initChatSelect();
 
 /**
  * @param {string} chat_id The ID of the chat to select
  */
-function initChatSelect(chat_id: Stringish = props.chat_id): void {
-  console.log(`The chat is: ${chat_id}!`);
-  // const chatRef = ref(database, `chats/${chat_id}`);
+function initChatSelect(chat_id: string = props.chat_id): void {
+  const chatRef = fbref(database, `Chats/${chat_id}`);
+  onValue(chatRef, (snapshot) => {
+    const data = snapshot.val();
+    chat.value.name = data.name;
+    chat.value.image = data.image;
+    console.log("Updated chat, name is now: " + chat.value.image);
+  });
 }
 
 // Returns what ever chat is selected (return is an emit to other modules)
@@ -64,5 +74,16 @@ function selectedChat() {
 .chat_list_wrapper p {
   text-align: start;
   padding-left: 5px;
+}
+
+.chat-img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  background: #ddd;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
 }
 </style>

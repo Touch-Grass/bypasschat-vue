@@ -1,8 +1,8 @@
 <template>
   <div class="chat_container">
-    <Chat v-for="id in props.chats"
-      :chat_id="id"
-      v-show="props.selected_chat === id"
+    <Chat v-for="chat in props.chats"
+      :chat_id="chat.id"
+      v-show="props.selected_chat === chat.id"
       :user_id="props.userData.id"
     ></Chat>
   </div>
@@ -13,7 +13,7 @@ import Chat from "./Chat.vue";
 
 interface Props {
   userData: any;
-  chats: string[];
+  chats: any[];
   selected_chat: string;
 }
 
