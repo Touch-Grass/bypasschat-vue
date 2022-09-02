@@ -28,8 +28,8 @@
     </div>
     <SettingsMenu v-show="settings_open" />
   </div>
-  
-  <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu" class="z-1000">This is a cool modal!</Modal>
+
+  <!-- <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu" class="z-1000">This is a cool modal!</Modal> -->
 </template>
 
 <script lang="ts" setup>
@@ -64,8 +64,13 @@ function toggleModal(selector: string) {
   console.log(selector);
 }
 
+function toggleFriendsModal(e: Event) {
+  console.log("toggleFriendsModal");
+  console.log(e);
+}
+
 const friendsMenu: Ref<boolean> = ref(false);
-  function hideFriendsMenu(): void {
+function hideFriendsMenu(): void {
   friendsMenu.value = false;
 }
 

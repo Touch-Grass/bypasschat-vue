@@ -28,9 +28,13 @@ function hideModal(): void {
 <style scoped>
 .modal {
   transition: 500ms;
+
+  isolation: isolate;
 }
 .modal-bg {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 100;
@@ -39,8 +43,8 @@ function hideModal(): void {
 }
 .modal_wrapper {
   position: fixed;
-  width: 80vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
   top: 50%;
   left: 50%;
   z-index: 110;

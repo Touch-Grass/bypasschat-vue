@@ -1,6 +1,6 @@
 <template>
   <div class="chat_list_wrapper" @click="selectedChat">
-    <img :src="chat.image" class="chat-img" alt="chat image" />
+    <img :src="chat.image" class="chat-img" />
     <p>{{ chat.name }}</p>
   </div>
 </template>
@@ -36,9 +36,8 @@ function initChatSelect(chat_id: string = props.chat_id): void {
   const chatRef = fbref(database, `Chats/${chat_id}`);
   onValue(chatRef, (snapshot) => {
     const data = snapshot.val();
-    chat.value.name = data.name;
-    chat.value.image = data.image;
-    console.log("Updated chat, name is now: " + chat.value.image);
+    chat.value.name = data?.name;
+    chat.value.image = data?.image;
   });
 }
 

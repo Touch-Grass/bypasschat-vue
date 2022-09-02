@@ -2,8 +2,8 @@
   <div class="list_wrapper">
     <div class="upper_wrapper">
       <UserInfo
-        @toggleModal="emits('toggleModal', 'friendsMenu')"
         :userData="props.userData"
+        @toggleFriendsModal="toggleFriendsMenu"
       ></UserInfo>
       <div class="reverse">
         <img
@@ -20,8 +20,11 @@
     <!-- <div class="block mt-1 h-line"></div> -->
     <div class="lower_wrapper">
       <div class="chat_select_wrapper">
-        <div v-for="chat in props.chats" :style="{order: chat.order}">
-          <ChatSelect :chat_id="chat.id" @selectedChat="changeChat"></ChatSelect>
+        <div v-for="chat in props.chats" :style="{ order: chat.order }">
+          <ChatSelect
+            :chat_id="chat.id"
+            @selectedChat="changeChat"
+          ></ChatSelect>
         </div>
       </div>
     </div>
@@ -30,12 +33,19 @@
     </div> -->
   </div>
 
+  <Modal :showModal="friendsMenu" @toggleFriendsModal="toggleFriendsMenu">
+    Whats up modal makers!!
+  </Modal>
+  <!-- <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu"
+    >This is a cool modal!</Modal
+  > -->
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import ChatSelect from "./ChatSelect.vue";
 import UserInfo from "./UserInfo.vue";
+import Modal from "../../modal/Modal.vue";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
 const chatInfo: string[] = ["123", "132"];
@@ -54,6 +64,16 @@ interface Emits {
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 const settings_icon = ref();
+
+const friendsMenu: Ref<boolean> = ref(false);
+function hideFriendsMenu(): void {
+  friendsMenu.value = false;
+}
+
+function toggleFriendsMenu() {
+  console.log("Toggling friends menu on emit");
+  friendsMenu.value = !friendsMenu.value;
+}
 
 chatInfo.push("231");
 
@@ -80,7 +100,6 @@ function changeChat(id: string): void {
 function toggleSettings(): void {
   emits("toggleSettings");
 }
-
 
 // // let userData: any = useUserData(props.userData);
 // let userData = props.userData;
@@ -155,7 +174,6 @@ function toggleSettings(): void {
   height: 60px;
   margin-bottom: 10px;
 }
-
 </style>
 
 <style>
