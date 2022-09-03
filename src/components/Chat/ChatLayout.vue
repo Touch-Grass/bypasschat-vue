@@ -48,9 +48,7 @@ import {
 } from "firebase/database";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
-import SettingsMenu from "./Menus/SettingsMenu.vue";
 import ModalLayout from "../modal/ModalLayout.vue";
-import { stringLength } from "@firebase/util";
 
 interface Props {
   // todo: fix this lol.

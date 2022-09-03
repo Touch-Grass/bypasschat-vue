@@ -1,33 +1,59 @@
-<!-- <script lang="ts">
-export function useUserID(user: any | null) {
-  // state encapsulated and managed by the composable
-  let userData = {
-    id: ref(user.uid),
-    name: ref("Bob"),
-    email: ref("bob@gmail.com"),
-    image: ref("https://picsum.photos/200/300"),
-  };
+<template>
+  <h2 class="text-center font-semibold text-3xl lg:text-4xl text-gray-800">
+    Login
+    <h5
+      v-show="signInError"
+      class="error_signing_in text-red-800 text-base block mt-2 font-extrabold"
+    >
+      Error Signing In!
+    </h5>
+  </h2>
+  <form @submit.prevent="Submit">
+    <label
+      for="email"
+      class="block text-xs font-semibold text-gray-600 uppercase py-2"
+    >
+      <span>Email</span>
+    </label>
+    <input
+      v-model="input_email"
+      id="email"
+      placeholder="Email"
+      type="email"
+      class="block w-full py-3 px-1 mt-2 text-gray-500 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md placeholder:text-center"
+      autocomplete="email"
+      required
+    />
 
-  // a composable can update its managed state over time.
-  function updateUserInfo() {
-    userData.id.value = user?.uid;
-    userData.name.value = user?.displayName;
-    userData.email.value = user?.email;
-    userData.image.value = user?.photoURL;
-  }
+    <label
+      for="password"
+      class="block mt-2 text-xs font-semibold text-gray-600 uppercase py-2"
+    >
+      <span>Password</span>
+    </label>
+    <input
+      v-model="input_password"
+      id="password"
+      placeholder="Password"
+      type="password"
+      class="block w-full py-3 px-1 mt-2 mb-4 text-gray-500 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md placeholder:text-center"
+      autocomplete="current-password"
+      required
+    />
 
-  // a composable can also hook into its owner component's
-  // lifecycle to setup and teardown side effects.
-  onMounted(() => window.addEventListener("mousemove", updateUserInfo));
-  onUnmounted(() => window.removeEventListener("mousemove", updateUserInfo));
+    <button
+      :class="{ fadeIn: disabled }"
+      type="submit"
+      class="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none"
+    >
+      Login
+    </button>
+    <slot></slot>
+  </form>
+</template>
 
-  // expose managed state as return value
-  return { userData };
-}
-</script> -->
-
-<script lang="ts" setup>
-import { ref, onMounted, onUnmounted, Ref } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, Ref } from "vue";
 import { auth, database } from "../../assets/typescript/firebase";
 import {
   signInWithEmailAndPassword,
@@ -35,9 +61,7 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { ref as fbref, onValue } from "firebase/database";
-import { mainModule } from "process";
-import { sign } from "crypto";
-let loggedIn: boolean = false;
+
 const signInError = ref(false);
 const formBase: Ref<HTMLDivElement | undefined> = ref();
 const input_email = ref("");
@@ -49,12 +73,8 @@ interface Emits {
   (e: "userData", userData: object): void;
 }
 
-interface Props {
-  renderLabels?: boolean;
-}
-
 const emits = defineEmits<Emits>();
-const props = defineProps<Props>();
+
 /**
  * Signs into the firebase
  */
@@ -66,10 +86,7 @@ function signInAuth(email: any, password: any) {
   console.log(password);
   console.groupEnd();
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential: any) => {
-      // const user = userCredential.user;
-      // alert("Signed in!");
-    })
+    .then((userCredential: any) => {})
     .catch((error) => {
       signInError.value = true;
       disabled.value = true;
@@ -93,7 +110,7 @@ function checkSignIn(): void {
       console.log("User signed in!");
       const uid = user.uid;
       // Sends info to the firebase
-      onValue(fbref(database, `/Users/${uid}`), (data) => {
+      onValue(fbref(database, `/Users/${uid}`), (data: any) => {
         if (!data) {
           signInError.value = true;
           disabled.value = true;
@@ -111,102 +128,25 @@ function checkSignIn(): void {
           image: data.val().image,
         };
         emits("userData", userData);
-        loggedIn = true;
-        emits("loggedIn", loggedIn);
+        emits("loggedIn", true);
       });
     } else {
       console.log("User signed out!");
-      loggedIn = false;
-      emits("loggedIn", loggedIn);
+      emits("loggedIn", false);
     }
   });
 }
 
 onMounted(() => {
-  // // Testing only emit
-  // let userData = {
-  //   id: "abcd1234",
-  //   name: "Bob",
-  //   email: "bob@gmail.com",
-  //   image: "https://picsum.photos/200/300",
-  // };
-  // emits("userData", userData);
-  // loggedIn = true;
-  // emits("loggedIn", loggedIn);
-  // auth.signOut();
   checkSignIn();
 });
 </script>
 
-<template>
-  <div class="flex flex-col h-screen">
-    <div class="grid place-items-center mx-2 my-auto">
-      <div
-        ref="formBase"
-        class="px-[3rem] py-[0.8rem] bg-white shadow-2xl rounded-lg"
-      >
-        <h2
-          class="text-center font-semibold text-3xl lg:text-4xl text-gray-800"
-        >
-          <slot>Login</slot>
-          <h5
-            v-show="signInError"
-            class="error_signing_in text-red-800 text-base block mt-2 font-extrabold"
-          >
-            Error Signing In!
-          </h5>
-        </h2>
-        <form @submit.prevent="Submit">
-          <label
-            for="email"
-            class="block text-xs font-semibold text-gray-600 uppercase py-2"
-            ><span v-if="renderLabels">Email</span></label
-          >
-          <input
-            v-model="input_email"
-            id="email"
-            placeholder="Email"
-            type="email"
-            class="block w-full py-3 px-1 mt-2 text-gray-500 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md placeholder:text-center"
-            autocomplete="email"
-            required
-          />
-
-          <label
-            for="password"
-            class="block mt-2 text-xs font-semibold text-gray-600 uppercase py-2"
-          >
-            <span v-if="renderLabels">Password</span></label
-          >
-          <input
-            v-model="input_password"
-            id="password"
-            placeholder="Password"
-            type="password"
-            class="block w-full py-3 px-1 mt-2 mb-4 text-gray-500 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md placeholder:text-center"
-            autocomplete="current-password"
-            required
-          />
-
-          <button
-            :class="{ fadeIn: disabled }"
-            type="submit"
-            class="w-full py-3 mt-10 bg-gray-800 rounded-sm font-medium text-white uppercase focus:outline-none hover:bg-gray-700 hover:shadow-none"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <style scoped>
-.fadeIn {
-  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  transform: translate3d(0, 0, 0);
+.form_switcher {
+  cursor: pointer;
+  color: darkred;
 }
-
 @keyframes shake {
   10%,
   90% {

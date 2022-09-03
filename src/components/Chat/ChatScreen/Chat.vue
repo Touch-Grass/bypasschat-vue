@@ -68,15 +68,19 @@ const props = defineProps<Props>();
 const messages: Ref<string[]> = ref([]);
 const chat_users: Ref<string[]> = ref([]);
 const message_input = ref("");
-const chat_messages_wrapper = ref();
 
 const chat = {
   name: ref(""),
   type: ref(""),
 };
 
-onMounted(() => loadMessages());
+loadMessages();
 
+const chat_messages_wrapper = ref();
+onMounted(() => {
+  chat_messages_wrapper.value.scrollTop =
+    chat_messages_wrapper.value.scrollHeight;
+});
 /**
  * Loads all messages in chat from firebase
  */
@@ -84,6 +88,7 @@ function loadMessages(): void {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
   onChildAdded(messagesRef, (data: DataSnapshot) => {
     if (data.key) {
+      // chat_messages_wrapper.value.scrollIntoView();
       messages.value.push(data.key);
     }
 

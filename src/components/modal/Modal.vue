@@ -35,8 +35,7 @@ const props = defineProps<Props>();
   left: 50%;
   z-index: 110;
 
-  /* background-color: var(--d-light-gray); */
-  background-color: red;
+  background-color: var(--d-light-gray);
   transform: translate(-50%, -50%);
 }
 </style>

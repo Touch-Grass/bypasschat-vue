@@ -1,5 +1,5 @@
 <template>
-  <div class="message" :class="message.side.value">
+  <div class="message" ref="messageHTML" :class="message.side.value">
     <img :src="message.image.value" class="msg-img" />
     <div class="msg-bubble">
       <div class="msg-info">
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from "vue";
+import { Ref, ref, onMounted } from "vue";
 // import { Stringish, database, ref, onValue } from "../../main";
 import { Stringish } from "../../../main";
 import {
@@ -55,6 +55,13 @@ const message: MessageData = {
 };
 
 initMessage();
+
+const messageHTML = ref();
+onMounted(() => {
+  messageHTML.value.scrollIntoView({
+    behavior: "smooth",
+  });
+});
 
 function initMessage(
   msg_id: string = props.msg_id,

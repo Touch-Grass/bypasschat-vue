@@ -32,7 +32,7 @@ import Modal from "./Modal.vue";
 import SettingsMenu from "./Menus/SettingsMenu.vue";
 import FriendsMenu from "./Menus/FriendsMenu.vue";
 import ProfileMenu from "./Menus/ProfileMenu.vue";
-import NewChatMenu from "./Menus/ProfileMenu.vue";
+import NewChatMenu from "./Menus/NewChatMenu.vue";
 
 type ModalDataType = Record<string, boolean>;
 

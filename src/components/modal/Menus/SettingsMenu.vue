@@ -8,15 +8,51 @@
       </div>
 
       <div class="settings_menu_items_wrapper">
-        <div class="settings_menu_section one"><p>1</p></div>
-        <div class="settings_menu_section two"><p>2</p></div>
-        <div class="settings_menu_section three"><p>3</p></div>
+        <div class="settings_menu_section one">
+          <label class="mr-5 input_label">Message Glow</label>
+          <ToggleInput
+            :user_id="props.userData.id"
+            property="msgGlow"
+            :default="true"
+          />
+        </div>
+        <div class="mt-3"></div>
+        <div class="settings_menu_section two">
+          <label class="mr-5 input_label"
+            >Light Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label
+          >
+          <ToggleInput
+            :user_id="props.userData.id"
+            property="theme"
+            :default="false"
+          />
+        </div>
+        <div class="mt-3"></div>
+        <div class="settings_menu_section two">
+          <label class="mr-5 input_label">Message Color</label>
+          <ColorInput
+            :user_id="props.userData.id"
+            property="msgCol"
+            default="#4798f5"
+          >
+            <datalist id="presetColors">
+              <option value="#4653c4" />
+              <option value="#579ffb" />
+              <option value="#F8C8DC" />
+              <option value="#52D452" />
+              <option value="#FF6961" />
+            </datalist>
+          </ColorInput>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ToggleInput from "./Settings/ToggleInput.vue";
+import ColorInput from "./Settings/ColorInput.vue";
+
 interface Props {
   userData: any;
 }
@@ -25,14 +61,33 @@ const props = defineProps<Props>();
 </script>
 
 <style>
+.input_label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color);
+}
+
 .ModalName {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--d-text);
 }
+.message_color {
+  border: transparent;
+  padding: transparent;
+  background-color: transparent;
+}
 </style>
 
 <style scoped>
+input[type="color"]::-moz-color-swatch,
+input[type="color"]::-webkit-color-swatch {
+  border: transparent;
+  outline: transparent;
+  padding: 0;
+  margin: 0;
+}
+
 .settings_menu {
   width: 100%;
   height: 100%;
@@ -45,19 +100,18 @@ const props = defineProps<Props>();
 }
 
 .settings_menu_items_wrapper {
-  /* controls how much of the settings menu this should take up */
   width: 100%;
-  background-color: orange;
+  background-color: var(--d-gray);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 .settings_menu_categories {
-  /* controls how much of the settings menu this should take up ( value / 2 is total width) */
   width: 25%;
-  background-color: blue;
+  background-color: var(--d-light-gray);
   flex-direction: column;
   display: flex;
   justify-content: flex-start;
@@ -66,6 +120,23 @@ const props = defineProps<Props>();
   border-bottom-left-radius: 8px;
 }
 
+.settings_menu_categories > div {
+  cursor: pointer;
+  width: 95%;
+}
+.settings_menu_categories > div:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-top: 5px;
+}
+.settings_menu_categories > div:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.settings_menu_categories > div:hover {
+  background-color: var(--d-gray);
+}
 .settings_menu_inner_wrapper {
   display: flex;
   width: 100%;

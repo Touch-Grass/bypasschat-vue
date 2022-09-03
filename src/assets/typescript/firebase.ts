@@ -32,24 +32,3 @@ export const app: FirebaseApp = initializeApp(firebaseConfig);
 export const database: Database = getDatabase(app);
 // Assigns the authentication to the variable "auth"
 export const auth: Auth = getAuth(app);
-
-// set(ref(database, "Testing"), {
-//     test: "Lets Go!",
-//   });
-
-// export {
-//   app,
-//   database,
-//   auth,
-//   // Auth
-//   signInWithEmailAndPassword,
-//   createUserWithEmailAndPassword,
-//   onAuthStateChanged,
-//   // Database
-//   getDatabase,
-//   ref,
-//   set,
-//   push,
-//   onValue,
-//   Database,
-// };
