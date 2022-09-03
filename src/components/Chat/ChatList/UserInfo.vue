@@ -10,8 +10,24 @@
 
   <div ref="dropdownMenu" v-show="dropdownOpen">
     <div class="dropdown_wrapper shadow-2xl">
-      <li @click="toggleProfileMenu">Profile</li>
-      <li @click="toggleFriendsMenu">Friends</li>
+      <li
+        @click="
+          () => {
+            emits('toggleModal', 'profile', true);
+          }
+        "
+      >
+        Profile
+      </li>
+      <li
+        @click="
+          () => {
+            emits('toggleModal', 'friends', true);
+          }
+        "
+      >
+        Friends
+      </li>
       <li @click="signOut">Logout</li>
     </div>
   </div>
@@ -27,8 +43,7 @@ interface Props {
   userData: any;
 }
 interface Emits {
-  // (e: "toggleModal", selector: string): void;
-  (e: "toggleFriendsModal"): void;
+  (e: "toggleModal", selector: string, mode: boolean): void;
 }
 
 const emits = defineEmits<Emits>();
@@ -46,14 +61,7 @@ function toggleProfileMenu(): void {
   console.log("toggleProfileMenu");
 }
 
-function toggleFriendsMenu(): void {
-  // console.log("toggleFriendsMenu", friendsMenu.value);
-  // console.log(friendsMenu.value);
-  // friendsMenu.value = !friendsMenu.value;
-  // emits("toggleFriendsModal", friendsMenu.value);
-  console.log("toggling friends menu");
-  emits("toggleFriendsModal");
-}
+function toggleFriendsMenu(): void {}
 function signOut(): void {
   auth.signOut();
   location.reload();

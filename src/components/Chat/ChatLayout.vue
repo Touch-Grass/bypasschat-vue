@@ -1,5 +1,5 @@
 <template>
-  <div @click="dismissSettings($event)" class="main_wrapper">
+  <div class="main_wrapper">
     <div v-if="props.userData.id === null" class="not_logged_in">
       <h1>Error, you are not logged in!</h1>
       <p>
@@ -9,13 +9,12 @@
     </div>
 
     <div v-if="props.userData.id !== null" class="chat_selector">
-      <!-- <Modal @toggledVisible="false" :showModal="true"></Modal> -->
       <ChatList
         :userData="props.userData"
         :chats="chats"
         @selectedChat="changeChat"
         @toggleSettings="toggleSettings"
-        @toggleModal="toggleModal"
+        @toggleModal="toggleModals"
       ></ChatList>
     </div>
 
@@ -29,7 +28,11 @@
     <SettingsMenu v-show="settings_open" />
   </div>
 
-  <!-- <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu" class="z-1000">This is a cool modal!</Modal> -->
+  <ModalLayout
+    :userData="props.userData"
+    :modalData="modalData"
+    @toggleModal="toggleModals"
+  ></ModalLayout>
 </template>
 
 <script lang="ts" setup>
@@ -46,7 +49,8 @@ import {
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 import SettingsMenu from "./Menus/SettingsMenu.vue";
-import Modal from "../modal/Modal.vue";
+import ModalLayout from "../modal/ModalLayout.vue";
+import { stringLength } from "@firebase/util";
 
 interface Props {
   // todo: fix this lol.
@@ -59,19 +63,32 @@ const chats: any[] = [];
 const settings_open = ref(false);
 const selected_chat = ref("");
 
-function toggleModal(selector: string) {
-  console.log("Toggled modal");
-  console.log(selector);
-}
+// type TypeModalData = {
+//   settings: boolean;
+//   friends: boolean;
+//   newChat: boolean;
+// };
 
-function toggleFriendsModal(e: Event) {
-  console.log("toggleFriendsModal");
-  console.log(e);
-}
+type TypeModalData = Ref<Record<string, boolean>>;
 
-const friendsMenu: Ref<boolean> = ref(false);
-function hideFriendsMenu(): void {
-  friendsMenu.value = false;
+const modalData: TypeModalData = ref({
+  settings: false,
+  friends: false,
+  profile: false,
+  newChat: false,
+});
+
+function toggleModals(selector: string, mode: boolean): void {
+  console.log(`Toggled the ${selector} modal to ${mode}`);
+  if (selector === "all") {
+    modalData.value.settings = mode;
+    modalData.value.friends = mode;
+    modalData.value.profile = mode;
+    modalData.value.newChat = mode;
+  } else {
+    modalData.value[selector] = mode;
+    console.log(modalData.value[selector]);
+  }
 }
 
 function changeChat(id: string): void {
@@ -80,11 +97,6 @@ function changeChat(id: string): void {
 
 function reloadLocation(): void {
   location.reload();
-}
-
-function dismissSettings(e: Event): void {
-  if (e.target === document.querySelector(".settings_icon")) return;
-  settings_open.value = false;
 }
 
 getChats();

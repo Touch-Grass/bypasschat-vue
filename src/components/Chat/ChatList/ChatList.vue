@@ -3,7 +3,7 @@
     <div class="upper_wrapper">
       <UserInfo
         :userData="props.userData"
-        @toggleFriendsModal="toggleFriendsMenu"
+        @toggleModal="(selector, mode) => $emit('toggleModal', selector, mode)"
       ></UserInfo>
       <div class="reverse">
         <img
@@ -11,7 +11,11 @@
           ref="settings_icon"
           class="mr-1 settings_icon"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAB/ElEQVRYhe2XO0sDQRSFv5jCIlj7iiAEFEQbbVXsI9hY2qfUQmNno+nyH+zzB7RRSEoVxVqxC8Qqxig+mrXIWXaS7E5210QRvDDM7JlzHzNz57HwL39UaoDTUWo/5Tzt49wtk1GNDcUIYEn1CZBQOe3oG2gAK6pvDOxa9WoMe74yDVwBB8CMsAWggjfdmwZ/08DL4iLdA9majhJAifa1vQXe1L4DtoGUwU8JuxPnTTqmjVJY52tSaADHQF3fn8Au9mUbEudTOnXZaOh7rZfzpBF5XtgwsAEshx2BuBvSRbbcmUzaFHN4o01beOvAGfACNNXOWvhpvFnJ2QKYBR7w1jrjwzki+Bw49OFn8HLjQT6sMgpcSOERbxdAa+QO8E5rrcdV9oQ5tM/EjGw4sjnay7krKaAqxTkDPxe266PjrvOZgc0Jq9K+a0LJk5RHDKwpbMyHP6a+ZwMbEfYU5CTqSeioTvj0JTs4QbxQAaSAV7WnDPxS9ZaPjotdGZi7k16JsAS2JMziJWEemFDZBz7oTsIMEZMwzDY8ZIDbMOxBlKWV7U36fBD9+lEM9stoj96XUZ5vXEau2K7je2CH7ut4R33fvo4h+EFSNgzaHiTzwmM/SGxSlKOCgRWEFaMai/MmrKheNDD3MVqOYS+yTBJ8Dkz8RADwyz8m/9JX+QLRONJ+SbNmWgAAAABJRU5ErkJggg=="
-          @click="toggleSettings"
+          @click="
+            () => {
+              emits('toggleModal', 'settings', true);
+            }
+          "
         />
       </div>
       <!-- <button @click="addChat" class="bg-blue-500">+</button> -->
@@ -33,9 +37,9 @@
     </div> -->
   </div>
 
-  <Modal :showModal="friendsMenu" @toggleFriendsModal="toggleFriendsMenu">
+  <!-- <Modal :showModal="friendsMenu" @toggleFriendsModal="toggleFriendsMenu">
     Whats up modal makers!!
-  </Modal>
+  </Modal> -->
   <!-- <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu"
     >This is a cool modal!</Modal
   > -->
@@ -51,6 +55,7 @@ import { ref as fbref, push, set, ThenableReference } from "firebase/database";
 const chatInfo: string[] = ["123", "132"];
 
 interface Props {
+  // Todo: make a record type for these.
   userData: any;
   chats: any[];
 }
@@ -58,7 +63,7 @@ interface Props {
 interface Emits {
   (e: "selectedChat", id: string): void;
   (e: "toggleSettings"): void;
-  (e: "toggleModal", selector: string): void;
+  (e: "toggleModal", selector: string, mode: boolean): void;
 }
 
 const emits = defineEmits<Emits>();
@@ -100,35 +105,6 @@ function changeChat(id: string): void {
 function toggleSettings(): void {
   emits("toggleSettings");
 }
-
-// // let userData: any = useUserData(props.userData);
-// let userData = props.userData;
-
-// console.group("userData values");
-// // console.log(useUserData(props.userData));
-// console.log(userData);
-// console.groupEnd();
-
-// watch(props.userData, (newVal: object) => {
-//   console.log("Something changed");
-//   if (newVal) {
-//     userData = useUserData(props.userData);
-//   }
-//   // if (newVal) {
-//   //   console.log("Something changed");
-//   //   // console.log("Watched and found userData update!");
-//   //   // console.log(newVal);
-//   //   // console.log(JSON.parse(JSON.stringify(newVal)).userData.name);
-//   // }
-// });
-// const userData: any = useUserData(props.userData);
-// console.log(userData);
-// const userData = JSON.parse(JSON.stringify(props.userData)).userData;
-// const userData = props.userData;
-
-// console.group("userData");
-// console.log(userData);
-// console.groupEnd();
 </script>
 
 <style scoped>

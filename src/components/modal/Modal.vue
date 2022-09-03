@@ -1,6 +1,5 @@
 <template>
   <div class="modal" v-show="showModal">
-    <div class="modal-bg" @click="hideModal"></div>
     <div class="modal_wrapper shadow-2xl rounded-lg">
       <slot></slot>
     </div>
@@ -19,10 +18,6 @@ interface Emits {
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-function hideModal(): void {
-  emits("toggledVisible", false);
-}
-
 // const props = defineProps<Props>();
 </script>
 <style scoped>
@@ -31,20 +26,11 @@ function hideModal(): void {
 
   isolation: isolate;
 }
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100;
-  backdrop-filter: blur(4px);
-  animation: unblur 200ms ease-in-out;
-}
+
 .modal_wrapper {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 80vw;
+  height: 80vh;
   top: 50%;
   left: 50%;
   z-index: 110;
@@ -52,14 +38,5 @@ function hideModal(): void {
   /* background-color: var(--d-light-gray); */
   background-color: red;
   transform: translate(-50%, -50%);
-}
-
-@keyframes unblur {
-  0% {
-    opacity: 25%;
-  }
-  100% {
-    opacity: 100%;
-  }
 }
 </style>
