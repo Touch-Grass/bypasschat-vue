@@ -27,7 +27,7 @@ const props = defineProps<Props>();
 .new_chat_button {
   background: var(--d-blue);
   border: transparent;
-  padding: 10px;
+  padding: 0.75rem;
 }
 .new_chat_button:active {
   background: var(--d-blue-clicked);

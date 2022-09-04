@@ -1,13 +1,21 @@
 <template>
   <div class="profile_menu_wrapper">
     <div class="profile_view">
-      <img
-        @mouseover="hover = true"
-        @mouseleave="hover = false"
-        :src="props.userData.image"
-        class="profile_image"
-      />
-      <span v-show="hover" class="profile_image_edit_text">Edit</span>
+      <div class="image_wrapper">
+        <img
+          @mouseover="hover = true"
+          @mouseleave="hover = false"
+          :src="props.userData.image"
+          class="profile_image"
+        />
+        <input type="file" id="fileImageUpload" />
+        <label
+          v-show="hover"
+          for="fileImageUpload"
+          class="profile_image_edit_text"
+          >Edit</label
+        >
+      </div>
       <div class="h-[125px] flex items-center">
         <div class="profile_name">{{ props.userData.name }}</div>
       </div>
@@ -15,10 +23,25 @@
     </div>
     <div class="edit_details_view">
       <div class="h-[calc(100%-125px)] w-[100%]">
-        <h2 class="mt-1 select-none input_label">Edit your information</h2>
-        <div class="mt-3"></div>
-        <input type="text" placeholder="Email" />
-        <input type="text" placeholder="Password" />
+        <div class="changed_info">
+          <h2 class="mt-1 select-none input_label">Edit information</h2>
+          <div class="mt-3"></div>
+          <input type="text" placeholder="Name" :value="props.userData.name" />
+          <br />
+          <div class="my-1"></div>
+          <input
+            type="password"
+            placeholder="password"
+            :value="props.userData.password"
+          />
+        </div>
+        <div class="enter_info">
+          <h2 class="mt-1 select-none input_label">Verify your password</h2>
+          <div class="mt-3"></div>
+          <input type="text" placeholder="Password" required />
+          <div class="my-2"></div>
+          <button class="change_info_button" type="submit">Change</button>
+        </div>
       </div>
     </div>
   </div>
@@ -103,13 +126,41 @@ input {
   height: 1px;
   background-color: #e0e0e0;
   box-shadow: 0px 0px 5px 0px white;
+  z-index: -10;
+}
+
+.enter_info {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: calc(100% - 115px);
+  align-items: center;
 }
 .profile_image_edit_text {
   position: absolute;
-  /* isolation: isolate; */
   background-blend-mode: multiply;
   font-weight: bolder;
-  transform: translate(69px, 70px);
+  transform: translate(-40px, -115px);
   z-index: 2;
+  padding: 30px;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: var(--d-gray);
+  padding: 0.25rem;
+  border-radius: 5px;
+}
+.image_wrapper > input {
+  position: absolute;
+  display: none;
+}
+.change_info_button {
+  background-color: var(--d-blue);
+  border: none;
+  padding: 0.75rem;
+}
+.change_info_button:active {
+  background-color: var(--d-blue-clicked);
 }
 </style>
