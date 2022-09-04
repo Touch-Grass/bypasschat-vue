@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import ToggleInput from "./Settings/ToggleInput.vue";
 import ColorInput from "./Settings/ColorInput.vue";
+import { changeProp } from "../../../assets/typescript/settings/changeRoot";
 
 interface Props {
   userData: any;

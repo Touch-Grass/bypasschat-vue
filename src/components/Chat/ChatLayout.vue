@@ -13,7 +13,6 @@
         :userData="props.userData"
         :chats="chats"
         @selectedChat="changeChat"
-        @toggleSettings="toggleSettings"
         @toggleModal="toggleModals"
       ></ChatList>
     </div>
@@ -25,7 +24,6 @@
         :userData="props.userData"
       ></ChatScreen>
     </div>
-    <SettingsMenu v-show="settings_open" />
   </div>
 
   <ModalLayout
@@ -77,7 +75,6 @@ const modalData: TypeModalData = ref({
 });
 
 function toggleModals(selector: string, mode: boolean): void {
-  console.log(`Toggled the ${selector} modal to ${mode}`);
   if (selector === "all") {
     modalData.value.settings = mode;
     modalData.value.friends = mode;
@@ -85,7 +82,6 @@ function toggleModals(selector: string, mode: boolean): void {
     modalData.value.newChat = mode;
   } else {
     modalData.value[selector] = mode;
-    console.log(modalData.value[selector]);
   }
 }
 
@@ -100,43 +96,16 @@ function reloadLocation(): void {
 getChats();
 
 function getChats() {
-  //Commented stuff below just adds chat to user, pls dont uncomment
-  // let newChatPush = push(fbref(database, `Users/${props.userData.id}/Chats`));
-  // set(newChatPush, {
-  //   id: "-NACSuF0Udj7dUHacsGW",
-  // });
   const userChatsRef: DatabaseReference = fbref(
     database,
     `Users/${props.userData.id}/Chats`,
   );
   onChildAdded(userChatsRef, (data: DataSnapshot) => {
-    // console.log(data.val().id);
     chats.push({
       id: data.val().id,
       order: data.val().order,
     });
   });
-}
-
-function toggleSettings(): void {
-  settings_open.value = !settings_open.value;
-  console.log(`Toggled settings ${settings_open.value}`);
-}
-
-// const userData = props.userData;
-
-// const userData = ref(JSON.parse(JSON.stringify(props.userData)).userData);
-
-//DO NOTE DELETE (FOR NOW)
-// onMounted(() => {
-//   console.log("Mounted");
-//   console.log(props.userData);
-// });
-
-const message_input = ref("");
-function sendMessage(): void {
-  console.log(message_input.value);
-  message_input.value = "";
 }
 </script>
 
@@ -148,7 +117,6 @@ function sendMessage(): void {
   grid-template-columns: 250px 1fr;
   /* ^^^ Chat selector, Main Chat pannel  */
   grid-template-rows: 1fr;
-
   overflow: hidden;
 }
 </style>

@@ -79,12 +79,6 @@ const emits = defineEmits<Emits>();
  * Signs into the firebase
  */
 function signInAuth(email: any, password: any) {
-  console.groupCollapsed("Sign in credentials");
-  console.log("Email");
-  console.log(email);
-  console.log("Password");
-  console.log(password);
-  console.groupEnd();
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential: any) => {})
     .catch((error) => {
@@ -107,7 +101,6 @@ function Submit(): void {
 function checkSignIn(): void {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("User signed in!");
       const uid = user.uid;
       // Sends info to the firebase
       onValue(fbref(database, `/Users/${uid}`), (data: any) => {
@@ -131,7 +124,6 @@ function checkSignIn(): void {
         emits("loggedIn", true);
       });
     } else {
-      console.log("User signed out!");
       emits("loggedIn", false);
     }
   });

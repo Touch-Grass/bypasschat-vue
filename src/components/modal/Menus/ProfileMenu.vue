@@ -1,13 +1,12 @@
 <template>
   <div class="profile_menu_wrapper">
     <div class="profile_view">
-      <div class="image_wrapper">
-        <img
-          @mouseover="hover = true"
-          @mouseleave="hover = false"
-          :src="props.userData.image"
-          class="profile_image"
-        />
+      <div
+        class="image_wrapper"
+        @mouseover="hover = true"
+        @mouseleave="hover = false"
+      >
+        <img :src="props.userData.image" class="profile_image" />
         <input type="file" id="fileImageUpload" />
         <label
           v-show="hover"
@@ -106,17 +105,19 @@ input {
   aspect-ratio: 1/1;
   border-radius: 50%;
   width: 150px;
+  min-width: 100px;
+  min-height: auto;
   height: auto;
   margin-top: 10px;
   cursor: pointer;
   z-index: 1;
   -webkit-user-drag: false;
 }
-.profile_image:hover {
+.image_wrapper:hover > .profile_image {
   filter: brightness(65%);
 }
 .profile_name {
-  margin: 15px 0 0 15px;
+  margin: 30px 0 0 15px;
   font-weight: bold;
 }
 .line {
@@ -128,20 +129,29 @@ input {
   box-shadow: 0px 0px 5px 0px white;
   z-index: -10;
 }
+@media (max-width: 425px) {
+  .line {
+    margin-top: 100px;
+  }
+  .profile_name {
+    margin: 0px 0 0 15px;
+  }
+}
 
 .enter_info {
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-  height: calc(100% - 115px);
+  height: calc(100% - 110px);
   align-items: center;
 }
 .profile_image_edit_text {
   position: absolute;
-  background-blend-mode: multiply;
+  isolation: isolate;
+  color: white;
   font-weight: bolder;
   transform: translate(-40px, -115px);
-  z-index: 2;
+  z-index: 5;
   padding: 30px;
 }
 
@@ -150,6 +160,10 @@ input[type="password"] {
   background-color: var(--d-gray);
   padding: 0.25rem;
   border-radius: 5px;
+}
+
+.image_wrapper:hover {
+  filter: brightness(65%);
 }
 .image_wrapper > input {
   position: absolute;

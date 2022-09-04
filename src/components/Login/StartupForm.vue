@@ -7,15 +7,19 @@
       >
         <LoginForm
           v-if="toggleForm"
-          @loggedIn="(val: boolean) => emits('loggedIn', val)"
-          @userData="(data) => emits('userData', data)"
+          @loggedIn="(val: boolean) => {emits('loggedIn', val)}"
+          @userData="
+            (data) => {
+              emits('userData', data);
+            }
+          "
         >
-          <h6 @click="() => (toggleForm = false)" class="form_switch_text">
+          <h6 @click="toggleForm = false" class="form_switch_text">
             &nbsp; Don't have an account? Click here! &nbsp;
           </h6>
         </LoginForm>
         <RegisterForm v-if="!toggleForm">
-          <h6 @click="() => (toggleForm = true)" class="form_switch_text">
+          <h6 @click="toggleForm = true" class="form_switch_text">
             Already have an account? Click here!
           </h6>
         </RegisterForm>

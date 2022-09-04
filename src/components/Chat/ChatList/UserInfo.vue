@@ -28,7 +28,15 @@
       >
         Friends
       </li>
-      <li @click="() => emits('toggleModal', 'newChat', true)">New Chat</li>
+      <li
+        @click="
+          () => {
+            emits('toggleModal', 'newChat', true);
+          }
+        "
+      >
+        New Chat
+      </li>
       <li @click="signOut">Logout</li>
     </div>
   </div>
@@ -54,15 +62,9 @@ const dropdownOpen = ref(false);
 const dropdownMenu = ref();
 
 function userWrapperClicked(): void {
-  console.log("userWrapperClicked");
   dropdownOpen.value = !dropdownOpen.value;
 }
 
-function toggleProfileMenu(): void {
-  console.log("toggleProfileMenu");
-}
-
-function toggleFriendsMenu(): void {}
 function signOut(): void {
   auth.signOut();
   location.reload();

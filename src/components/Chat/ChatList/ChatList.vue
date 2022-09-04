@@ -3,9 +3,10 @@
     <div class="upper_wrapper">
       <UserInfo
         :userData="props.userData"
-        @toggleModal="(selector, mode) => $emit('toggleModal', selector, mode)"
+        @toggleModal="(selector, mode) => emits('toggleModal', selector, mode)"
       ></UserInfo>
       <div class="reverse">
+        <button></button>
         <img
           v-show="props.userData.id !== null"
           ref="settings_icon"
@@ -82,28 +83,9 @@ function toggleFriendsMenu() {
 
 chatInfo.push("231");
 
-function addChat(): void {
-  let newChatPush: ThenableReference = push(fbref(database, "/Chats"));
-  set(newChatPush, {
-    name: "New Chat",
-  });
-
-  let userChatPush: ThenableReference = push(
-    fbref(database, `/Users/${props.userData.id}/Chats`),
-  );
-  set(userChatPush, {
-    id: newChatPush.key,
-    order: 0,
-  });
-}
-
 function changeChat(id: string): void {
   console.log(`Changed the chat to ${id}`);
   emits("selectedChat", id);
-}
-
-function toggleSettings(): void {
-  emits("toggleSettings");
 }
 </script>
 
@@ -119,7 +101,6 @@ function toggleSettings(): void {
   width: 100%;
   height: 60px;
   border-bottom: 2px solid var(--d-dark-gray);
-  /* .upper_wrapper { */
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -169,20 +150,6 @@ function toggleSettings(): void {
   border: 1px solid white;
 }
 
-/* .list_wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-} */
-/* .list_wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: var(--d-gray);
-} */
 .upper_wrapper .reverse {
   display: flex;
   width: 100%;
@@ -190,14 +157,6 @@ function toggleSettings(): void {
   align-items: flex-end !important;
 }
 
-/* .list_wrapper > ul {
-  display: inline-block;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-} */
 .h-line {
   width: 100%;
   height: 1px;

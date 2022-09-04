@@ -23,8 +23,6 @@
         <div class="message_input_container">
           <input
             v-model="message_input"
-            required
-            oninvalid="this.setCustomValidity('Please enter a message')"
             class="message_input_box"
             placeholder="Message"
             type="text"
@@ -100,7 +98,7 @@ function loadMessages(): void {
 function getMessage() {
   return {
     sender: props.user_id,
-    text: message_input.value,
+    text: message_input.value.trim(),
     time: getTime(),
   };
 }
@@ -110,9 +108,11 @@ function getMessage() {
  * Calls getMessage() to get the message info about what is sent.
  */
 function sendMessage(): void {
+  // If the input is blank or the string is only spaces.
+  if (!message_input.value.trim()) return;
+
   //Calls getMessage function which returns message object
   const message = getMessage();
-  console.log(message);
 
   const messageRef = push(fbref(database, `/Chats/${props.chat_id}/Messages`));
   set(messageRef, message);
@@ -209,8 +209,8 @@ function sendMessage(): void {
   width: 100%;
   height: 60px;
 }
-.message_input_container {
-}
+/* .message_input_container {
+} */
 
 .message_button_container {
   padding: 15px 5px;

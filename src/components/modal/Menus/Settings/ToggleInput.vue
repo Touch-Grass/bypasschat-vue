@@ -18,7 +18,12 @@ interface Props {
   default: boolean;
 }
 
+interface Emits {
+  (e: "valChange", val: boolean): void;
+}
+
 const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 
 const checked = ref(props.default);
 
@@ -28,7 +33,10 @@ function initPropertyChange() {
   onValue(
     fbref(database, `Users/${props.user_id}/Settings/${props.property}`),
     (snapshot) => {
-      if (snapshot.exists()) checked.value = snapshot.val();
+      if (snapshot.exists()) {
+        checked.value = snapshot.val();
+        emits("valChange", snapshot.val());
+      }
     },
   );
 }

@@ -1,12 +1,12 @@
 <template>
-  <div class="message" ref="messageHTML" :class="message.side.value">
-    <img :src="message.image.value" class="msg-img" />
+  <div class="message" ref="messageHTML" :class="{message.value.side}">
+    <img :src="message.value.image" class="msg-img" />
     <div class="msg-bubble">
       <div class="msg-info">
-        <div class="msg-info-name">{{ message.name.value }}</div>
-        <div class="msg-info-time">{{ message.time.value }}</div>
+        <div class="msg-info-name">{{ message.name }}</div>
+        <div class="msg-info-time">{{ message.time }}</div>
       </div>
-      <div class="msg-text">{{ message.text.value }}</div>
+      <div class="msg-text">{{ message.value.text }}</div>
     </div>
   </div>
 </template>
@@ -34,67 +34,65 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-type MessageData = {
-  text: Ref<string>;
-  date: Ref<string>;
-  time: Ref<string>;
-  name: Ref<string>;
-  image: Ref<string>;
-  sender: Ref<string>;
-  side: Ref<string>;
-};
+type MessageData = Ref<{
+  text: string;
+  date: string;
+  time: string;
+  name: string;
+  image: string;
+  sender: string;
+  side: string;
+}>;
 
-const message: MessageData = {
-  text: ref(""),
-  date: ref(""),
-  time: ref(""),
-  name: ref(""),
-  image: ref(""),
-  sender: ref(""),
-  side: ref(""),
-};
-
-initMessage();
+const message: MessageData = ref({
+  text: "",
+  date: "",
+  time: "",
+  name: "",
+  image: "",
+  sender: "",
+  side: "",
+});
 
 const messageHTML = ref();
 onMounted(() => {
-  messageHTML.value.scrollIntoView({
-    behavior: "smooth",
-  });
+  messageHTML.value.scrollIntoView({ behavior: "smooth" });
 });
+
+initMessage();
 
 function initMessage(
   msg_id: string = props.msg_id,
-  chat_id: string = props.chat_id,
+  chat_id: string = props.chat_id
 ): void {
   const messageRef: DatabaseReference = fbref(
     database,
-    `Chats/${chat_id}/Messages/${msg_id}`,
+    `Chats/${chat_id}/Messages/${msg_id}`
   ); //Gets the ref or the specific message based of chat id and message id
   //   console.log(messageRef);
   onValue(messageRef, (snapshot: DataSnapshot) => {
     //On value event liddstener for the message ref, will update if message is edited at all
     const data = snapshot.val();
     if (data) {
-      message.text.value = data.text;
-      message.date.value = data.time;
-      message.sender.value = data.sender;
+      message.value.text = data.text;
+      message.value.date = data.time;
+      message.value.sender = data.sender;
       updateTime();
       // Sets the side that the message will be on.
-      message.side.value =
-        props.user_id === message.sender.value
+      message.value.side =
+        props.user_id === message.value.sender
           ? "right-message"
           : "left-message";
       const userRef: DatabaseReference = fbref(
         database,
-        `Users/${data.sender}`,
+        `Users/${data.sender}`
       ); //Ref to the user who sent the message
       // Listens for changes in the database and will run here.
       onValue(userRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {
-          message.name.value = data.name;
-          message.image.value = data.image;
+          message.value.name = data.name;
+          message.value.image = data.image;
         }
       });
     }
@@ -108,8 +106,8 @@ function initMessage(
 }
 
 function updateTime(): void {
-  if (message.date.value) {
-    message.time.value = formatTime(message.date.value);
+  if (message.value.date) {
+    message.value.time = formatTime(message.value.date);
   }
 }
 </script>

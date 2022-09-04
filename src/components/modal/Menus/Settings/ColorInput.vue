@@ -16,7 +16,12 @@ interface Props {
   default: string;
 }
 
+interface Emits {
+  (e: "valChange", val: string): void;
+}
+
 const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 
 const colorVal = ref(props.default);
 
@@ -26,7 +31,10 @@ function initPropertyChange() {
   onValue(
     fbref(database, `Users/${props.user_id}/Settings/${props.property}`),
     (snapshot) => {
-      if (snapshot.exists()) colorVal.value = snapshot.val();
+      if (snapshot.exists()) {
+        colorVal.value = snapshot.val();
+        emits("valChange", snapshot.val());
+      }
     },
   );
 }
