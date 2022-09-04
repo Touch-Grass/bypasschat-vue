@@ -1,12 +1,12 @@
 <template>
-  <div class="message" ref="messageHTML" :class="{message.value.side}">
-    <img :src="message.value.image" class="msg-img" />
+  <div class="message" ref="messageHTML" :class="message.side">
+    <img :src="message.image" class="msg-img" />
     <div class="msg-bubble">
       <div class="msg-info">
         <div class="msg-info-name">{{ message.name }}</div>
         <div class="msg-info-time">{{ message.time }}</div>
       </div>
-      <div class="msg-text">{{ message.value.text }}</div>
+      <div class="msg-text">{{ message.text }}</div>
     </div>
   </div>
 </template>
