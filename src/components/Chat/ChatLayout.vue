@@ -98,7 +98,7 @@ getChats();
 function getChats() {
   const userChatsRef: DatabaseReference = fbref(
     database,
-    `Users/${props.userData.id}/Chats`,
+    `Users/${props.userData.id}/Chats`
   );
   onChildAdded(userChatsRef, (data: DataSnapshot) => {
     chats.push({

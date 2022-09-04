@@ -49,7 +49,7 @@ function createChat(type: ChatType): void {
   });
 
   let userChatPush: ThenableReference = push(
-    fbref(database, `/Users/${props.userData.id}/Chats`),
+    fbref(database, `/Users/${props.userData.id}/Chats`)
   );
   set(userChatPush, {
     id: newChatPush.key,

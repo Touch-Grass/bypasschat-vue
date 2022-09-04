@@ -37,14 +37,14 @@ function initPropertyChange() {
         checked.value = snapshot.val();
         emits("valChange", snapshot.val());
       }
-    },
+    }
   );
 }
 
 function changeProperty() {
   set(
     fbref(database, `Users/${props.user_id}/Settings/${props.property}`),
-    checked.value,
+    checked.value
   );
 }
 </script>

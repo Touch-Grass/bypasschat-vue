@@ -35,7 +35,7 @@ function initPropertyChange() {
         colorVal.value = snapshot.val();
         emits("valChange", snapshot.val());
       }
-    },
+    }
   );
 }
 
@@ -43,7 +43,7 @@ function changeProperty() {
   console.log(colorVal.value);
   set(
     fbref(database, `Users/${props.user_id}/Settings/${props.property}`),
-    colorVal.value,
+    colorVal.value
   );
 }
 </script>
