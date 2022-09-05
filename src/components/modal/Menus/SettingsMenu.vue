@@ -56,18 +56,17 @@ import ColorInput from "./Settings/ColorInput.vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue, child } from "firebase/database";
 
-
 interface Props {
   userData: any;
 }
 
 const props = defineProps<Props>();
-  
-  onMounted(() => initSettingUpdates());
-  
+
+onMounted(() => initSettingUpdates());
+
 function initSettingUpdates() {
   const root = document.documentElement.style;
-  
+
   changeProp("msgCol", newVal =>
     root.setProperty("--right-msg-bg", newVal as string)
   );

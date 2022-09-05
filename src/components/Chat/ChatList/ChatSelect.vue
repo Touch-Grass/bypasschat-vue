@@ -35,7 +35,7 @@ initChatSelect();
  */
 function initChatSelect(chat_id: string = props.chat_id): void {
   const chatRef = fbref(database, `Chats/${chat_id}`);
-  onValue(chatRef, (snapshot) => {
+  onValue(chatRef, snapshot => {
     const data = snapshot.val();
     chat.value.name = data?.name;
     chat.value.image = data?.image;

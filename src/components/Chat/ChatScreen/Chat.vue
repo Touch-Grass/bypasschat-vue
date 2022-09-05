@@ -89,7 +89,7 @@ initChat();
 
 function initChat() {
   const chatRef = fbref(database, `Chats/${props.chat_id}`);
-  onValue(chatRef, (snapshot) => {
+  onValue(chatRef, snapshot => {
     if (snapshot.exists()) {
       chat.value = {
         name: snapshot.val().name,
