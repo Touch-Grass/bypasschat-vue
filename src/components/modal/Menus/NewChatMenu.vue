@@ -1,12 +1,14 @@
 <template>
-  <label class="input_label">Create a new chat!</label>
   <div class="new_chat_wrapper">
+    <label class="input_label">Create a New Chat</label>
+    <div class="mb-4"></div>
     <input
       type="text"
-      class="new_chat_input"
+      class="new_chat_input modal_input"
       placeholder="Enter a chat name"
       v-model="newChatName"
     />
+    <div class="my-1"></div>
     <button
       class="new_chat_button private_chat_button"
       @click="createChat(ChatType.private)"
@@ -41,15 +43,15 @@ enum ChatType {
 
 const newChatName = ref("");
 
-function createChat(type: ChatType): void {
-  console.log(type);
-  let newChatPush: ThenableReference = push(fbref(database, "/Chats"));
+async function createChat(type: ChatType): Promise<void> {
+  if (!newChatName.value.trim()) return;
+  const newChatPush: ThenableReference = push(fbref(database, "/Chats"));
   set(newChatPush, {
     name: newChatName.value,
   });
 
   let userChatPush: ThenableReference = push(
-    fbref(database, `/Users/${props.userData.id}/Chats`),
+    fbref(database, `/Users/${props.userData.id}/Chats`)
   );
   set(userChatPush, {
     id: newChatPush.key,
@@ -66,6 +68,10 @@ function createChat(type: ChatType): void {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.new_chat_input {
+  background-color: var(--d-gray);
+  padding: 0.75rem;
 }
 .new_chat_button {
   background: var(--d-blue);

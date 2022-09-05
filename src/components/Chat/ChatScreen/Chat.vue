@@ -1,7 +1,7 @@
 <template>
   <div class="chat_wrapper">
     <div class="chat_head shadow-lg">
-      <img :src="chat.image" class="w-10 h-10" />
+      <img :src="chat.image ?? defaultChatImage" class="absolute w-10 h-10" />
       <p>
         {{ chat.name }}
       </p>
@@ -54,6 +54,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getTime } from "../../../assets/typescript/time";
+import { defaultChatImage } from "../../../assets/typescript/Variables";
 
 interface Props {
   chat_id: string;
@@ -86,15 +87,15 @@ onMounted(() => {
 
 initChat();
 
-function initChat(){
+function initChat() {
   const chatRef = fbref(database, `Chats/${props.chat_id}`);
   onValue(chatRef, (snapshot) => {
-    if(snapshot.exists()){
+    if (snapshot.exists()) {
       chat.value = {
         name: snapshot.val().name,
         image: snapshot.val().image,
         type: snapshot.val().type,
-      };   
+      };
     }
   });
 }
@@ -154,16 +155,23 @@ function sendMessage(): void {
 <style scoped>
 /* Chat header */
 .chat_head {
+  position: absolute;
   background-color: var(--d-light-gray);
   border-bottom: 2px solid var(--d-dark-gray);
-  position: absolute;
   top: 0;
   width: calc(100% - 250px);
   height: 60px;
-  backdrop-filter: blur(10px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.chat_head p {
-  text-align: center;
+
+.chat_head img {
+  position: relative;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
 }
 </style>
 

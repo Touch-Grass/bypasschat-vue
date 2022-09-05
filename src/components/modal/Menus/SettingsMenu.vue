@@ -56,44 +56,50 @@ import ColorInput from "./Settings/ColorInput.vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue, child } from "firebase/database";
 
+const root = document.documentElement.style;
+
 interface Props {
   userData: any;
 }
 
 const props = defineProps<Props>();
 
-onMounted(() => {
-  initSettingUpdates();
-})
-
-//Use github copilot to explain code below
+onMounted(() => initSettingUpdates());
 
 function initSettingUpdates() {
-  changeProp("msgCol", (newVal) => {
-    document.documentElement.style.setProperty("--right-msg-bg", newVal);
-  });
-
-  changeProp("msgGlow", (newVal) => {
-    if (newVal) {
-      document.documentElement.style.setProperty("--msg-glow", "0px");
-    } else {
-      document.documentElement.style.setProperty("--msg-glow", "-10px");
-    }
-  });
-  
-  
+  changeProp("msgCol", newVal =>
+    root.setProperty("--right-msg-bg", newVal as string)
+  );
+  changeProp("msgGlow", newVal =>
+    newVal
+      ? root.setProperty("--msg-glow", "0px")
+      : root.setProperty("--msg-glow", "-8px")
+  );
+  changeProp("theme", newVal =>
+    newVal
+      ? (root.setProperty("--d-gray", "white"),
+        root.setProperty("--d-dark-gray", "white"),
+        root.setProperty("--d-light-gray", "white"),
+        root.setProperty("--d-tint-gray", "white"))
+      : (root.setProperty("--d-gray", "rgb(47, 49, 54)"),
+        root.setProperty("--d-dark-gray", "rgb(32, 34, 37)"),
+        root.setProperty("--d-light-gray", "rgb(54, 57, 63)"),
+        root.setProperty("--d-tint-gray", "rgb(66, 70, 77)"))
+  );
 }
 
-function changeProp(prop: string, applyProp: (newVal: any) => void) {
+function changeProp(
+  prop: string,
+  applyProp: (newVal: boolean | string) => void
+) {
   const settingsRef = fbref(database, `Users/${props.userData.id}/Settings`);
 
-  onValue(child(settingsRef, prop), (snapshot) => {
+  onValue(child(settingsRef, prop), snapshot => {
     if (snapshot.exists()) {
       applyProp(snapshot.val());
     }
   });
 }
-
 </script>
 
 <style>

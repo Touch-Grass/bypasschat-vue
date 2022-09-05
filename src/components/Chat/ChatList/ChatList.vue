@@ -6,7 +6,15 @@
         @toggleModal="(selector, mode) => emits('toggleModal', selector, mode)"
       ></UserInfo>
       <div class="reverse">
-        <button></button>
+        <img
+          @click="
+            () => {
+              emits('toggleModal', 'newChat', true);
+            }
+          "
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAdElEQVRIiWNgGAUkAg8GBobHDAwM/8nEj6Bm4ASPKDAc2RKcAKaIXIChn4kCw4gCpFpAsg8HnQ8GnwUsBORxhTe6OCMuAwbcB+gu+49DHCcY+pE84HGADogOexigexA9htLkFtXIZmAFHgyU1QkEK5xRgAEAw+tLFxSOpJUAAAAASUVORK5CYII="
+          class="new_chat_button"
+        />
         <img
           v-show="props.userData.id !== null"
           ref="settings_icon"
@@ -89,6 +97,14 @@ function changeChat(id: string): void {
 }
 </script>
 
+<style>
+.settings_icon,
+.user_wrapper,
+.new_chat_button {
+  cursor: pointer;
+}
+</style>
+
 <style scoped>
 .list_wrapper {
   background-color: var(--d-gray);
@@ -104,6 +120,10 @@ function changeChat(id: string): void {
   display: flex;
   align-items: center;
   flex-direction: row;
+}
+
+.new_chat_button {
+  margin-bottom: 3.9px;
 }
 
 .lower_wrapper {

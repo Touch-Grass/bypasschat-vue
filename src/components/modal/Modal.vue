@@ -20,6 +20,17 @@ const props = defineProps<Props>();
 
 // const props = defineProps<Props>();
 </script>
+<style>
+.modal_input {
+  background-color: var(--d-light-gray);
+  padding: 0.25rem;
+  border-radius: 3px;
+}
+.modal_input:focus {
+  border: transparent;
+  outline: transparent;
+}
+</style>
 <style scoped>
 .modal {
   transition: 500ms;

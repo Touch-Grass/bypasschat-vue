@@ -31,13 +31,19 @@
           <input
             type="password"
             placeholder="password"
+            class="modal_input"
             :value="props.userData.password"
           />
         </div>
         <div class="enter_info">
           <h2 class="mt-1 select-none input_label">Verify your password</h2>
           <div class="mt-3"></div>
-          <input type="text" placeholder="Password" required />
+          <input
+            type="text"
+            placeholder="Password"
+            class="modal_input"
+            required
+          />
           <div class="my-2"></div>
           <button class="change_info_button" type="submit">Change</button>
         </div>

@@ -28,15 +28,6 @@
       >
         Friends
       </li>
-      <li
-        @click="
-          () => {
-            emits('toggleModal', 'newChat', true);
-          }
-        "
-      >
-        New Chat
-      </li>
       <li @click="signOut">Logout</li>
     </div>
   </div>

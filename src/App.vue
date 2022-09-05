@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!loggedIn" class="absolute top-0 login_background w-screen">
+  <div v-if="!loggedIn" class="absolute top-0 login_background w-screen">
     <StartupForm
       @loggedIn="logChange"
       @userData="setUserData"
@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineComponent, Ref } from "vue";
-import StartupForm from "./components/Login/StartupForm.vue";
+import { ref } from "vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
+import StartupForm from "./components/Login/StartupForm.vue";
 
 const loggedIn = ref(false);
 
