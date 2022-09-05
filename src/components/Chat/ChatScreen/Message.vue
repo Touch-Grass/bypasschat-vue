@@ -113,12 +113,12 @@ function updateTime(): void {
 </script>
 
 <style scoped>
-  .message {
-    /*   Each message has this class */
-    display: flex;
-    align-items: flex-end;
-    /* margin-bottom: 10px; */
-  }
+.message {
+  /*   Each message has this class */
+  display: flex;
+  align-items: flex-end;
+  /* margin-bottom: 10px; */
+}
 .msg-text {
   max-width: 400px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -140,7 +140,6 @@ function updateTime(): void {
   overflow-y: auto;
   padding: 10px;
 }
-
 
 .msg-img {
   /*   Image for each message */

@@ -86,15 +86,15 @@ onMounted(() => {
 
 initChat();
 
-function initChat(){
+function initChat() {
   const chatRef = fbref(database, `Chats/${props.chat_id}`);
   onValue(chatRef, (snapshot) => {
-    if(snapshot.exists()){
+    if (snapshot.exists()) {
       chat.value = {
         name: snapshot.val().name,
         image: snapshot.val().image,
         type: snapshot.val().type,
-      };   
+      };
     }
   });
 }

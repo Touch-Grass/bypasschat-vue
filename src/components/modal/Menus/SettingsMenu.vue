@@ -64,7 +64,7 @@ const props = defineProps<Props>();
 
 onMounted(() => {
   initSettingUpdates();
-})
+});
 
 //Use github copilot to explain code below
 
@@ -80,8 +80,6 @@ function initSettingUpdates() {
       document.documentElement.style.setProperty("--msg-glow", "-10px");
     }
   });
-  
-  
 }
 
 function changeProp(prop: string, applyProp: (newVal: any) => void) {
@@ -93,7 +91,6 @@ function changeProp(prop: string, applyProp: (newVal: any) => void) {
     }
   });
 }
-
 </script>
 
 <style>
