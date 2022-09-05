@@ -3,6 +3,7 @@
     <div class="friend_search">
       <span class="input_label modal_title">Search for a friend to add!</span>
       <input
+        v-model="friendsInput"
         type="text"
         ref="inputName"
         @change="searchFriends"
@@ -21,11 +22,20 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-
-const inputName = ref("");
+import { database } from "../../../assets/typescript/firebase";
+import { ref as fbref, onChildAdded } from "firebase/database";
+const friendsInput = ref("");
 
 function searchFriends(): void {
-  console.log(inputName.value);
+  console.log(friendsInput.value);
+
+  const usersRef = fbref(database, "Users");
+  onChildAdded(usersRef, snapshot => {
+    const data = snapshot.val();
+    if (data.name === friendsInput.value) {
+      console.log("Found a match!");
+    }
+  });
 }
 
 interface Props {
