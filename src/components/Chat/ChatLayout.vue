@@ -111,7 +111,7 @@ function getChats() {
 
 <style>
 .main_wrapper {
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
   width: 100vw;
   display: grid;
   grid-template-columns: 250px 1fr;

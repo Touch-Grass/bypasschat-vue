@@ -60,7 +60,7 @@ const props = defineProps<Props>();
 .friends_search_input {
   width: calc(100% - 1rem);
   flex: 0 0 calc(70% - 1rem);
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
 }
 .friend_counter {
   font-size: 15px;

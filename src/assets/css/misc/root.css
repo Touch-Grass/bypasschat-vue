@@ -20,11 +20,24 @@
   --msg-glow: 0px;
   --color: rgb(255, 255, 255);
 
-  --d-gray: rgb(47, 49, 54);
-  --d-dark-gray: rgb(32, 34, 37);
-  --d-light-gray: rgb(54, 57, 63);
-  --d-tint-gray: rgb(66, 70, 77);
 
+  
+  
+  --theme-main-white: rgb(212, 219, 221);
+  --theme-dark-white: rgb(148, 148, 148);
+  --theme-light-white: rgb(226, 226, 226);
+  --theme-tint-white: rgb(165, 170, 177);
+  
+  --theme-main-gray: rgb(47, 49, 54);
+  --theme-dark-gray: rgb(32, 34, 37);
+  --theme-light-gray: rgb(54, 57, 63);
+  --theme-tint-gray: rgb(66, 70, 77);
+
+  --theme-main: var(--theme-main-gray);
+  --theme-dark: var(--theme-dark-gray);
+  --theme-light: var(--theme-light-gray);
+  --theme-tint: var(--theme-tint-gray);
+  
   --d-red: rgb(237, 66, 69);
   --d-blue: rgb(88, 101, 242);
   --d-blue-clicked: rgb(71, 82, 196);

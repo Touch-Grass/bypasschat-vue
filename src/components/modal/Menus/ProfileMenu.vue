@@ -163,7 +163,7 @@ input {
 
 input[type="text"],
 input[type="password"] {
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
   padding: 0.25rem;
   border-radius: 5px;
 }

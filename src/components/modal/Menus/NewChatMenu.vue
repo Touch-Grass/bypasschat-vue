@@ -70,7 +70,7 @@ async function createChat(type: ChatType): Promise<void> {
   align-items: center;
 }
 .new_chat_input {
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
   padding: 0.75rem;
 }
 .new_chat_button {

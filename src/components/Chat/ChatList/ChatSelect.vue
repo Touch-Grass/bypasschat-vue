@@ -64,11 +64,11 @@ function selectedChat() {
   align-items: center;
   display: block;
   /* Puts in block at the end for text-alignment */
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
 }
 
 .chat_list_wrapper:hover {
-  background-color: var(--d-light-gray);
+  background-color: var(--theme-light);
 }
 
 .chat_list_wrapper p {

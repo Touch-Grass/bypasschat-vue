@@ -85,7 +85,7 @@ function signOut(): void {
 }
 
 .user_wrapper:hover {
-  background-color: var(--d-light-gray);
+  background-color: var(--theme-light);
 }
 
 .dropdown_wrapper {
@@ -95,7 +95,7 @@ function signOut(): void {
   align-items: center;
 
   position: fixed;
-  background-color: var(--d-dark-gray);
+  background-color: var(--theme-dark);
   width: 200px;
   height: fit-content;
   padding: 5px;
@@ -113,11 +113,11 @@ function signOut(): void {
   border-radius: 5px;
   width: 100%;
   padding-left: 5px;
-  background-color: var(--d-dark-gray);
+  background-color: var(--theme-dark);
   user-select: none;
 }
 .dropdown_wrapper li:hover {
-  background-color: var(--d-light-gray);
+  background-color: var(--theme-light);
 }
 
 @keyframes settingsSlide {

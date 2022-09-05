@@ -56,17 +56,18 @@ import ColorInput from "./Settings/ColorInput.vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue, child } from "firebase/database";
 
-const root = document.documentElement.style;
 
 interface Props {
   userData: any;
 }
 
 const props = defineProps<Props>();
-
-onMounted(() => initSettingUpdates());
-
+  
+  onMounted(() => initSettingUpdates());
+  
 function initSettingUpdates() {
+  const root = document.documentElement.style;
+  
   changeProp("msgCol", newVal =>
     root.setProperty("--right-msg-bg", newVal as string)
   );
@@ -77,14 +78,14 @@ function initSettingUpdates() {
   );
   changeProp("theme", newVal =>
     newVal
-      ? (root.setProperty("--d-gray", "white"),
-        root.setProperty("--d-dark-gray", "white"),
-        root.setProperty("--d-light-gray", "white"),
-        root.setProperty("--d-tint-gray", "white"))
-      : (root.setProperty("--d-gray", "rgb(47, 49, 54)"),
-        root.setProperty("--d-dark-gray", "rgb(32, 34, 37)"),
-        root.setProperty("--d-light-gray", "rgb(54, 57, 63)"),
-        root.setProperty("--d-tint-gray", "rgb(66, 70, 77)"))
+      ? (root.setProperty("--theme-main", "var(--theme-main-white)"),
+        root.setProperty("--theme-dark", "var(--theme-dark-white)"),
+        root.setProperty("--theme-light", "var(--theme-light-white)"),
+        root.setProperty("--theme-tint", "var(--theme-tint-white)"))
+      : (root.setProperty("--theme-main", "var(--theme-main-gray)"),
+        root.setProperty("--theme-dark", "var(--theme-dark-gray)"),
+        root.setProperty("--theme-light", "var(--theme-light-gray)"),
+        root.setProperty("--theme-tint", "var(--theme-tint-gray)"))
   );
 }
 
@@ -143,7 +144,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .settings_menu_items_wrapper {
   width: 100%;
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,7 +154,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 .settings_menu_categories {
   width: 25%;
-  background-color: var(--d-light-gray);
+  background-color: var(--theme-light);
   flex-direction: column;
   display: flex;
   justify-content: flex-start;
@@ -177,7 +178,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .settings_menu_categories > div:hover {
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
 }
 .settings_menu_inner_wrapper {
   display: flex;

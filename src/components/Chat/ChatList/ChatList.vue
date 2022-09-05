@@ -107,7 +107,7 @@ function changeChat(id: string): void {
 
 <style scoped>
 .list_wrapper {
-  background-color: var(--d-gray);
+  background-color: var(--theme-main);
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -116,7 +116,7 @@ function changeChat(id: string): void {
 .upper_wrapper {
   width: 100%;
   height: 60px;
-  border-bottom: 2px solid var(--d-dark-gray);
+  border-bottom: 2px solid var(--theme-dark);
   display: flex;
   align-items: center;
   flex-direction: row;

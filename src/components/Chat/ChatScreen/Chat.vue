@@ -145,7 +145,7 @@ function sendMessage(): void {
 
 <style scoped>
 .chat_wrapper {
-  background-color: var(--d-light-gray);
+  background-color: var(--theme-light);
 
   width: 100%;
   height: 100%;
@@ -156,8 +156,8 @@ function sendMessage(): void {
 /* Chat header */
 .chat_head {
   position: absolute;
-  background-color: var(--d-light-gray);
-  border-bottom: 2px solid var(--d-dark-gray);
+  background-color: var(--theme-light);
+  border-bottom: 2px solid var(--theme-dark);
   top: 0;
   width: calc(100% - 250px);
   height: 60px;
@@ -217,7 +217,7 @@ function sendMessage(): void {
 
 .message_input_wrapper form {
   /* Styling the forms appearance */
-  background-color: var(--d-tint-gray);
+  background-color: var(--theme-tint);
   border-radius: 15px;
 
   margin: 10px;
