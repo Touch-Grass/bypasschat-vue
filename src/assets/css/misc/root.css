@@ -17,6 +17,7 @@
   /* Colors */
   --left-msg-bg: rgb(232, 232, 232);
   --right-msg-bg: rgb(71, 152, 245);
+  --msg-glow: 0px;
   --color: rgb(255, 255, 255);
 
   --d-dark-gray: rgb(32, 34, 37);

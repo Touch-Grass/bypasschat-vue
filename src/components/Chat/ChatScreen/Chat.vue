@@ -1,8 +1,9 @@
 <template>
   <div class="chat_wrapper">
     <div class="chat_head shadow-lg">
+      <img :src="chat.image" class="w-10 h-10" />
       <p>
-        {{ props.chat_id }}
+        {{ chat.name }}
       </p>
     </div>
 
@@ -50,6 +51,7 @@ import {
   set,
   onChildAdded,
   DataSnapshot,
+  onValue,
 } from "firebase/database";
 import { getTime } from "../../../assets/typescript/time";
 
@@ -67,18 +69,36 @@ const messages: Ref<string[]> = ref([]);
 const chat_users: Ref<string[]> = ref([]);
 const message_input = ref("");
 
-const chat = {
-  name: ref(""),
-  type: ref(""),
-};
+const chat = ref({
+  name: "",
+  image: "",
+  type: "",
+});
 
 loadMessages();
 
 const chat_messages_wrapper = ref();
+
 onMounted(() => {
   chat_messages_wrapper.value.scrollTop =
     chat_messages_wrapper.value.scrollHeight;
 });
+
+initChat();
+
+function initChat(){
+  const chatRef = fbref(database, `Chats/${props.chat_id}`);
+  onValue(chatRef, (snapshot) => {
+    if(snapshot.exists()){
+      chat.value = {
+        name: snapshot.val().name,
+        image: snapshot.val().image,
+        type: snapshot.val().type,
+      };   
+    }
+  });
+}
+
 /**
  * Loads all messages in chat from firebase
  */

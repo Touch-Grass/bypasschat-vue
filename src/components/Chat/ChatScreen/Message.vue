@@ -113,6 +113,12 @@ function updateTime(): void {
 </script>
 
 <style scoped>
+  .message {
+    /*   Each message has this class */
+    display: flex;
+    align-items: flex-end;
+    /* margin-bottom: 10px; */
+  }
 .msg-text {
   max-width: 400px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -135,12 +141,6 @@ function updateTime(): void {
   padding: 10px;
 }
 
-.message {
-  /*   Each message has this class */
-  display: flex;
-  align-items: flex-end;
-  /* margin-bottom: 10px; */
-}
 
 .msg-img {
   /*   Image for each message */
@@ -160,6 +160,7 @@ function updateTime(): void {
   padding: 15px;
   border-radius: 15px;
   background: var(--left-msg-bg);
+  box-shadow: 0px 0px 15px var(--msg-glow) var(--left-msg-bg);
 }
 
 .msg-info {
@@ -186,6 +187,7 @@ function updateTime(): void {
 }
 .right-message .msg-bubble {
   background: var(--right-msg-bg);
+  box-shadow: 0px 0px 15px var(--msg-glow) var(--right-msg-bg);
   color: #fff;
   border-bottom-right-radius: 0;
 }

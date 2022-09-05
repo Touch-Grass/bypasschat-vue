@@ -50,15 +50,50 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import ToggleInput from "./Settings/ToggleInput.vue";
 import ColorInput from "./Settings/ColorInput.vue";
-import { changeProp } from "../../../assets/typescript/settings/changeRoot";
+import { database } from "../../../assets/typescript/firebase";
+import { ref as fbref, onValue, child } from "firebase/database";
 
 interface Props {
   userData: any;
 }
 
 const props = defineProps<Props>();
+
+onMounted(() => {
+  initSettingUpdates();
+})
+
+//Use github copilot to explain code below
+
+function initSettingUpdates() {
+  changeProp("msgCol", (newVal) => {
+    document.documentElement.style.setProperty("--right-msg-bg", newVal);
+  });
+
+  changeProp("msgGlow", (newVal) => {
+    if (newVal) {
+      document.documentElement.style.setProperty("--msg-glow", "0px");
+    } else {
+      document.documentElement.style.setProperty("--msg-glow", "-10px");
+    }
+  });
+  
+  
+}
+
+function changeProp(prop: string, applyProp: (newVal: any) => void) {
+  const settingsRef = fbref(database, `Users/${props.userData.id}/Settings`);
+
+  onValue(child(settingsRef, prop), (snapshot) => {
+    if (snapshot.exists()) {
+      applyProp(snapshot.val());
+    }
+  });
+}
+
 </script>
 
 <style>
