@@ -88,7 +88,7 @@ function initMessage(
         `Users/${data.sender}`
       ); //Ref to the user who sent the message
       // Listens for changes in the database and will run here.
-      onValue(userRef, (snapshot) => {
+      onValue(userRef, snapshot => {
         const data = snapshot.val();
         if (data) {
           message.value.name = data.name;
