@@ -28,7 +28,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { database } from "../../../assets/typescript/firebase";
-import { ref as fbref, push, set, ThenableReference } from "firebase/database";
+import {
+  ref as fbref,
+  push,
+  set,
+  get,
+  ThenableReference,
+  DatabaseReference,
+  child,
+} from "firebase/database";
+import { getMemoedVNodeCall } from "@vue/compiler-core";
 
 interface Props {
   userData: any;
@@ -43,20 +52,17 @@ enum ChatType {
 
 const newChatName = ref("");
 
-async function createChat(type: ChatType): Promise<void> {
+function createChat(type: ChatType): void {
   if (!newChatName.value.trim()) return;
   const newChatPush: ThenableReference = push(fbref(database, "/Chats"));
-  set(newChatPush, {
-    name: newChatName.value,
-  });
+  set(newChatPush, { name: newChatName.value });
 
-  let userChatPush: ThenableReference = push(
-    fbref(database, `/Users/${props.userData.id}/Chats`)
+  const userChats: DatabaseReference = fbref(
+    database,
+    `/Users/${props.userData.id}/Chats/${newChatPush.key}`
   );
-  set(userChatPush, {
-    id: newChatPush.key,
-    order: 0,
-  });
+  set(userChats, { id: newChatPush.key, order: 0 });
+  newChatName.value = "";
 }
 </script>
 

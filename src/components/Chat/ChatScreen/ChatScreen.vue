@@ -5,12 +5,23 @@
       :chat_id="chat.id"
       v-show="props.selected_chat === chat.id"
       :user_id="props.userData.id"
+      @chatUpdated="updateChats"
     ></Chat>
   </div>
 </template>
 
 <script lang="ts" setup>
 import Chat from "./Chat.vue";
+import { database } from "../../../assets/typescript/firebase";
+import {
+  ref as fbref,
+  onValue,
+  set,
+  orderByChild,
+  query,
+  child,
+  off,
+} from "firebase/database";
 
 interface Props {
   userData: any;
@@ -20,16 +31,22 @@ interface Props {
 
 const props = defineProps<Props>();
 
-
-function chatUpdated(chat_id: string) {
-  // props.chats = props.chats.map((chat) => {
-  //   if (chat.id === chat_id) {
-  //     chat.unread = false;
-  //   }
-  //   return chat;
-  // });
+function updateChats(chat_id: string) {
+  console.log("updating chats");
+  const chatsRef = fbref(database, `Users/${props.userData.id}/chats`);
+  set(child(chatsRef, `${chat_id}/order`), 1);
+  onValue(chatsRef, snapshot => {
+    if (snapshot.exists()) {
+      // let orderCount: number = 2;
+      // snapshot.forEach((chat: any) => {
+      //   orderCount += 1;
+      //   console.log(orderCount);
+      //   console.log(chat.key);
+      //   set(child(chatsRef, `${chat.key}/order`), orderCount);
+      // });
+    }
+  });
 }
-
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" v-show="showModal">
+  <div class="modal" v-show="props.showModal">
     <div class="modal_wrapper shadow-2xl rounded-lg">
       <slot></slot>
     </div>
@@ -17,8 +17,6 @@ interface Emits {
 
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
-
-// const props = defineProps<Props>();
 </script>
 <style>
 .modal_input {

@@ -96,7 +96,7 @@ initChat();
 
 function initChat() {
   const chatRef = fbref(database, `Chats/${props.chat_id}`);
-  onValue(chatRef, (snapshot) => {
+  onValue(chatRef, snapshot => {
     if (snapshot.exists()) {
       chat.value = {
         name: snapshot.val().name,
@@ -112,6 +112,7 @@ function initChat() {
  */
 function loadMessages(): void {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
+
   onChildAdded(messagesRef, (data: DataSnapshot) => {
     if (data.key) {
       // chat_messages_wrapper.value.scrollIntoView();
