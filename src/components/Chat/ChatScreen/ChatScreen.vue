@@ -21,7 +21,7 @@ import {
   query,
   child,
   off,
-onChildAdded,
+  onChildAdded,
 } from "firebase/database";
 
 interface Props {
@@ -40,7 +40,7 @@ function updateChats(chat_id: string) {
     if (snapshot.exists()) {
       const arrangeChats: Record<string, number>[] = [];
       snapshot.forEach((chat: any) => {
-        if(chat.key === chat_id) return;
+        if (chat.key === chat_id) return;
         // set(child(chatsRef, `${chat.key}/order`), orderCount);
         arrangeChats.push({
           id: chat.key,
@@ -49,8 +49,7 @@ function updateChats(chat_id: string) {
       });
       arrangeChats.sort((a, b) => {
         return a.order - b.order;
-      }
-      );
+      });
       console.log(arrangeChats);
 
       let orderCount: number = 2;
@@ -58,7 +57,6 @@ function updateChats(chat_id: string) {
         set(child(chatsRef, `${chat.id}/order`), orderCount);
         orderCount += 1;
       });
-
     }
   });
 }
