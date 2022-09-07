@@ -60,7 +60,7 @@ import {
   onAuthStateChanged,
   UserCredential,
 } from "firebase/auth";
-import { ref as fbref, onValue } from "firebase/database";
+import { ref as fbref, onValue, set } from "firebase/database";
 
 const signInError = ref(false);
 const formBase: Ref<HTMLDivElement | undefined> = ref();

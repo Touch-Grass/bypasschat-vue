@@ -55,12 +55,19 @@ import {
 } from "firebase/database";
 import { getTime } from "../../../assets/typescript/time";
 import { defaultChatImage } from "../../../assets/typescript/Variables";
+import { emitKeypressEvents } from "readline";
 
 interface Props {
   chat_id: string;
   user_id: string;
 }
+
+interface Emits {
+  (event: "chatUpdated", chat_id: string): void;
+}
+
 const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 
 /**
  * Array of all messages in chat, each item is an id of a message as a string,
@@ -109,6 +116,7 @@ function loadMessages(): void {
     if (data.key) {
       // chat_messages_wrapper.value.scrollIntoView();
       messages.value.push(data.key);
+      emits("chatUpdated", props.chat_id);
     }
 
     // document.querySelector(".chat_messages_wrapper")?.scrollTo(0, 999999999999999);

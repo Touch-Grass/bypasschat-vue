@@ -19,6 +19,17 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+
+function chatUpdated(chat_id: string) {
+  // props.chats = props.chats.map((chat) => {
+  //   if (chat.id === chat_id) {
+  //     chat.unread = false;
+  //   }
+  //   return chat;
+  // });
+}
+
 </script>
 
 <style scoped>
