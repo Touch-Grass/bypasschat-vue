@@ -21,7 +21,7 @@ import {
   query,
   child,
   off,
-onChildAdded,
+  onChildAdded,
 } from "firebase/database";
 
 interface Props {
@@ -40,12 +40,11 @@ function updateChats(chat_id: string) {
     if (snapshot.exists()) {
       let orderCount: number = 2;
       snapshot.forEach((chat: any) => {
-        if(chat.key === chat_id) return;
-        set(child(chatsRef, `${chat.key}/order`), chat.order += 1);
+        if (chat.key === chat_id) return;
+        set(child(chatsRef, `${chat.key}/order`), (chat.order += 1));
         orderCount += 1;
       });
       console.log(snapshot.val());
-
     }
   });
 }
