@@ -81,7 +81,7 @@ const emits = defineEmits<Emits>();
 function signInAuth(email: any, password: any) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential: any) => {})
-    .catch((error) => {
+    .catch(error => {
       signInError.value = true;
       disabled.value = true;
       setTimeout(() => {
@@ -99,7 +99,7 @@ function Submit(): void {
 }
 
 function checkSignIn(): void {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, user => {
     if (user) {
       const uid = user.uid;
       // Sends info to the firebase
