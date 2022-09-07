@@ -38,13 +38,26 @@ function updateChats(chat_id: string) {
   set(child(chatsRef, `${chat_id}/order`), 1);
   onValue(chatsRef, snapshot => {
     if (snapshot.exists()) {
-      let orderCount: number = 2;
+      const arrangeChats: Record<string, number>[] = [];
       snapshot.forEach((chat: any) => {
         if(chat.key === chat_id) return;
-        set(child(chatsRef, `${chat.key}/order`), chat.order += 1);
+        // set(child(chatsRef, `${chat.key}/order`), orderCount);
+        arrangeChats.push({
+          id: chat.key,
+          order: chat.val().order,
+        });
+      });
+      arrangeChats.sort((a, b) => {
+        return a.order - b.order;
+      }
+      );
+      console.log(arrangeChats);
+
+      let orderCount: number = 2;
+      arrangeChats.forEach((chat: any) => {
+        set(child(chatsRef, `${chat.id}/order`), orderCount);
         orderCount += 1;
       });
-      console.log(snapshot.val());
 
     }
   });
