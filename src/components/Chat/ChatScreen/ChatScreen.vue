@@ -21,6 +21,7 @@ import {
   query,
   child,
   off,
+onChildAdded,
 } from "firebase/database";
 
 interface Props {
@@ -33,17 +34,18 @@ const props = defineProps<Props>();
 
 function updateChats(chat_id: string) {
   console.log("updating chats");
-  const chatsRef = fbref(database, `Users/${props.userData.id}/chats`);
+  const chatsRef = fbref(database, `Users/${props.userData.id}/Chats`);
   set(child(chatsRef, `${chat_id}/order`), 1);
   onValue(chatsRef, snapshot => {
     if (snapshot.exists()) {
-      // let orderCount: number = 2;
-      // snapshot.forEach((chat: any) => {
-      //   orderCount += 1;
-      //   console.log(orderCount);
-      //   console.log(chat.key);
-      //   set(child(chatsRef, `${chat.key}/order`), orderCount);
-      // });
+      let orderCount: number = 2;
+      snapshot.forEach((chat: any) => {
+        if(chat.key === chat_id) return;
+        set(child(chatsRef, `${chat.key}/order`), chat.order += 1);
+        orderCount += 1;
+      });
+      console.log(snapshot.val());
+
     }
   });
 }
