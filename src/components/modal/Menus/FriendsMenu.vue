@@ -16,7 +16,9 @@
       <br />
       <small class="input_label friend_counter">You have 0 friends</small>
     </div>
-    <div class="friends_list"></div>
+    <div class="friends_list">
+      <FriendsList :userData="props.userData"></FriendsList>
+    </div>
   </div>
 </template>
 
@@ -24,6 +26,7 @@
 import { ref } from "vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onChildAdded } from "firebase/database";
+import FriendsList from "./Friends/FriendsList.vue";
 const friendsInput = ref("");
 
 function searchFriends(): void {
@@ -51,6 +54,8 @@ const props = defineProps<Props>();
   gap: 0px 0px;
   width: 100%;
   height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 .friend_search,
 .friends_list,
@@ -73,6 +78,9 @@ const props = defineProps<Props>();
 }
 .friends_list {
   grid-area: 2 / 2 / 3 / 3;
+  max-height: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
 .add_friend {
   justify-content: flex-start;
