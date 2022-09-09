@@ -11,7 +11,7 @@
         <div class="settings_menu_section one">
           <label class="mr-5 input_label">Message Glow</label>
           <ToggleInput
-            :user_id="props.userData.id"
+            :user_id="(props.userData.id as string)"
             property="msgGlow"
             :default="true"
           />
@@ -22,7 +22,7 @@
             >Light Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label
           >
           <ToggleInput
-            :user_id="props.userData.id"
+            :user_id="(props.userData.id as string)"
             property="theme"
             :default="false"
           />
@@ -31,7 +31,7 @@
         <div class="settings_menu_section two">
           <label class="mr-5 input_label">Message Color</label>
           <ColorInput
-            :user_id="props.userData.id"
+            :user_id="(props.userData.id as string)"
             property="msgCol"
             default="#4798f5"
           >
@@ -55,19 +55,19 @@ import ToggleInput from "./Settings/ToggleInput.vue";
 import ColorInput from "./Settings/ColorInput.vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue, child } from "firebase/database";
-
+import { UserData } from "../../../assets/typescript/types";
 
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 
 const props = defineProps<Props>();
-  
-  onMounted(() => initSettingUpdates());
-  
+
+onMounted(() => initSettingUpdates());
+
 function initSettingUpdates() {
   const root = document.documentElement.style;
-  
+
   changeProp("msgCol", newVal =>
     root.setProperty("--right-msg-bg", newVal as string)
   );

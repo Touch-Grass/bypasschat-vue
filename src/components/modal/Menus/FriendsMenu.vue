@@ -27,6 +27,7 @@ import { ref } from "vue";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onChildAdded } from "firebase/database";
 import FriendsList from "./Friends/FriendsList.vue";
+import { UserData } from "../../../assets/typescript/types";
 const friendsInput = ref("");
 
 function searchFriends(): void {
@@ -42,7 +43,7 @@ function searchFriends(): void {
 }
 
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 const props = defineProps<Props>();
 </script>

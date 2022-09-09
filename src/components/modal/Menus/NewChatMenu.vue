@@ -38,9 +38,10 @@ import {
   child,
 } from "firebase/database";
 import { getMemoedVNodeCall } from "@vue/compiler-core";
+import { UserData } from "../../../assets/typescript/types";
 
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 
 const props = defineProps<Props>();

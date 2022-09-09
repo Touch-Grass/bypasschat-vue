@@ -4,7 +4,7 @@
       v-for="chat in props.chats"
       :chat_id="chat.id"
       v-show="props.selected_chat === chat.id"
-      :user_id="props.userData.id"
+      :user_id="(props.userData.id as string)"
       @chatUpdated="updateChats"
     ></Chat>
   </div>
@@ -21,11 +21,12 @@ import {
   query,
   child,
   off,
-onChildAdded,
+  onChildAdded,
 } from "firebase/database";
+import { UserData } from "../../../assets/typescript/types";
 
 interface Props {
-  userData: any;
+  userData: UserData;
   chats: any[];
   selected_chat: string;
 }
@@ -40,7 +41,7 @@ function updateChats(chat_id: string) {
     if (snapshot.exists()) {
       const arrangeChats: Record<string, number>[] = [];
       snapshot.forEach((chat: any) => {
-        if(chat.key === chat_id) return;
+        if (chat.key === chat_id) return;
         // set(child(chatsRef, `${chat.key}/order`), orderCount);
         arrangeChats.push({
           id: chat.key,
@@ -49,8 +50,7 @@ function updateChats(chat_id: string) {
       });
       arrangeChats.sort((a, b) => {
         return a.order - b.order;
-      }
-      );
+      });
       console.log(arrangeChats);
 
       let orderCount: number = 2;
@@ -58,7 +58,6 @@ function updateChats(chat_id: string) {
         set(child(chatsRef, `${chat.id}/order`), orderCount);
         orderCount += 1;
       });
-
     }
   });
 }

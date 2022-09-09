@@ -35,12 +35,13 @@
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import { auth } from "../../../assets/typescript/firebase";
+import { UserData } from "../../../assets/typescript/types";
 import Modal from "../../modal/Modal.vue";
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
 
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 interface Emits {
   (e: "toggleModal", selector: string, mode: boolean): void;

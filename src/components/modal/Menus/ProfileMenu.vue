@@ -6,7 +6,7 @@
         @mouseover="hover = true"
         @mouseleave="hover = false"
       >
-        <img :src="props.userData.image" class="profile_image" />
+        <img :src="(props.userData.image as string)" class="profile_image" />
         <input type="file" id="fileImageUpload" />
         <label
           v-show="hover"
@@ -54,9 +54,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { UserData } from "../../../assets/typescript/types";
 
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 const hover = ref(false);
 

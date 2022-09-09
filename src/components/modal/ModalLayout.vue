@@ -33,12 +33,13 @@ import SettingsMenu from "./Menus/SettingsMenu.vue";
 import FriendsMenu from "./Menus/FriendsMenu.vue";
 import ProfileMenu from "./Menus/ProfileMenu.vue";
 import NewChatMenu from "./Menus/NewChatMenu.vue";
+import { UserData } from "../../assets/typescript/types";
 
 type ModalDataType = Record<string, boolean>;
 
 interface Props {
   modalData: ModalDataType;
-  userData: any;
+  userData: UserData;
 }
 
 interface Emits {

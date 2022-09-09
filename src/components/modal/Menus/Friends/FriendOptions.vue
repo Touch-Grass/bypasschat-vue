@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import { UserData } from "../../../../assets/typescript/types";
+
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 
 const props = defineProps<Props>();

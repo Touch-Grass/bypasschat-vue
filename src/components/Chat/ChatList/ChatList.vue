@@ -61,11 +61,11 @@ import UserInfo from "./UserInfo.vue";
 import Modal from "../../modal/Modal.vue";
 import { auth, database } from "../../../assets/typescript/firebase";
 import { ref as fbref, push, set, ThenableReference } from "firebase/database";
+import { UserData } from "../../../assets/typescript/types";
 const chatInfo: string[] = ["123", "132"];
 
 interface Props {
-  // Todo: make a record type for these.
-  userData: any;
+  userData: UserData;
   chats: any[];
 }
 
@@ -80,15 +80,6 @@ const props = defineProps<Props>();
 const settings_icon = ref();
 
 const friendsMenu: Ref<boolean> = ref(false);
-function hideFriendsMenu(): void {
-  friendsMenu.value = false;
-}
-
-function toggleFriendsMenu() {
-  console.log("Toggling friends menu on emit");
-  friendsMenu.value = !friendsMenu.value;
-}
-
 chatInfo.push("231");
 
 function changeChat(id: string): void {

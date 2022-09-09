@@ -2,7 +2,7 @@
   <div class="friend_item_wrapper">
     <span>
       <div class="name">
-        <img class="friend_image" :src="props.userData.image" />
+        <img class="friend_image" :src="(props.userData.image as string)" />
         {{ name }}
         <div class="dots">
           <div class="friends_options_menu">
@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
+import { UserData } from "../../../../assets/typescript/types";
 import FriendOptions from "./FriendOptions.vue";
 interface Props {
-  userData: any;
+  userData: UserData;
   name: string;
 }
 const props = defineProps<Props>();

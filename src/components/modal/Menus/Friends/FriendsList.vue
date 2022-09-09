@@ -18,9 +18,10 @@
 </template>
 
 <script lang="ts" setup>
+import { UserData } from "../../../../assets/typescript/types";
 import FriendDisplayItem from "./FriendDisplayItem.vue";
 interface Props {
-  userData: any;
+  userData: UserData;
 }
 const props = defineProps<Props>();
 </script>

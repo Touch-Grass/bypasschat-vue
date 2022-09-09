@@ -14,7 +14,12 @@ import { ref } from "vue";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 import StartupForm from "./components/Login/StartupForm.vue";
 const loggedIn = ref(false);
-const userData = ref({ id: null, name: null, email: null, image: null });
+const userData = ref({
+  id: null,
+  name: null,
+  email: null,
+  image: null,
+});
 function logChange(e: boolean): void {
   loggedIn.value = e;
 }

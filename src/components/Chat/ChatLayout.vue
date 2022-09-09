@@ -39,18 +39,16 @@ import { database } from "../../assets/typescript/firebase";
 import {
   ref as fbref,
   onChildAdded,
-  push,
-  set,
   DatabaseReference,
   DataSnapshot,
 } from "firebase/database";
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 import ModalLayout from "../modal/ModalLayout.vue";
+import { UserData } from "../../assets/typescript/types";
 
 interface Props {
-  // todo: fix this lol.
-  userData: any;
+  userData: UserData;
 }
 
 const props = defineProps<Props>();
@@ -98,7 +96,7 @@ getChats();
 function getChats() {
   const userChatsRef: DatabaseReference = fbref(
     database,
-    `Users/${props.userData.id}/Chats`,
+    `Users/${props.userData.id}/Chats`
   );
   onChildAdded(userChatsRef, (data: DataSnapshot) => {
     chats.push({
