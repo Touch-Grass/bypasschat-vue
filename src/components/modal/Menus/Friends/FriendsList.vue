@@ -1,18 +1,9 @@
 <template>
   <div class="friend_wrapper">
     <div class="friends_list_wrapper">
-      <FriendDisplayItem
-        :name="'CUBBY!!!'"
-        :userData="props.userData"
-      ></FriendDisplayItem>
-      <FriendDisplayItem
-        :name="'CUBBY!!!'"
-        :userData="props.userData"
-      ></FriendDisplayItem>
-      <FriendDisplayItem
-        :name="'CUBBY!!!'"
-        :userData="props.userData"
-      ></FriendDisplayItem>
+      <FriendDisplayItem :userData="props.userData"></FriendDisplayItem>
+      <FriendDisplayItem :userData="props.userData"></FriendDisplayItem>
+      <FriendDisplayItem :userData="props.userData"></FriendDisplayItem>
     </div>
   </div>
 </template>

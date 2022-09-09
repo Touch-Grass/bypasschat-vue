@@ -8,26 +8,10 @@
     <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
   </div>
 
-  <div ref="dropdownMenu" v-show="dropdownOpen">
+  <div ref="dropdownMenu" class="dropdown_area" v-show="dropdownOpen">
     <div class="dropdown_wrapper shadow-2xl">
-      <li
-        @click="
-          () => {
-            emits('toggleModal', 'profile', true);
-          }
-        "
-      >
-        Profile
-      </li>
-      <li
-        @click="
-          () => {
-            emits('toggleModal', 'friends', true);
-          }
-        "
-      >
-        Friends
-      </li>
+      <li @click="() => emits('toggleModal', 'profile', true)">Profile</li>
+      <li @click="() => emits('toggleModal', 'friends', true)">Friends</li>
       <li @click="signOut">Logout</li>
     </div>
   </div>
@@ -55,6 +39,7 @@ const dropdownMenu = ref();
 
 function userWrapperClicked(): void {
   dropdownOpen.value = !dropdownOpen.value;
+  console.log(dropdownOpen.value, "UserWrapper");
 }
 
 function signOut(): void {

@@ -3,7 +3,7 @@
     <span>
       <div class="name">
         <img class="friend_image" :src="(props.userData.image as string)" />
-        {{ name }}
+        {{ props.userData.name }}
         <div class="dots">
           <div class="friends_options_menu">
             <FriendOptions :userData="props.userData"></FriendOptions>
@@ -24,7 +24,6 @@ import { UserData } from "../../../../assets/typescript/types";
 import FriendOptions from "./FriendOptions.vue";
 interface Props {
   userData: UserData;
-  name: string;
 }
 const props = defineProps<Props>();
 </script>

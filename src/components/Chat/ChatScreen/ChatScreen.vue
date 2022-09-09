@@ -13,16 +13,7 @@
 <script lang="ts" setup>
 import Chat from "./Chat.vue";
 import { database } from "../../../assets/typescript/firebase";
-import {
-  ref as fbref,
-  onValue,
-  set,
-  orderByChild,
-  query,
-  child,
-  off,
-  onChildAdded,
-} from "firebase/database";
+import { ref as fbref, onValue, set, child } from "firebase/database";
 import { UserData } from "../../../assets/typescript/types";
 
 interface Props {
@@ -51,7 +42,7 @@ function updateChats(chat_id: string) {
       arrangeChats.sort((a, b) => {
         return a.order - b.order;
       });
-      console.log(arrangeChats);
+      // console.log(arrangeChats);
 
       let orderCount: number = 2;
       arrangeChats.forEach((chat: any) => {
