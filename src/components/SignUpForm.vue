@@ -26,35 +26,26 @@
   </form>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 import { auth } from "../assets/typescript/firebase";
 import {
   createUserWithEmailAndPassword,
   User,
   UserCredential,
 } from "firebase/auth";
-import { Stringish } from "../main";
-export default defineComponent({
-  data() {
-    return {
-      input_email: "",
-      input_name: "",
-      input_password: "",
-    };
-  },
-  methods: {
-    signInAuth(email: string, password: string) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential: UserCredential) => {
-          const user: User = userCredential.user;
-          alert("Signed up!");
-          console.log(user);
-        })
-        .catch((error: Error) => {
-          throw new Error(`New Error ${error.message}`);
-        });
-    },
-  },
-});
+import { ref } from "vue";
+const input_email = ref("");
+const input_name = ref("");
+const input_password = ref("");
+function signInAuth(email: string, password: string) {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential: UserCredential) => {
+      const user: User = userCredential.user;
+      alert("Signed up!");
+      console.log(user);
+    })
+    .catch((error: Error) => {
+      throw new Error(`New Error ${error.message}`);
+    });
+}
 </script>
