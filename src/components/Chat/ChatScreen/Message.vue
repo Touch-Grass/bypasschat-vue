@@ -27,6 +27,7 @@ import {
 import { database } from "../../../assets/typescript/firebase";
 import { formatTime } from "../../../assets/typescript/time";
 import { emitKeypressEvents } from "readline";
+import { FontFaceAscentOverrideProperty } from "csstype";
 
 interface Props {
   chat_id: string;
@@ -68,7 +69,7 @@ function initReading() {
         }
       }
     },
-    { threshold: [0.5] }
+    { threshold: [0.1] }
   );
 
   observer.observe(messageHTML.value);
