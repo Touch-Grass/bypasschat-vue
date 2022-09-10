@@ -31,19 +31,12 @@ import { emitKeypressEvents } from "readline";
 interface Props {
   chat_id: string;
   msg_id: string;
+  msg_index: number;
   user_id: string;
 }
 const props = defineProps<Props>();
 
-type MessageData = Ref<{
-  text: string;
-  date: string;
-  time: string;
-  name: string;
-  image: string;
-  sender: string;
-  side: string;
-}>;
+type MessageData = Ref<Record<string, string>>;
 
 const message: MessageData = ref({
   text: "",
@@ -58,14 +51,35 @@ const message: MessageData = ref({
 const messageHTML = ref();
 onMounted(() => {
   messageHTML.value.scrollIntoView({ behavior: "smooth" });
+  initMessage();
 });
 
-initMessage();
+let index = 5;
+
+function initReading() {
+  const observer = new IntersectionObserver(
+    entries => {
+      if (props.msg_index >= index) {
+        console.log(`Message Index: ${props.msg_index} Index: ${index}`);
+        if (entries[0].isIntersecting) {
+          console.log("Message has become visible!");
+          messageHTML.value.style.border = "5px solid red";
+          index++;
+        }
+      }
+    },
+    { threshold: [0.5] }
+  );
+
+  observer.observe(messageHTML.value);
+}
 
 function initMessage(
   msg_id: string = props.msg_id,
   chat_id: string = props.chat_id
 ): void {
+  initReading();
+
   const messageRef: DatabaseReference = fbref(
     database,
     `Chats/${chat_id}/Messages/${msg_id}`
@@ -89,7 +103,7 @@ function initMessage(
         `Users/${data.sender}`
       ); //Ref to the user who sent the message
       // Listens for changes in the database and will run here.
-      onValue(userRef, (snapshot) => {
+      onValue(userRef, snapshot => {
         const data = snapshot.val();
         if (data) {
           message.value.name = data.name;

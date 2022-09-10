@@ -101,7 +101,6 @@ function getChats() {
   onChildAdded(userChatsRef, (data: DataSnapshot) => {
     chats.push({
       id: data.val().id,
-      order: data.val().order,
     });
   });
 }

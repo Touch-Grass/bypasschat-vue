@@ -9,10 +9,11 @@
 
     <div class="chat_messages_area">
       <ul class="chat_messages_wrapper" ref="chat_messages_wrapper">
-        <li v-for="id in messages">
+        <li v-for="msg in messages">
           <Message
             :chat_id="props.chat_id"
-            :msg_id="id"
+            :msg_id="msg.id"
+            :msg_index="msg.index"
             :user_id="props.user_id"
           ></Message>
         </li>
@@ -69,11 +70,16 @@ interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
+type MessageType = {
+  id: string;
+  index: number;
+};
+
 /**
  * Array of all messages in chat, each item is an id of a message as a string,
  * ex: "-J1iKLLAVBB29B2"
  */
-const messages: Ref<string[]> = ref([]);
+const messages: Ref<MessageType[]> = ref([]);
 const chat_users: Ref<string[]> = ref([]);
 const message_input = ref("");
 
@@ -113,11 +119,18 @@ function initChat() {
 function loadMessages(): void {
   const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
 
+  let messageCount = 0;
+
   onChildAdded(messagesRef, (data: DataSnapshot) => {
     if (data.key) {
       // chat_messages_wrapper.value.scrollIntoView();
-      messages.value.push(data.key);
-      emits("chatUpdated", props.chat_id);
+      console.log(messageCount);
+      messages.value.push({
+        id: data.key,
+        index: messageCount,
+      });
+      // emits("chatUpdated", props.chat_id);
+      messageCount++;
     }
 
     // document.querySelector(".chat_messages_wrapper")?.scrollTo(0, 999999999999999);
@@ -125,7 +138,7 @@ function loadMessages(): void {
   });
 }
 
-function getMessage() {
+function getMessage(): Record<string, string> {
   return {
     sender: props.user_id,
     text: message_input.value.trim(),

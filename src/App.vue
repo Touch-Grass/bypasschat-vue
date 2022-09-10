@@ -11,7 +11,6 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { hideDropdown } from "./assets/typescript/functions";
 import ChatLayout from "./components/Chat/ChatLayout.vue";
 import StartupForm from "./components/Login/StartupForm.vue";
 const loggedIn = ref(false);

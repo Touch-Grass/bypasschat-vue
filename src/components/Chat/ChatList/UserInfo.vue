@@ -1,5 +1,5 @@
 <template>
-  <div class="user_wrapper" @click="userWrapperClicked">
+  <div class="user_wrapper" ref="userWrapper" @click="userWrapperClicked">
     <img
       :src="props.userData.image ?? defaultImage"
       alt="Profile Image"
@@ -17,7 +17,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, Ref } from "vue";
+import { onMounted, ref, Ref } from "vue";
 import { auth } from "../../../assets/typescript/firebase";
 import { UserData } from "../../../assets/typescript/types";
 import Modal from "../../modal/Modal.vue";
@@ -37,9 +37,20 @@ const props = defineProps<Props>();
 const dropdownOpen = ref(false);
 const dropdownMenu = ref();
 
+const userWrapper = ref();
+
 function userWrapperClicked(): void {
   dropdownOpen.value = !dropdownOpen.value;
   console.log(dropdownOpen.value, "UserWrapper");
+}
+
+onMounted(() => clickOffDropdown());
+
+function clickOffDropdown(): void {
+  document.addEventListener("click", (e: MouseEvent) => {
+    if (dropdownOpen.value)
+      if (!userWrapper.value.contains(e.target)) dropdownOpen.value = false;
+  });
 }
 
 function signOut(): void {
