@@ -151,6 +151,8 @@ onMounted(() => {
 
 .msg-img {
   /*   Image for each message */
+  isolation: isolate;
+  z-index: 10 !important;
   width: 50px;
   height: 50px;
   margin-right: 10px;

@@ -2,7 +2,19 @@
   <div
     class="chat_conxtext_menu_wrapper"
     :style="{ top: `${props.position.y}px`, left: `${props.position.x}px` }"
-  ></div>
+  >
+    <div class="chat_context_menu">
+      <div @click="InviteUser" class="chat_context_menu_item">Invite</div>
+      <div @click="LeaveChat" class="chat_context_menu_item">Leave</div>
+      <div class="host_only_line"></div>
+      <div @click="ChangeIcon" class="chat_context_menu_item host_only">
+        Change Icon
+      </div>
+      <div @click="ChangeName" class="chat_context_menu_item host_only">
+        Change Name
+      </div>
+    </div>
+  </div>
 </template>
 <!-- Height: 169px -->
 <!-- Width: 127.183px -->
@@ -17,6 +29,32 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+function InviteUser(): void {
+  console.log('InviteUser');
+}
+
+function LeaveChat(): void {
+  console.log('LeaveChat');
+  if (confirm('Are you sure you want to leave this chat?')) {
+    console.log('Leaving chat');
+  }
+}
+
+function ChangeIcon(): void {
+  if (/*Add hostonly conditional*/ false) {
+    console.log('ChangeIcon');
+  } else {
+    console.warn("You don't have permission to do that");
+  }
+}
+
+function ChangeName() {
+  if (/*Add hostonly conditional*/ false) {
+    console.log('ChangeName');
+  } else {
+    console.warn("You don't have permission to do that");
+  }
+}
 </script>
 
 <style scoped>
@@ -31,6 +69,8 @@ const props = defineProps<Props>();
   margin: 5px 0 0 5px;
   background-color: var(--theme-dark);
 
+  z-index: 100;
+  isolation: isolate;
   transition: background-color 300ms ease-in-out;
 }
 .chat_context_menu_item:first-child {
