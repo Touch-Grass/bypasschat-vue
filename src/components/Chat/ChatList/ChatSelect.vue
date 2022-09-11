@@ -1,18 +1,34 @@
 <template>
-  <div class="chat_list_wrapper" @click="selectedChat">
+  <div
+    class="chat_list_wrapper"
+    @contextmenu="toggleContextMenu"
+    @click="selectedChat"
+    ref="chatRef"
+  >
     <img :src="chat.image ?? defaultChatImage" class="chat-img" />
     <p>{{ chat.name }}</p>
+  </div>
+
+  <div ref="contextMenu">
+    <Modal :showModal="true"></Modal>
+    <ChatContextMenu
+      v-show="showContextMenu"
+      :chat_id="props.chat_id"
+      :position="contextMenuPos"
+    ></ChatContextMenu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref } from "vue";
-import { database } from "../../../assets/typescript/firebase";
-import { ref as fbref, onValue } from "firebase/database";
-import { defaultChatImage } from "../../../assets/typescript/Variables";
+import { onMounted, ref, Ref } from 'vue';
+import { database } from '../../../assets/typescript/firebase';
+import { ref as fbref, onValue } from 'firebase/database';
+import { defaultChatImage } from '../../../assets/typescript/Variables';
+import ChatContextMenu from './ChatContextMenu.vue';
+import Modal from '../../modal/modals/Modal.vue';
 
 interface Emits {
-  (e: "selectedChat", id: string): void;
+  (e: 'selectedChat', id: string): void;
 }
 
 interface Props {
@@ -22,10 +38,18 @@ interface Props {
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
+const chatRef = ref();
 const chat = ref({
-  name: "",
-  image: "",
+  name: '',
+  image: '',
 });
+
+const contextMenu = ref();
+const contextMenuPos = ref({
+  x: 0,
+  y: 0,
+});
+const showContextMenu = ref(false);
 
 initChatSelect();
 
@@ -41,10 +65,32 @@ function initChatSelect(chat_id: string = props.chat_id): void {
   });
 }
 
+function initContextMenu(): void {
+  ['click', 'contextmenu'].forEach((eventName: string) => {
+    document.addEventListener(eventName, (e: any) => {
+      if (
+        !contextMenu.value.contains(e.target) &&
+        !chatRef.value.contains(e.target)
+      )
+        showContextMenu.value = false;
+    });
+  });
+}
+
+function toggleContextMenu(e: MouseEvent): void {
+  e.preventDefault();
+  console.log(`Toggled Context Menu for ${chat.value.name}`);
+  contextMenuPos.value.x = e.clientX;
+  contextMenuPos.value.y = e.clientY;
+  showContextMenu.value = !showContextMenu.value;
+}
+
 // Returns what ever chat is selected (return is an emit to other modules)
 function selectedChat(): void {
-  emits("selectedChat", props.chat_id);
+  emits('selectedChat', props.chat_id);
 }
+
+onMounted(() => initContextMenu());
 </script>
 
 <style>

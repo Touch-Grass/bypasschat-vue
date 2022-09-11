@@ -1,4 +1,5 @@
 {
   "endOfLine": "auto",
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "singleQuote": true
 }

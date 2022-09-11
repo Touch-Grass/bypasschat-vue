@@ -26,19 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { database } from "../../../assets/typescript/firebase";
+import { ref } from 'vue';
+import { database } from '../../../assets/typescript/firebase';
 import {
   ref as fbref,
   push,
   set,
-  get,
   ThenableReference,
   DatabaseReference,
-  child,
-} from "firebase/database";
-import { getMemoedVNodeCall } from "@vue/compiler-core";
-import { UserData } from "../../../assets/typescript/types";
+} from 'firebase/database';
+import { UserData } from '../../../assets/typescript/types';
 
 interface Props {
   userData: UserData;
@@ -47,15 +44,15 @@ interface Props {
 const props = defineProps<Props>();
 
 enum ChatType {
-  private = "private",
-  group = "group",
+  private = 'private',
+  group = 'group',
 }
 
-const newChatName = ref("");
+const newChatName = ref('');
 
 function createChat(type: ChatType): void {
   if (!newChatName.value.trim()) return;
-  const newChatPush: ThenableReference = push(fbref(database, "/Chats"));
+  const newChatPush: ThenableReference = push(fbref(database, '/Chats'));
   set(newChatPush, { name: newChatName.value });
 
   const userChats: DatabaseReference = fbref(
@@ -63,7 +60,7 @@ function createChat(type: ChatType): void {
     `/Users/${props.userData.id}/Chats/${newChatPush.key}`
   );
   set(userChats, { id: newChatPush.key, order: 0 });
-  newChatName.value = "";
+  newChatName.value = '';
 }
 </script>
 

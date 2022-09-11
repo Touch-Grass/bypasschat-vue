@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, Ref, ref } from "vue";
-import { database } from "../../../assets/typescript/firebase";
-import { ref as fbref, onValue, child } from "firebase/database";
-import { ChatType, UserData } from "../../../assets/typescript/types";
-import SettingsThemePage from "./SettingsMenuPages/SettingsThemePage.vue";
-import SettingsChatInfo from "./SettingsMenuPages/SettingsChatInfo.vue";
+import { onMounted, Ref, ref } from 'vue';
+import { database } from '../../../assets/typescript/firebase';
+import { ref as fbref, onValue, child } from 'firebase/database';
+import { UserData } from '../../../assets/typescript/types';
+import SettingsThemePage from './SettingsMenuPages/SettingsThemePage.vue';
+import SettingsChatInfo from './SettingsMenuPages/SettingsChatInfo.vue';
 
 /*
 Page numbers are used to determine which page to show
@@ -53,26 +53,26 @@ const chats: any[] = [];
 
 function initSettingUpdates() {
   const root = document.documentElement.style;
-  changeProp("msgCol", newVal =>
-    root.setProperty("--right-msg-bg", newVal as string)
+  changeProp('msgCol', newVal =>
+    root.setProperty('--right-msg-bg', newVal as string)
   );
-  changeProp("msgGlow", newVal =>
+  changeProp('msgGlow', newVal =>
     newVal
-      ? root.setProperty("--msg-glow", "0px")
-      : root.setProperty("--msg-glow", "-8px")
+      ? root.setProperty('--msg-glow', '0px')
+      : root.setProperty('--msg-glow', '-8px')
   );
-  changeProp("theme", newVal =>
+  changeProp('theme', newVal =>
     newVal
-      ? (root.setProperty("--theme-main", "var(--theme-main-white)"),
-        root.setProperty("--theme-dark", "var(--theme-dark-white)"),
-        root.setProperty("--theme-light", "var(--theme-light-white)"),
-        root.setProperty("--theme-color", "var(--theme-color-white)"),
-        root.setProperty("--theme-tint", "var(--theme-tint-white)"))
-      : (root.setProperty("--theme-main", "var(--theme-main-gray)"),
-        root.setProperty("--theme-dark", "var(--theme-dark-gray)"),
-        root.setProperty("--theme-light", "var(--theme-light-gray)"),
-        root.setProperty("--theme-color", "var(--theme-color-gray)"),
-        root.setProperty("--theme-tint", "var(--theme-tint-gray)"))
+      ? (root.setProperty('--theme-main', 'var(--theme-main-white)'),
+        root.setProperty('--theme-dark', 'var(--theme-dark-white)'),
+        root.setProperty('--theme-light', 'var(--theme-light-white)'),
+        root.setProperty('--theme-color', 'var(--theme-color-white)'),
+        root.setProperty('--theme-tint', 'var(--theme-tint-white)'))
+      : (root.setProperty('--theme-main', 'var(--theme-main-gray)'),
+        root.setProperty('--theme-dark', 'var(--theme-dark-gray)'),
+        root.setProperty('--theme-light', 'var(--theme-light-gray)'),
+        root.setProperty('--theme-color', 'var(--theme-color-gray)'),
+        root.setProperty('--theme-tint', 'var(--theme-tint-gray)'))
   );
 }
 
@@ -149,8 +149,8 @@ onMounted(() => initSettingUpdates());
 </style>
 
 <style scoped>
-input[type="color"]::-moz-color-swatch,
-input[type="color"]::-webkit-color-swatch {
+input[type='color']::-moz-color-swatch,
+input[type='color']::-webkit-color-swatch {
   border: transparent;
   outline: transparent;
   padding: 0;

@@ -41,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { UserData } from "../../../../assets/typescript/types";
-import ColorInput from "../Settings/ColorInput.vue";
-import ToggleInput from "../Settings/ToggleInput.vue";
+import { UserData } from '../../../../assets/typescript/types';
+import ColorInput from '../Settings/ColorInput.vue';
+import ToggleInput from '../Settings/ToggleInput.vue';
 
 interface Props {
   userData: UserData;

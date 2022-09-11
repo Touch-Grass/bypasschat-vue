@@ -23,21 +23,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { database } from "../../../assets/typescript/firebase";
-import { ref as fbref, onChildAdded } from "firebase/database";
-import FriendsList from "./Friends/FriendsList.vue";
-import { UserData } from "../../../assets/typescript/types";
-const friendsInput = ref("");
+import { ref } from 'vue';
+import { database } from '../../../assets/typescript/firebase';
+import { ref as fbref, onChildAdded } from 'firebase/database';
+import FriendsList from './Friends/FriendsList.vue';
+import { UserData } from '../../../assets/typescript/types';
+const friendsInput = ref('');
 
 function searchFriends(): void {
   console.log(friendsInput.value);
 
-  const usersRef = fbref(database, "Users");
+  const usersRef = fbref(database, 'Users');
   onChildAdded(usersRef, snapshot => {
     const data = snapshot.val();
     if (data.name === friendsInput.value) {
-      console.log("Found a match!");
+      console.log('Found a match!');
     }
   });
 }

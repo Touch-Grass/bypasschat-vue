@@ -12,17 +12,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue';
 import {
   ref as fbref,
   onValue,
   onChildRemoved,
   DatabaseReference,
   DataSnapshot,
-} from "firebase/database";
-import { database } from "../../../assets/typescript/firebase";
-import { formatTime } from "../../../assets/typescript/time";
-import { MessageData } from "../../../assets/typescript/types";
+} from 'firebase/database';
+import { database } from '../../../assets/typescript/firebase';
+import { formatTime } from '../../../assets/typescript/time';
+import { MessageData } from '../../../assets/typescript/types';
 
 interface Props {
   chat_id: string;
@@ -33,13 +33,13 @@ interface Props {
 const props = defineProps<Props>();
 
 const message: MessageData = ref({
-  text: "",
-  date: "",
-  time: "",
-  name: "",
-  image: "",
-  sender: "",
-  side: "",
+  text: '',
+  date: '',
+  time: '',
+  name: '',
+  image: '',
+  sender: '',
+  side: '',
 });
 
 const messageHTML = ref();
@@ -52,8 +52,8 @@ function initReading() {
       if (props.msg_index >= index) {
         console.log(`Message Index: ${props.msg_index} Index: ${index}`);
         if (entries[0].isIntersecting) {
-          console.log("Message has become visible!");
-          messageHTML.value.style.border = "5px solid red";
+          console.log('Message has become visible!');
+          messageHTML.value.style.border = '5px solid red';
           index++;
         }
       }
@@ -68,7 +68,7 @@ function initMessage(
   msg_id: string = props.msg_id,
   chat_id: string = props.chat_id
 ): void {
-  initReading();
+  // initReading();
 
   const messageRef: DatabaseReference = fbref(
     database,
@@ -86,8 +86,8 @@ function initMessage(
       // Sets the side that the message will be on.
       message.value.side =
         props.user_id === message.value.sender
-          ? "right-message"
-          : "left-message";
+          ? 'right-message'
+          : 'left-message';
       const userRef: DatabaseReference = fbref(
         database,
         `Users/${data.sender}`
@@ -103,7 +103,7 @@ function initMessage(
     }
   });
   onChildRemoved(messageRef, () => {
-    console.log("Message Removed");
+    console.log('Message Removed');
     //delete this vue component
   });
   //Updates the time every minute.
@@ -115,7 +115,7 @@ function updateTime(): void {
 }
 
 onMounted(() => {
-  messageHTML.value.scrollIntoView({ behavior: "smooth" });
+  messageHTML.value.scrollIntoView({ behavior: 'smooth' });
   initMessage();
 });
 </script>

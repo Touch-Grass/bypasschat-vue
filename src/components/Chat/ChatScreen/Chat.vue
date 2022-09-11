@@ -43,9 +43,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref, onMounted } from "vue";
-import Message from "./Message.vue";
-import { database } from "../../../assets/typescript/firebase";
+import { ref, Ref, onMounted } from 'vue';
+import Message from './Message.vue';
+import { database } from '../../../assets/typescript/firebase';
 import {
   ref as fbref,
   push,
@@ -53,10 +53,16 @@ import {
   onChildAdded,
   DataSnapshot,
   onValue,
-} from "firebase/database";
-import { getTime } from "../../../assets/typescript/time";
-import { defaultChatImage } from "../../../assets/typescript/Variables";
-import { emitKeypressEvents } from "readline";
+  query,
+  limitToLast,
+  get,
+} from 'firebase/database';
+import { getTime } from '../../../assets/typescript/time';
+import {
+  defaultChatImage,
+  defaultProfileImage,
+} from '../../../assets/typescript/Variables';
+import { emitKeypressEvents } from 'readline';
 
 interface Props {
   chat_id: string;
@@ -64,7 +70,7 @@ interface Props {
 }
 
 interface Emits {
-  (event: "chatUpdated", chat_id: string): void;
+  (event: 'chatUpdated', chat_id: string): void;
 }
 
 const props = defineProps<Props>();
@@ -81,22 +87,17 @@ type MessageType = {
  */
 const messages: Ref<MessageType[]> = ref([]);
 const chat_users: Ref<string[]> = ref([]);
-const message_input = ref("");
+const message_input = ref('');
 
 const chat = ref({
-  name: "",
-  image: "",
-  type: "",
+  name: '',
+  image: '',
+  type: '',
 });
 
 loadMessages();
 
 const chat_messages_wrapper = ref();
-
-onMounted(() => {
-  chat_messages_wrapper.value.scrollTop =
-    chat_messages_wrapper.value.scrollHeight;
-});
 
 initChat();
 
@@ -111,6 +112,46 @@ function initChat() {
       };
     }
   });
+
+  initNotifications();
+}
+
+let notificationCount = 0;
+function initNotifications() {
+  const messagesRef = fbref(database, `/Chats/${props.chat_id}/Messages`);
+  onChildAdded(query(messagesRef, limitToLast(1)), data => {
+    if (data.exists() && notificationCount > 0) {
+      notifyMessage(data.val().sender, data.val().text);
+    }
+    notificationCount++;
+  });
+}
+
+function notifyMessage(sender: string, text: string) {
+  if (sender === props.user_id) return;
+
+  if (!('Notification' in window)) {
+    console.warn("This browser doesn't support notifications.");
+  } else if (Notification.permission === 'granted') {
+    get(fbref(database, `Users/${sender}`)).then(data => {
+      if (data.exists()) {
+        new Notification(data.val().name, {
+          icon: data.val().image ?? defaultProfileImage,
+          body: text,
+        });
+      }
+    });
+  } else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        new Notification('Thanks for allowing notifications', {
+          body: 'Welcome to ChitChat™',
+        });
+      } else {
+        console.warn('Notifications are disabled');
+      }
+    });
+  }
 }
 
 /**
@@ -161,8 +202,13 @@ function sendMessage(): void {
   set(messageRef, message);
 
   // Clears the input.
-  message_input.value = "";
+  message_input.value = '';
 }
+onMounted(
+  () =>
+    (chat_messages_wrapper.value.scrollTop =
+      chat_messages_wrapper.value.scrollHeight)
+);
 </script>
 
 <style scoped>

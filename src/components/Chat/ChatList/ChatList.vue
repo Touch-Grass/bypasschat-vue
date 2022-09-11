@@ -1,5 +1,5 @@
 <template>
-  <div class="list_wrapper">
+  <div class="list_wrapper" @contextmenu="(e: Event) => {e.preventDefault()}">
     <div class="upper_wrapper">
       <UserInfo
         :userData="props.userData"
@@ -55,11 +55,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from "vue";
-import ChatSelect from "./ChatSelect.vue";
-import UserInfo from "./UserInfo.vue";
-import { ChatsRef, ChatType, UserData } from "../../../assets/typescript/types";
-const chatInfo: string[] = ["123", "132"];
+import { Ref, ref } from 'vue';
+import ChatSelect from './ChatSelect.vue';
+import UserInfo from './UserInfo.vue';
+import { ChatsRef, ChatType, UserData } from '../../../assets/typescript/types';
+const chatInfo: string[] = ['123', '132'];
 
 /*Todo:
 
@@ -76,9 +76,9 @@ interface Props {
 }
 
 interface Emits {
-  (e: "selectedChat", id: string): void;
-  (e: "toggleSettings"): void;
-  (e: "toggleModal", selector: string, mode: boolean): void;
+  (e: 'selectedChat', id: string): void;
+  (e: 'toggleSettings'): void;
+  (e: 'toggleModal', selector: string, mode: boolean): void;
 }
 
 const emits = defineEmits<Emits>();
@@ -86,13 +86,13 @@ const props = defineProps<Props>();
 const settings_icon = ref();
 
 const friendsMenu: Ref<boolean> = ref(false);
-chatInfo.push("231");
+chatInfo.push('231');
 
 const chatsRef: ChatsRef = ref(props.chats);
 
 function changeChat(id: string): void {
   console.log(`Changed the chat to ${id}`);
-  emits("selectedChat", id);
+  emits('selectedChat', id);
 
   // updateChats(id);
 }

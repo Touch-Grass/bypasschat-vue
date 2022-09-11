@@ -5,7 +5,7 @@
       alt="Profile Image"
       class="profile_image"
     />
-    <h1 class="block profile_name">{{ props.userData.name ?? "Error" }}</h1>
+    <h1 class="block profile_name">{{ props.userData.name ?? 'Error' }}</h1>
   </div>
 
   <div ref="dropdownMenu" class="dropdown_area" v-show="dropdownOpen">
@@ -17,18 +17,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
-import { auth } from "../../../assets/typescript/firebase";
-import { UserData } from "../../../assets/typescript/types";
-import Modal from "../../modal/Modal.vue";
+import { onMounted, ref, Ref } from 'vue';
+import { auth } from '../../../assets/typescript/firebase';
+import { UserData } from '../../../assets/typescript/types';
+import Modal from '../../modal/Modal.vue';
 const defaultImage =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png';
 
 interface Props {
   userData: UserData;
 }
 interface Emits {
-  (e: "toggleModal", selector: string, mode: boolean): void;
+  (e: 'toggleModal', selector: string, mode: boolean): void;
 }
 
 const emits = defineEmits<Emits>();
@@ -41,13 +41,13 @@ const userWrapper = ref();
 
 function userWrapperClicked(): void {
   dropdownOpen.value = !dropdownOpen.value;
-  console.log(dropdownOpen.value, "UserWrapper");
+  console.log(dropdownOpen.value, 'UserWrapper');
 }
 
 onMounted(() => clickOffDropdown());
 
 function clickOffDropdown(): void {
-  document.addEventListener("click", (e: MouseEvent) => {
+  document.addEventListener('click', (e: MouseEvent) => {
     if (dropdownOpen.value)
       if (!userWrapper.value.contains(e.target)) dropdownOpen.value = false;
   });

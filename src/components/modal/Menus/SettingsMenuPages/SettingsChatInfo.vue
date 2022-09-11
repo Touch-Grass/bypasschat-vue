@@ -49,10 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import { ChatType, UserData } from "../../../../assets/typescript/types";
-import ColorInput from "../Settings/ColorInput.vue";
-import ToggleInput from "../Settings/ToggleInput.vue";
-import SettingsMenuChatList from "../ChatList/SettingsMenuChatList.vue";
+import { ChatType, UserData } from '../../../../assets/typescript/types';
+import ColorInput from '../Settings/ColorInput.vue';
+import ToggleInput from '../Settings/ToggleInput.vue';
+import SettingsMenuChatList from '../ChatList/SettingsMenuChatList.vue';
 
 interface Props {
   userData: UserData;
