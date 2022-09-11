@@ -7,11 +7,7 @@
       ></UserInfo>
       <div class="reverse">
         <img
-          @click="
-            () => {
-              emits('toggleModal', 'newChat', true);
-            }
-          "
+          @click="() => emits('toggleModal', 'newChat', true)"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAdElEQVRIiWNgGAUkAg8GBobHDAwM/8nEj6Bm4ASPKDAc2RKcAKaIXIChn4kCw4gCpFpAsg8HnQ8GnwUsBORxhTe6OCMuAwbcB+gu+49DHCcY+pE84HGADogOexigexA9htLkFtXIZmAFHgyU1QkEK5xRgAEAw+tLFxSOpJUAAAAASUVORK5CYII="
           class="new_chat_button"
         />
@@ -20,11 +16,7 @@
           ref="settings_icon"
           class="mr-1 settings_icon"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAB/ElEQVRYhe2XO0sDQRSFv5jCIlj7iiAEFEQbbVXsI9hY2qfUQmNno+nyH+zzB7RRSEoVxVqxC8Qqxig+mrXIWXaS7E5210QRvDDM7JlzHzNz57HwL39UaoDTUWo/5Tzt49wtk1GNDcUIYEn1CZBQOe3oG2gAK6pvDOxa9WoMe74yDVwBB8CMsAWggjfdmwZ/08DL4iLdA9majhJAifa1vQXe1L4DtoGUwU8JuxPnTTqmjVJY52tSaADHQF3fn8Au9mUbEudTOnXZaOh7rZfzpBF5XtgwsAEshx2BuBvSRbbcmUzaFHN4o01beOvAGfACNNXOWvhpvFnJ2QKYBR7w1jrjwzki+Bw49OFn8HLjQT6sMgpcSOERbxdAa+QO8E5rrcdV9oQ5tM/EjGw4sjnay7krKaAqxTkDPxe266PjrvOZgc0Jq9K+a0LJk5RHDKwpbMyHP6a+ZwMbEfYU5CTqSeioTvj0JTs4QbxQAaSAV7WnDPxS9ZaPjotdGZi7k16JsAS2JMziJWEemFDZBz7oTsIMEZMwzDY8ZIDbMOxBlKWV7U36fBD9+lEM9stoj96XUZ5vXEau2K7je2CH7ut4R33fvo4h+EFSNgzaHiTzwmM/SGxSlKOCgRWEFaMai/MmrKheNDD3MVqOYS+yTBJ8Dkz8RADwyz8m/9JX+QLRONJ+SbNmWgAAAABJRU5ErkJggg=="
-          @click="
-            () => {
-              emits('toggleModal', 'settings', true);
-            }
-          "
+          @click="() => emits('toggleModal', 'settings', true)"
         />
       </div>
       <!-- <button @click="addChat" class="bg-blue-500">+</button> -->
@@ -36,22 +28,15 @@
         <div v-for="chat in props.chats">
           <ChatSelect
             :chat_id="chat.id"
+            @toggleModal="
+              (selector, mode) => emits('toggleModal', selector, mode)
+            "
             @selectedChat="changeChat"
           ></ChatSelect>
         </div>
       </div>
     </div>
-    <!-- <div class="button_logout_wrapper">
-      <button class="bg-blue-800 button_logout" @click="logout">Logout</button>
-    </div> -->
   </div>
-
-  <!-- <Modal :showModal="friendsMenu" @toggleFriendsModal="toggleFriendsMenu">
-    Whats up modal makers!!
-  </Modal> -->
-  <!-- <Modal @toggledVisible="hideFriendsMenu" :showModal="friendsMenu"
-    >This is a cool modal!</Modal
-  > -->
 </template>
 
 <script lang="ts" setup>
@@ -93,8 +78,6 @@ const chatsRef: ChatsRef = ref(props.chats);
 function changeChat(id: string): void {
   console.log(`Changed the chat to ${id}`);
   emits('selectedChat', id);
-
-  // updateChats(id);
 }
 
 // initChats();

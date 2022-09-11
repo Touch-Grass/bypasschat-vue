@@ -14,6 +14,6 @@ const props = defineProps<props>();
 .leave_chat_menu_wrapper {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: red;
 }
 </style>

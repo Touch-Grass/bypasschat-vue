@@ -43,26 +43,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref, onMounted } from 'vue';
-import Message from './Message.vue';
-import { database } from '../../../assets/typescript/firebase';
 import {
-  ref as fbref,
-  push,
-  set,
-  onChildAdded,
   DataSnapshot,
-  onValue,
-  query,
-  limitToLast,
   get,
+  limitToLast,
+  onChildAdded,
+  onValue,
+  push,
+  query,
+  ref as fbref,
+  set,
 } from 'firebase/database';
+import { onMounted, ref, Ref } from 'vue';
+import { database } from '../../../assets/typescript/firebase';
 import { getTime } from '../../../assets/typescript/time';
 import {
   defaultChatImage,
   defaultProfileImage,
 } from '../../../assets/typescript/Variables';
-import { emitKeypressEvents } from 'readline';
+import Message from './Message.vue';
 
 interface Props {
   chat_id: string;
@@ -250,7 +249,7 @@ onMounted(
   position: absolute;
   top: 60px;
   width: calc(100% - 250px);
-  height: calc(100% - 120px);
+  height: calc(100% - 140px);
   /* This is a backup to keep the chat fixed and not scroll with messages */
   overflow: hidden;
 }

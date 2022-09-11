@@ -28,8 +28,14 @@ interface Props {
   };
 }
 
+interface Emits {
+  (e: 'toggleModal', selector: string, mode: boolean): void;
+}
+
 const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 function InviteUser(): void {
+  emits('toggleModal', 'inviteUser', true);
   console.log('InviteUser');
 }
 
@@ -64,7 +70,7 @@ function ChangeName() {
   width: min-content;
   height: max-content;
   padding: 0.25rem;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
 
   margin: 5px 0 0 5px;
   background-color: var(--theme-dark);
@@ -73,13 +79,14 @@ function ChangeName() {
   isolation: isolate;
   transition: background-color 300ms ease-in-out;
 }
+
 .chat_context_menu_item:first-child {
-  border-top-left-radius: 0.75rem;
-  border-top-right-radius: 0.75rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 .chat_context_menu_item:last-child {
-  border-bottom-left-radius: 0.75rem;
-  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 .chat_context_menu_item {
   font-size: 1rem;
@@ -104,13 +111,14 @@ function ChangeName() {
   background-color: white;
   box-shadow: 0 0 15 white;
   cursor: pointer;
+  margin: 0.25rem 0;
 }
 
 .host_only {
-  background-color: var(--theme-tint);
+  color: var(--theme-tint);
   cursor: not-allowed;
 }
 .host_only:hover {
-  background-color: var(--theme-tint);
+  background-color: var(--theme-dark);
 }
 </style>

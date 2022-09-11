@@ -14,6 +14,7 @@
       v-show="showContextMenu"
       :chat_id="props.chat_id"
       :position="contextMenuPos"
+      @toggleModal="(selector, mode) => emits('toggleModal', selector, mode)"
     ></ChatContextMenu>
   </div>
 </template>
@@ -28,6 +29,7 @@ import Modal from '../../modal/modals/Modal.vue';
 
 interface Emits {
   (e: 'selectedChat', id: string): void;
+  (e: 'toggleModal', selector: string, mode: boolean): void;
 }
 
 interface Props {

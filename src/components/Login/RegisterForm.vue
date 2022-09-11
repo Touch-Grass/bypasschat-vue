@@ -76,37 +76,39 @@
   </form>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const registerForm = ref({
-  name: "",
-  email: "",
-  password: "",
-  repeat_password: "",
+  name: '',
+  email: '',
+  password: '',
+  repeat_password: '',
 });
 
 const disabled = ref(false);
 interface Emits {
-  (e: "showSignInModal", showSignInModal: boolean): void;
+  (e: 'showSignInModal', showSignInModal: boolean): void;
 }
+
+const emits = defineEmits<Emits>();
 
 function Validate() {
   // Makes sures that the form doesn't submit if the user hasn't filled out all the fields
-  if (Object.keys(registerForm.value).includes(""))
-    return "Please fill in all fields";
+  if (Object.keys(registerForm.value).includes(''))
+    return 'Please fill in all fields';
 
   if (registerForm.value.name.length <= 3)
-    return "Name must be at least 3 characters long";
+    return 'Name must be at least 3 characters long';
 
   if (registerForm.value.name.length > 10)
-    return "Name must be less than 12 characters long";
+    return 'Name must be less than 12 characters long';
 
   //If the name is letters and numbers
   if (!registerForm.value.name.match(/^[a-zA-Z0-9_]+$/))
-    return "Name must be only include characters, numbers and underscores";
+    return 'Name must be only include characters, numbers and underscores';
 
   if (registerForm.value.password !== registerForm.value.repeat_password)
-    return "Passwords do not match";
+    return 'Passwords do not match';
 }
 
 function Submit() {
@@ -120,12 +122,11 @@ function Submit() {
 }
 
 function registerUser(userCredentials: Record<string, string>) {
-  alert("Registering user");
+  alert('Registering user');
 }
 
-const emits = defineEmits<Emits>();
 function showSignInModal() {
-  console.log("showSignInModal");
+  console.log('showSignInModal');
 }
 </script>
 

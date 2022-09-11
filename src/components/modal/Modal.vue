@@ -36,6 +36,12 @@ const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 </script>
 <style>
+.inner_modal_wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
 .modal_input {
   background-color: var(--theme-light);
   padding: 0.25rem;

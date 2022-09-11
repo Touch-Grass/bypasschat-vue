@@ -19,22 +19,29 @@
       <NewChatMenu :userData="props.userData"></NewChatMenu>
     </Modal>
     <Modal
-      :showModal="true"
+      :showModal="props.modalData.leaveChat"
       :size="{ width: '100px', height: '200px' }"
       :position="{ x: '50px', y: '20px' }"
     >
       <LeaveChatMenu :userData="props.userData"></LeaveChatMenu>
+    </Modal>
+    <Modal
+      :showModal="props.modalData.inviteUser"
+      :size="{ width: '600px', height: '450px' }"
+    >
+      <InviteUserModal :userData="props.userData"></InviteUserModal>
     </Modal>
   </div>
 </template>
 <script setup lang="ts">
 import { ModalDataType, UserData } from '../../assets/typescript/types';
 import FriendsMenu from './Menus/FriendsMenu.vue';
-import LeaveChatMenu from './Menus/LeaveChatMenu.vue';
 import NewChatMenu from './Menus/NewChatMenu.vue';
 import ProfileMenu from './Menus/ProfileMenu.vue';
 import SettingsMenu from './Menus/SettingsMenu.vue';
 import Modal from './Modal.vue';
+import LeaveChatMenu from './Menus/LeaveChatMenu.vue';
+import InviteUserModal from './Menus/InviteUserModal.vue';
 interface Props {
   modalData: ModalDataType;
   userData: UserData;
