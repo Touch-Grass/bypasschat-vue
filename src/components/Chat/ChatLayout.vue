@@ -29,12 +29,13 @@
   <ModalLayout
     :userData="props.userData"
     :modalData="modalData"
+    :chats="chats"
     @toggleModal="toggleModals"
   ></ModalLayout>
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref } from "vue";
+import { ref } from "vue";
 import { database } from "../../assets/typescript/firebase";
 import {
   ref as fbref,
@@ -45,7 +46,11 @@ import {
 import ChatScreen from "./ChatScreen/ChatScreen.vue";
 import ChatList from "./ChatList/ChatList.vue";
 import ModalLayout from "../modal/ModalLayout.vue";
-import { UserData } from "../../assets/typescript/types";
+import {
+  ChatType,
+  TypeModalData,
+  UserData,
+} from "../../assets/typescript/types";
 
 interface Props {
   userData: UserData;
@@ -54,16 +59,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const chats: any[] = [];
-const settings_open = ref(false);
 const selected_chat = ref("");
-
-// type TypeModalData = {
-//   settings: boolean;
-//   friends: boolean;
-//   newChat: boolean;
-// };
-
-type TypeModalData = Ref<Record<string, boolean>>;
 
 const modalData: TypeModalData = ref({
   settings: false,
