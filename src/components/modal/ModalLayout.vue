@@ -34,7 +34,7 @@ import LeaveChatMenu from './Menus/LeaveChatMenu.vue';
 import NewChatMenu from './Menus/NewChatMenu.vue';
 import ProfileMenu from './Menus/ProfileMenu.vue';
 import SettingsMenu from './Menus/SettingsMenu.vue';
-import Modal from './modals/Modal.vue';
+import Modal from './Modal.vue';
 interface Props {
   modalData: ModalDataType;
   userData: UserData;

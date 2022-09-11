@@ -10,7 +10,7 @@
   </div>
 
   <div ref="contextMenu">
-    <Modal :showModal="true"></Modal>
+    <!-- <Modal :showModal="true"></Modal> -->
     <ChatContextMenu
       v-show="showContextMenu"
       :chat_id="props.chat_id"
@@ -25,7 +25,6 @@ import { database } from '../../../assets/typescript/firebase';
 import { ref as fbref, onValue } from 'firebase/database';
 import { defaultChatImage } from '../../../assets/typescript/Variables';
 import ChatContextMenu from './ChatContextMenu.vue';
-import Modal from '../../modal/modals/Modal.vue';
 
 interface Emits {
   (e: 'selectedChat', id: string): void;
