@@ -44,8 +44,8 @@ function signInAuth(email: string, password: string) {
       alert("Signed up!");
       console.log(user);
     })
-    .catch((error: Error) => {
-      throw new Error(`New Error ${error.message}`);
+    .catch((e: Error) => {
+      throw new Error(`New Error ${e.message}`);
     });
 }
 </script>

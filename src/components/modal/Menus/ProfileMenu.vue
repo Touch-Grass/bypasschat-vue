@@ -70,7 +70,7 @@ input:focus {
   outline: transparent;
 }
 input {
-  color: var(--color);
+  color: var(--theme-color);
   background-color: transparent;
 }
 

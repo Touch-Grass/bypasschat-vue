@@ -11,11 +11,11 @@
 
 <script lang="ts" setup>
 import Chat from "./Chat.vue";
-import { UserData } from "../../../assets/typescript/types";
+import { ChatType, UserData } from "../../../assets/typescript/types";
 
 interface Props {
   userData: UserData;
-  chats: any[];
+  chats: ChatType;
   selected_chat: string;
 }
 

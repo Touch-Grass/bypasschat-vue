@@ -9,7 +9,7 @@
           v-if="toggleForm"
           @loggedIn="(val: boolean) => {emits('loggedIn', val)}"
           @userData="
-            (data) => {
+            data => {
               emits('userData', data);
             }
           "

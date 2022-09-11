@@ -1,6 +1,6 @@
 <template>
   <div class="chat_wrapper">
-    <div class="chat_head shadow-lg">
+    <div class="chat_head shadow-md">
       <img :src="chat.image ?? defaultChatImage" class="absolute w-10 h-10" />
       <p>
         {{ chat.name }}
@@ -190,6 +190,7 @@ function sendMessage(): void {
 }
 
 .chat_head img {
+  user-select: none;
   position: relative;
   margin-right: 0.5rem;
   border-radius: 50%;

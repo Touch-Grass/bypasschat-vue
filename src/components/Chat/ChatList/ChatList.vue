@@ -58,17 +58,7 @@
 import { Ref, ref } from "vue";
 import ChatSelect from "./ChatSelect.vue";
 import UserInfo from "./UserInfo.vue";
-import Modal from "../../modal/Modal.vue";
-import { auth, database } from "../../../assets/typescript/firebase";
-import {
-  ref as fbref,
-  push,
-  set,
-  onValue,
-  child,
-  ThenableReference,
-} from "firebase/database";
-import { UserData } from "../../../assets/typescript/types";
+import { ChatsRef, ChatType, UserData } from "../../../assets/typescript/types";
 const chatInfo: string[] = ["123", "132"];
 
 /*Todo:
@@ -82,7 +72,7 @@ const chatInfo: string[] = ["123", "132"];
 
 interface Props {
   userData: UserData;
-  chats: any[];
+  chats: ChatType;
 }
 
 interface Emits {
@@ -98,7 +88,7 @@ const settings_icon = ref();
 const friendsMenu: Ref<boolean> = ref(false);
 chatInfo.push("231");
 
-const chatsRef = ref(props.chats);
+const chatsRef: ChatsRef = ref(props.chats);
 
 function changeChat(id: string): void {
   console.log(`Changed the chat to ${id}`);
@@ -232,6 +222,10 @@ function changeChat(id: string): void {
   border-radius: 50%;
   margin-left: 0.65rem;
   border: 1px solid white;
+}
+
+.upper_wrapper .reverse img {
+  user-select: none;
 }
 
 .upper_wrapper .reverse {

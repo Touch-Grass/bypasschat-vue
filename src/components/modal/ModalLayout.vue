@@ -10,7 +10,7 @@
   ></div>
   <div class="modals_wrapper">
     <Modal :showModal="props.modalData.settings">
-      <SettingsMenu :userData="props.userData"></SettingsMenu>
+      <SettingsMenu :userData="props.userData" :chats="chats"></SettingsMenu>
     </Modal>
 
     <Modal :showModal="props.modalData.friends">
@@ -33,9 +33,11 @@ import SettingsMenu from "./Menus/SettingsMenu.vue";
 import FriendsMenu from "./Menus/FriendsMenu.vue";
 import ProfileMenu from "./Menus/ProfileMenu.vue";
 import NewChatMenu from "./Menus/NewChatMenu.vue";
-import { UserData } from "../../assets/typescript/types";
-
-type ModalDataType = Record<string, boolean>;
+import {
+  ChatType,
+  ModalDataType,
+  UserData,
+} from "../../assets/typescript/types";
 
 interface Props {
   modalData: ModalDataType;
@@ -46,17 +48,10 @@ interface Emits {
   (e: "toggleModal", selector: string, mode: boolean): void;
 }
 
-/* props.modalData =
-{
-  settings: false,
-  friends: true,
-  newChat: false
-}
-
-*/
-
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
+
+const chats: any[] = [];
 </script>
 
 <style scoped>

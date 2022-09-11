@@ -7,7 +7,6 @@
 
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
-import { Stringish } from "../../../main";
 import { database } from "../../../assets/typescript/firebase";
 import { ref as fbref, onValue } from "firebase/database";
 import { defaultChatImage } from "../../../assets/typescript/Variables";
@@ -23,7 +22,7 @@ interface Props {
 const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-let chat = ref({
+const chat = ref({
   name: "",
   image: "",
 });
@@ -35,7 +34,7 @@ initChatSelect();
  */
 function initChatSelect(chat_id: string = props.chat_id): void {
   const chatRef = fbref(database, `Chats/${chat_id}`);
-  onValue(chatRef, (snapshot) => {
+  onValue(chatRef, snapshot => {
     const data = snapshot.val();
     chat.value.name = data?.name;
     chat.value.image = data?.image;
@@ -43,7 +42,7 @@ function initChatSelect(chat_id: string = props.chat_id): void {
 }
 
 // Returns what ever chat is selected (return is an emit to other modules)
-function selectedChat() {
+function selectedChat(): void {
   emits("selectedChat", props.chat_id);
 }
 </script>
@@ -77,6 +76,7 @@ function selectedChat() {
 }
 
 .chat-img {
+  user-select: none;
   width: 30px;
   height: 30px;
   margin-right: 10px;

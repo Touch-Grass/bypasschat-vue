@@ -12,22 +12,17 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref, onMounted } from "vue";
-// import { Stringish, database, ref, onValue } from "../../main";
-import { Stringish } from "../../../main";
+import { ref, onMounted } from "vue";
 import {
-  getDatabase,
   ref as fbref,
   onValue,
   onChildRemoved,
   DatabaseReference,
-  Database,
   DataSnapshot,
 } from "firebase/database";
 import { database } from "../../../assets/typescript/firebase";
 import { formatTime } from "../../../assets/typescript/time";
-import { emitKeypressEvents } from "readline";
-import { FontFaceAscentOverrideProperty } from "csstype";
+import { MessageData } from "../../../assets/typescript/types";
 
 interface Props {
   chat_id: string;
@@ -36,8 +31,6 @@ interface Props {
   user_id: string;
 }
 const props = defineProps<Props>();
-
-type MessageData = Ref<Record<string, string>>;
 
 const message: MessageData = ref({
   text: "",
@@ -50,10 +43,6 @@ const message: MessageData = ref({
 });
 
 const messageHTML = ref();
-onMounted(() => {
-  messageHTML.value.scrollIntoView({ behavior: "smooth" });
-  initMessage();
-});
 
 let index = 5;
 
@@ -122,10 +111,13 @@ function initMessage(
 }
 
 function updateTime(): void {
-  if (message.value.date) {
-    message.value.time = formatTime(message.value.date);
-  }
+  if (message.value.date) message.value.time = formatTime(message.value.date);
 }
+
+onMounted(() => {
+  messageHTML.value.scrollIntoView({ behavior: "smooth" });
+  initMessage();
+});
 </script>
 
 <style scoped>
@@ -167,6 +159,7 @@ function updateTime(): void {
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+  user-select: none;
 }
 
 .msg-bubble {
