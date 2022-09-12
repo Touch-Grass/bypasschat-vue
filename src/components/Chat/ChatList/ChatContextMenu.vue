@@ -1,7 +1,11 @@
 <template>
   <div
     class="chat_conxtext_menu_wrapper"
-    :style="{ top: `${props.position.y}px`, left: `${props.position.x}px` }"
+    :style="{
+      top: `${props.position.y}px`,
+      left: `${props.position.x}px`,
+      transform: `translateX(-130px);`,
+    }"
   >
     <div class="chat_context_menu">
       <div @click="InviteUser" class="chat_context_menu_item">Invite</div>
@@ -67,13 +71,14 @@ function ChangeName() {
 .chat_conxtext_menu_wrapper {
   box-sizing: border-box;
   position: fixed;
-  width: min-content;
-  height: max-content;
+  width: 125px;
+  height: 180px;
   padding: 0.25rem;
   border-radius: 0.5rem;
 
   margin: 5px 0 0 5px;
   background-color: var(--theme-dark);
+  transform-origin: right top;
 
   z-index: 100;
   isolation: isolate;
@@ -88,6 +93,7 @@ function ChangeName() {
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
+
 .chat_context_menu_item {
   font-size: 1rem;
   white-space: nowrap;

@@ -180,6 +180,10 @@ onMounted(() => {
   align-items: center;
   margin-bottom: 10px;
 }
+.left-message .msg-info-name {
+  color: rgb(41, 57, 57);
+}
+
 .msg-info-name {
   margin-right: 10px;
   font-weight: bold;
