@@ -85,7 +85,8 @@ function toggleContextMenu(e: MouseEvent): void {
   console.log(`Toggled Context Menu for ${chat.value.name}`);
   contextMenuPos.value.x = e.clientX;
   contextMenuPos.value.y = e.clientY;
-  if(contextMenuPos.value.x > 115) contextMenuAlign.value = true; else contextMenuAlign.value = false;
+  if (contextMenuPos.value.x > 115) contextMenuAlign.value = true;
+  else contextMenuAlign.value = false;
   showContextMenu.value = !showContextMenu.value;
 }
 
