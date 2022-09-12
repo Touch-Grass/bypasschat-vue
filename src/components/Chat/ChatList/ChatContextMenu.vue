@@ -4,7 +4,7 @@
     :style="{
       top: `${props.position.y}px`,
       left: `${props.position.x}px`,
-      transform: `translateX(-130px);`,
+      transform: props.align ? 'translateX(-130px)' : 'none',
     }"
   >
     <div class="chat_context_menu">
@@ -30,6 +30,7 @@ interface Props {
     x: number;
     y: number;
   };
+  align: boolean;
 }
 
 interface Emits {
@@ -78,7 +79,10 @@ function ChangeName() {
 
   margin: 5px 0 0 5px;
   background-color: var(--theme-dark);
+
   transform-origin: right top;
+
+  /* transform: translateX(-130px); */
 
   z-index: 100;
   isolation: isolate;

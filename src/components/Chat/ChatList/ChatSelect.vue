@@ -14,6 +14,7 @@
       v-show="showContextMenu"
       :chat_id="props.chat_id"
       :position="contextMenuPos"
+      :align="contextMenuAlign"
       @toggleModal="(selector, mode) => emits('toggleModal', selector, mode)"
     ></ChatContextMenu>
   </div>
@@ -50,6 +51,7 @@ const contextMenuPos = ref({
   x: 0,
   y: 0,
 });
+const contextMenuAlign = ref(false);
 const showContextMenu = ref(false);
 
 initChatSelect();
@@ -83,6 +85,7 @@ function toggleContextMenu(e: MouseEvent): void {
   console.log(`Toggled Context Menu for ${chat.value.name}`);
   contextMenuPos.value.x = e.clientX;
   contextMenuPos.value.y = e.clientY;
+  if(contextMenuPos.value.x > 115) contextMenuAlign.value = true; else contextMenuAlign.value = false;
   showContextMenu.value = !showContextMenu.value;
 }
 
