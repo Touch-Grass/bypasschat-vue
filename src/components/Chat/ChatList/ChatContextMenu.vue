@@ -50,14 +50,12 @@ function InviteUser(): void {
 
 function LeaveChat(): void {
   console.log('LeaveChat');
-  if (confirm('Are you sure you want to leave this chat?')) { 
+  if (confirm('Are you sure you want to leave this chat?')) {
     console.log('Leaving chat');
     const userChatRef = fbref(
       database,
       `Users/${props.user_id}/Chats/${props.chat_id}`
     );
-
-
   }
 }
 
