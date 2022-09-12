@@ -24,7 +24,11 @@
 <!-- Width: 127.183px -->
 
 <script setup lang="ts">
+import { database } from '../../../assets/typescript/firebase';
+import { ref as fbref, onValue } from 'firebase/database';
+
 interface Props {
+  user_id: string;
   chat_id: string;
   position: {
     x: number;
@@ -46,8 +50,14 @@ function InviteUser(): void {
 
 function LeaveChat(): void {
   console.log('LeaveChat');
-  if (confirm('Are you sure you want to leave this chat?')) {
+  if (confirm('Are you sure you want to leave this chat?')) { 
     console.log('Leaving chat');
+    const userChatRef = fbref(
+      database,
+      `Users/${props.user_id}/Chats/${props.chat_id}`
+    );
+
+
   }
 }
 

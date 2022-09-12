@@ -12,6 +12,7 @@
   <div ref="contextMenu">
     <ChatContextMenu
       v-show="showContextMenu"
+      :user_id="props.user_id"
       :chat_id="props.chat_id"
       :position="contextMenuPos"
       :align="contextMenuAlign"
@@ -34,6 +35,7 @@ interface Emits {
 }
 
 interface Props {
+  user_id: string;
   chat_id: string;
 }
 

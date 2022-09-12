@@ -27,6 +27,7 @@
       <div class="chat_select_wrapper">
         <div v-for="chat in props.chats">
           <ChatSelect
+            :user_id="props.userData.id || ''"
             :chat_id="chat.id"
             @toggleModal="
               (selector, mode) => emits('toggleModal', selector, mode)
